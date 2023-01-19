@@ -22,7 +22,7 @@ function [fig] = draw_tdcr(g,seg_end,r_disk,r_height,options)
 %
 %
 %   Author: Jessica Burgner-Kahrs <jbk@cs.toronto.edu>
-%   Date: 2022/01/04
+%   Date: 2023/01/04
 %   Version: 0.1
 %
 %   Copyright: 2023 Continuum Robotics Laboratory, University of Toronto
