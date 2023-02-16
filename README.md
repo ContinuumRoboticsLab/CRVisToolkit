@@ -7,8 +7,8 @@ The Continuum Robot Visualization Toolkit stems from the [Continuum Robotics Lab
 The functions are organized into folders based on the continuum robot type:
 
 - tdcr (tendon-driven continuum robots)
-- ***[Coming soon]*** ctcr (concentric tube continuum robots)
-- ***[Coming soon]*** util (utility functions, such as robot independent mapping for constant curvature kinematics framework) 
+- ctcr (concentric tube continuum robots)
+- util (utility functions, such as robot independent mapping for constant curvature kinematics framework) 
 
 ![](tdcr_vis.png)
 
