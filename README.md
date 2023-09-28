@@ -1,5 +1,5 @@
-# CRVisToolkit
-This is a set of MATLAB functions for visualization and plotting of continuum robots.
+# CRVisToolkit Python Port
+Working on porting the visualization toolkit to python so it is accessible.
 
 The Continuum Robot Visualization Toolkit stems from the [Continuum Robotics Laboratory](https://crl.utm.utoronto.ca) codebase and is part of the [Open Continuum Robotics Project](http://opencontinuumrobotics.com/).
 
