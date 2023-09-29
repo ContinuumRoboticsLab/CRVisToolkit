@@ -1,20 +1,55 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+
+from utils import setupfigure
 
 
-def null_space(A, rcond=None):
-    u, s, vh = np.linalg.svd(A, full_matrices=True)
-    M, N = u.shape[0], vh.shape[1]
-    if rcond is None:
-        rcond = np.finfo(s.dtype).eps * max(M, N)
-    tol = np.amax(s) * rcond
-    num = np.sum(s > tol, dtype=int)
-    Q = vh[num:,:].T.conj()
-    return Q
+def nullspace(A, atol=1e-13, rtol=0):
+    """
+    Compute an approximate basis for the nullspace of A.
+
+    The algorithm used by this function is based on the singular value
+    decomposition of `A`.
+
+    Parameters
+    ----------
+    A : ndarray
+        A should be at most 2-D.  A 1-D array with length k will be treated
+        as a 2-D with shape (1, k)
+    atol : float
+        The absolute tolerance for a zero singular value.  Singular values
+        smaller than `atol` are considered to be zero.
+    rtol : float
+        The relative tolerance.  Singular values less than rtol*smax are
+        considered to be zero, where smax is the largest singular value.
+
+    If both `atol` and `rtol` are positive, the combined tolerance is the
+    maximum of the two; that is::
+        tol = max(atol, rtol * smax)
+    Singular values smaller than `tol` are considered to be zero.
+
+    Return value
+    ------------
+    ns : ndarray
+        If `A` is an array with shape (m, k), then `ns` will be an array
+        with shape (k, n), where n is the estimated dimension of the
+        nullspace of `A`.  The columns of `ns` are a basis for the
+        nullspace; each element in numpy.dot(A, ns) will be approximately
+        zero.
+    """
+
+    # Source: https://scipy-cookbook.readthedocs.io/items/RankNullspace.html
+
+    A = np.atleast_2d(A)
+    u, s, vh = np.linalg.svd(A)
+    tol = max(atol, rtol * s[0])
+    nnz = (s >= tol).sum()
+    ns = vh[nnz:].conj().T
+    return ns
 
 
-def draw_tdcr(g: np.ndarray[float], seg_end: np.ndarray[int], r_disk: float=2.5*1e-3, r_height: float=1.5*1e-3, tipframe: bool=True, segframe: bool=False, baseframe: bool=False, projections: bool=False, baseplate: bool=False):
+def draw_tdcr(g: np.ndarray[float], seg_end: np.ndarray[int], r_disk: float=2.5*1e-3, r_height: float=1.5*1e-3, tipframe: bool=True, segframe: bool=False, baseframe: bool=False, projections: bool=False, baseplate: bool=True):
     '''
     DRAW_CTCR Creates a figure of a concentric tube continuum robot (ctcr)
 
@@ -42,7 +77,7 @@ def draw_tdcr(g: np.ndarray[float], seg_end: np.ndarray[int], r_disk: float=2.5*
         Shows robot base frame
     projections: bool, default=False
         Shows projections of backbone curve onto coordinate axes
-    baseplate: bool, default=False
+    baseplate: bool, default=True
         Shows robot base plate
 
     Outputs
@@ -60,128 +95,87 @@ def draw_tdcr(g: np.ndarray[float], seg_end: np.ndarray[int], r_disk: float=2.5*
     if g.shape[0] < len(seg_end) or max(seg_end) > g.shape[0]:
         raise ValueError("Dimension mismatch")
 
-    numseg = len(seg_end)
-    curvelength = np.sum(np.linalg.norm(g[1:, 12:15].T - g[:-1, 12:15].T))
-    
     # Setup figure
-    fig = plt.figure()
-    fig.set_size_inches(1280/fig.dpi, 1024/fig.dpi)
-    ax = fig.add_subplot(projection='3d')
-    
-    col = np.linspace(0.2, 0.8, numseg)
+    ax = setupfigure(g=g, seg_end=seg_end, tipframe=tipframe, segframe=segframe, baseframe=baseframe, projections=projections, baseplate=baseplate)
+
+    numseg = seg_end.size
+    col = np.linspace(0.2, 0.8, numseg, endpoint=True)
 
     # Backbone
-    ax.plot3D(g[:seg_end[0], 12], g[:seg_end[0], 13], g[:seg_end[0], 14], linewidth=5, color=[col[0], col[0], col[0]])
+    start = 0
     for i in range(numseg):
-        start = 0 if i == 0 else seg_end[i], seg_end[i, 0]
-        ax.plot3D(g[seg_end[i - 1]:seg_end[i], 12], g[seg_end[i]:seg_end[i + 1] + 1, 13], g[seg_end[i]:seg_end[i + 1], 14], linewidth=5, color=col[i]*np.ones((3,)))
-    
-    # Projections
-    if projections:
-        ax.plot3D(g[:, 12], np.full(g.shape[0], ax.get_ylim()[0]), g[:, 14], linewidth=2, color=[0, 1, 0]) # project in x-z axis
-        ax.plot3D(np.full(g.shape[0], ax.get_xlim()[0]), g[:, 13], g[:, 14], linewidth=2, color=[1, 0, 0]) # project in y-z axis
-        ax.plot3D(g[:, 12], g[:, 13], np.zeros(g.shape[0]), linewidth=2, color=[0, 0, 1]) # project in x-y axis
-    
+        ax.plot(g[start:seg_end[i], 12], g[start:seg_end[i], 13], g[start:seg_end[i], 14], linewidth=5, color=col[i]*np.ones(3))
+        start = seg_end[i]
+
     # Tendons
-    tendon1 = np.zeros((seg_end[numseg - 1, 0], 3))
-    tendon2 = np.zeros((seg_end[numseg - 1, 0], 3))
-    tendon3 = np.zeros((seg_end[numseg - 1, 0], 3))
-    
+    tendon1 = np.zeros((seg_end[numseg - 1], 3))
+    tendon2 = np.zeros((seg_end[numseg - 1], 3))
+    tendon3 = np.zeros((seg_end[numseg - 1], 3))
+
     # Tendon locations on disk
-    r1 = np.array([0, r_disk, 0]).T
-    r2 = np.array([np.cos(30*np.pi/180)*r_disk, -np.sin(30*np.pi/180)*r_disk, 0]).T
-    r3 = np.array([-np.cos(30*np.pi/180)*r_disk, -np.sin(30*np.pi/180)*r_disk, 0]).T
+    r1 = np.array([0, r_disk, 0])
+    r2 = np.array([np.cos(30*np.pi/180)*r_disk, -np.sin(30*np.pi/180)*r_disk, 0])
+    r3 = np.array([-np.cos(30*np.pi/180)*r_disk, -np.sin(30*np.pi/180)*r_disk, 0])
 
-    for i in range(int(seg_end[numseg - 1])):
-        RotMat = np.reshape([g[i, 0:3], g[i, 4:7], g[i, 8:11]], (3, 3))
-        tendon1[i, 0:3] = np.dot(RotMat, r1) + g[i, 12:15]
-        tendon2[i, 0:3] = np.dot(RotMat, r2) + g[i, 12:15]
-        tendon3[i, 0:3] = np.dot(RotMat, r3) + g[i, 12:15]
+    for i in range(seg_end[numseg - 1]):
+        RotMat = np.array([g[i, 0:3], g[i, 4:7], g[i, 8:11]]).T
+        tendon1[i, 0:3] = RotMat@r1 + g[i, 12:15]
+        tendon2[i, 0:3] = RotMat@r2 + g[i, 12:15]
+        tendon3[i, 0:3] = RotMat@r3 + g[i, 12:15]
 
-    ax.plot3D(tendon1[:, 0], tendon1[:, 1], tendon1[:, 2], color='black')
-    ax.plot3D(tendon2[:, 0], tendon2[:, 1], tendon2[:, 2], color='black')
-    ax.plot3D(tendon3[:, 0], tendon3[:, 1], tendon3[:, 2], color='black')
+    ax.plot(tendon1[:, 0], tendon1[:, 1], tendon1[:, 2], color='k')
+    ax.plot(tendon2[:, 0], tendon2[:, 1], tendon2[:, 2], color='k')
+    ax.plot(tendon3[:, 0], tendon3[:, 1], tendon3[:, 2], color='k')
 
     # draw spheres to represent tendon location at end disks
     radius = 0.75e-3
 
     u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]  # Get sphere coordinates
-    x=np.cos(u)*np.sin(v)
-    y=np.sin(u)*np.sin(v)
-    z=np.cos(v)
+    x = np.cos(u)*np.sin(v)
+    y = np.sin(u)*np.sin(v)
+    z = np.cos(v)
 
     for i in range(numseg):
-        ax.plot_surface(x*radius+tendon1[seg_end[i, 0] - 1, 0], y*radius+tendon1[seg_end[i, 0] - 1, 1], z*radius+tendon1[seg_end[i, 0] - 1, 2], color='black')
-        ax.plot_surface(x*radius+tendon2[seg_end[i, 0] - 1, 0], y*radius+tendon2[seg_end[i, 0] - 1, 1], z*radius+tendon2[seg_end[i, 0] - 1, 2], color='black')
-        ax.plot_surface(x*radius+tendon3[seg_end[i, 0] - 1, 0], y*radius+tendon3[seg_end[i, 0] - 1, 1], z*radius+tendon3[seg_end[i, 0] - 1, 2], color='black')
+        ax.plot_surface(x*radius+tendon1[seg_end[i] - 1, 0], y*radius+tendon1[seg_end[i] - 1, 1], z*radius+tendon1[seg_end[i] - 1, 2], color='k')
+        ax.plot_surface(x*radius+tendon2[seg_end[i] - 1, 0], y*radius+tendon2[seg_end[i] - 1, 1], z*radius+tendon2[seg_end[i] - 1, 2], color='k')
+        ax.plot_surface(x*radius+tendon3[seg_end[i] - 1, 0], y*radius+tendon3[seg_end[i] - 1, 1], z*radius+tendon3[seg_end[i] - 1, 2], color='k')
 
     # spacer disks
+    seg_idx = 0
+    theta = np.arange(0, 2 * np.pi, 0.05)
     for i in range(g.shape[0]):
-        seg = np.where(seg_end >= i)[0]
-        if seg.size == 0:
-            color = col[0] * np.array([1, 1, 1])
-        else:
-            color = col[seg[0]] * np.array([1, 1, 1])
+        if seg_end[seg_idx] < i:
+            seg_idx += 1
 
-        RotMat = g[i, [0, 1, 2, 4, 5, 6, 8, 9, 10]].reshape(3, 3)
+        color = col[seg_idx]*np.ones(3)
+
+        RotMat = np.array([g[i, 0:3], g[i, 4:7], g[i, 8:11]]).T
         normal = RotMat[:3, 2].T
+        v = nullspace(normal)
+        v_theta = v[:, 0].reshape((-1, 1)) * np.cos(theta) + v[:, 1].reshape((-1, 1)) * np.sin(theta)
+
+        # Draw the lower circular surface of the disk
         pos = g[i, 12:15].T - RotMat @ np.array([0, 0, r_height/2])
+        lowercirc = np.tile(pos.reshape((-1, 1)), theta.size) + r_disk * v_theta
+        x, y, z = lowercirc[0, :], lowercirc[1, :], lowercirc[2, :]
 
-        theta = np.arange(0, 2 * np.pi + 0.05, 0.05)
-        v = null_space(normal)
-        lowercirc = np.tile(pos.reshape(-1, 1), (1, theta.size)) + r_disk * (v[:, 0].reshape(-1, 1) * np.cos(theta) + v[:, 1].reshape(-1, 1) * np.sin(theta))
-        ax.plot_surface(lowercirc[0, :], lowercirc[1, :], lowercirc[2, :], facecolors=color, shade=False)
+        verts = [list(zip(x, y, z))]
+        ax.add_collection3d(Poly3DCollection(verts, color=color, edgecolor='k', rasterized=True, zorder=10), zdir='z')
 
-        pos = g[i, 12:15] + RotMat @ np.array([0, 0, r_height/2])
-        uppercirc = np.tile(pos.reshape(-1, 1), (1, theta.size)) + r_disk * (v[:, 0].reshape(-1, 1) * np.cos(theta) + v[:, 1].reshape(-1, 1) * np.sin(theta))
-        ax.plot_surface(uppercirc[0, :], uppercirc[1, :], uppercirc[2, :], facecolors=color, shade=False)
+        # Draw the upper circular surface of the disk
+        pos = g[i, 12:15].T + RotMat @ np.array([0, 0, r_height/2])
+        uppercirc = np.tile(pos.reshape((-1, 1)), theta.size) + r_disk * v_theta
+        x, y, z = uppercirc[0, :], uppercirc[1, :], uppercirc[2, :]
 
+        verts = [list(zip(x, y, z))]
+        ax.add_collection3d(Poly3DCollection(verts, color=color, edgecolor='k', rasterized=True, zorder=10), zdir='z')
+
+        # Draw the in-between surface of the disk
         x = np.vstack((lowercirc[0, :], uppercirc[0, :]))
         y = np.vstack((lowercirc[1, :], uppercirc[1, :]))
         z = np.vstack((lowercirc[2, :], uppercirc[2, :]))
 
-        ax.plot_surface(x, y, z, facecolors=color, shade=False)
-
-    # base plate
-    if baseplate:
-        color = [1, 1, 1] * 0.9
-        squaresize = 0.02
-        thickness = 0.001
-        ax.gca().add_patch(plt.Polygon([[-squaresize, -squaresize, squaresize, squaresize], [-squaresize, squaresize, squaresize, -squaresize]], [-thickness, -thickness, -thickness, -thickness], color=color))
-        ax.gca().add_patch(plt.Polygon([[-squaresize, -squaresize, squaresize, squaresize], [-squaresize, squaresize, squaresize, -squaresize]], [0, 0, 0, 0], color=color))
-        ax.gca().add_patch(plt.Polygon([[squaresize, squaresize, squaresize, squaresize], [-squaresize, squaresize, squaresize, -squaresize]], [-thickness, 0, 0, -thickness], color=color))
-        ax.gca().add_patch(plt.Polygon([[-squaresize, -squaresize, -squaresize, -squaresize], [-squaresize, squaresize, squaresize, -squaresize]], [-thickness, 0, 0, -thickness], color=color))
-        ax.gca().add_patch(plt.Polygon([[-squaresize, -squaresize, squaresize, squaresize], [-squaresize, -squaresize, -squaresize, -squaresize]], [-thickness, -thickness, 0, 0], color=color))
-        ax.gca().add_patch(plt.Polygon([[-squaresize, -squaresize, squaresize, squaresize], [squaresize, squaresize, squaresize, squaresize]], [-thickness, -thickness, 0, 0], color=color))
-
-    # Coordinate Frames
-    if tipframe and not segframe:
-        ax.quiver(g[-1, 12], g[-1, 13], g[-1, 14], g[-1, 0], g[-1, 1], g[-1, 2], color=[1, 0, 0], linewidth=3, length=0.01)
-        ax.quiver(g[-1, 12], g[-1, 13], g[-1, 14], g[-1, 4], g[-1, 5], g[-1, 6], color=[0, 1, 0], linewidth=3, length=0.01)
-        ax.quiver(g[-1, 12], g[-1, 13], g[-1, 14], g[-1, 8], g[-1, 9], g[-1, 10], color=[0, 0, 1], linewidth=3, length=0.01)
-
-    if segframe:
-        for i in range(numseg):
-            ax.quiver(g[seg_end[i], 12], g[seg_end[i], 13], g[seg_end[i], 14], g[seg_end[i], 0], g[seg_end[i], 1], g[seg_end[i], 2], color=[1, 0, 0], linewidth=3, length=0.01)
-            ax.quiver(g[seg_end[i], 12], g[seg_end[i], 13], g[seg_end[i], 14], g[seg_end[i], 4], g[seg_end[i], 5], g[seg_end[i], 6], color=[0, 1, 0], linewidth=3, length=0.01)
-            ax.quiver(g[seg_end[i], 12], g[seg_end[i], 13], g[seg_end[i], 14], g[seg_end[i], 8], g[seg_end[i], 9], g[seg_end[i], 10], color=[0, 0, 1], linewidth=3, length=0.01)
-
-    if baseframe:
-        ax.quiver(0, 0, 0, 1, 0, 0, color=[1, 0, 0], linewidth=3, length=0.01)
-        ax.quiver(0, 0, 0, 0, 1, 0, color=[0, 1, 0], linewidth=3, length=0.01)
-        ax.quiver(0, 0, 0, 0, 0, 1, color=[0, 0, 1], linewidth=3, length=0.01)
-
-    # Axes, Labels
-    clearance = 0.03
-    ax.set_xlim(-(np.max(np.abs(g[:, 12])) + clearance), np.max(np.abs(g[:, 12])) + clearance)
-    ax.set_ylim(-(np.max(np.abs(g[:, 13])) + clearance), np.max(np.abs(g[:, 13])) + clearance)
-    ax.set_zlim(0, curvelength + clearance)
-    ax.set_xlabel('x (m)')
-    ax.set_ylabel('y (m)')
-    ax.set_zlabel('z (m)')
-    ax.grid(True, alpha=0.3)
-    ax.view_init(azim=45, elev=30)
-    ax.set_box_aspect([1, 1, 1])
+        ax.plot_surface(x, y, z, color=color, shade=False, zorder=10)
 
     plt.show()
 
@@ -189,9 +183,10 @@ def draw_tdcr(g: np.ndarray[float], seg_end: np.ndarray[int], r_disk: float=2.5*
 if "__main__" == __name__:
     import json
 
-    with open("example_data.json", "r") as f:
+    data = {}
+    with open("./tdcr_curve_examples.json", "r") as f:
         data = json.load(f)
 
-    draw_tdcr(np.array(data["onesegtdcr"]), np.array([10]).reshape((1, 1)))
-    draw_tdcr(np.array(data["threesegtdcr"]), np.array([10, 20, 30]).reshape((3, 1)), projections=True)
-    draw_tdcr(np.array(data["foursegtdcr"]), np.array([15, 30, 45, 60]).reshape((4, 1)), segframe=True, baseframe=True)
+    # draw_tdcr(np.array(data["onesegtdcr"]), np.array([10]), tipframe=True, segframe=True, baseframe=True, projections=True, baseplate=True)
+    # draw_tdcr(np.array(data["threesegtdcr"]), np.array([10, 20, 30]), tipframe=True, segframe=True, baseframe=True, projections=True, baseplate=True)
+    draw_tdcr(np.array(data["foursegtdcr"]), np.array([15, 30, 45, 60]), tipframe=True, segframe=True, baseframe=True, projections=True, baseplate=True)
