@@ -2,9 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
+from utils import robotindependentmapping
+
 
 # TODO: Fix the triangular patches issue
-def draw_ctcr(g: np.ndarray[np.ndarray[np.double]], tube_end: np.ndarray[np.uint8], r_tube: np.double, tipframe: bool=True, baseframe: bool=False, projections:bool=False, baseplate:bool=False) -> None:
+def draw_ctcr(g: np.ndarray[np.ndarray[float]], tube_end: np.ndarray[int], r_tube: np.ndarray[float], tipframe: bool=False, baseframe: bool=False, projections:bool=False, baseplate:bool=False) -> None:
     '''
     DRAW_CTCR Creates a figure of a concentric tube continuum robot (ctcr)
 
@@ -42,11 +44,11 @@ def draw_ctcr(g: np.ndarray[np.ndarray[np.double]], tube_end: np.ndarray[np.uint
     Copyright: 2023 Continuum Robotics Laboratory, University of Toronto
     '''
 
-    if np.max(tube_end) > g.shape[0] or tube_end.shape[1] != r_tube.shape[1]:
+    if np.max(tube_end) > g.shape[0] or tube_end.size != r_tube.size:
         raise ValueError("Dimension mismatch")
 
-    curvelength = np.sum(np.linalg.norm(g[1:, 12:15].T - g[:-1, 12:15].T))
-    numtubes = tube_end.shape[1]
+    curvelength = np.sum(np.linalg.norm(g[1:, 12:15] - g[:-1, 12:15], axis=1))
+    numtubes = tube_end.size
 
     ## Setup figure
     # fig = plt.figure()
@@ -65,39 +67,54 @@ def draw_ctcr(g: np.ndarray[np.ndarray[np.double]], tube_end: np.ndarray[np.uint
     alpha = 1  # 0 = transparent
 
     ## draw tubes
+    start_tube = 0
     for j in range(numtubes):
-        # set tube start and end index for current tube
-        if j == 0:
-            starttube = 0
-        else:
-            starttube = tube_end[j - 1, 0]
-        endtube = tube_end[j, 0]
+        end_tube = tube_end[j]
         color = [col[j], col[j], col[j]]
 
         # points on a circle in the local x-y plane
-        basecirc = np.vstack([r_tube[j] * np.sin(tcirc), r_tube[j] * np.cos(tcirc), np.zeros((1, radial_pts)), np.ones((1, radial_pts))])
+        basecirc = np.vstack([r_tube[j] * np.sin(tcirc), r_tube[j] * np.cos(tcirc), np.zeros(radial_pts), np.ones(radial_pts)])
 
         # transform circle points into the tube's base frame
-        basecirc_trans = np.reshape(g[starttube, :], (4, 4)) @ basecirc
+        # T_point = g[start_tube, :].reshape((4, 4))
+        # basecirc_trans = T_point @ basecirc
 
         # draw patches to fill in the circle
-        ax.plot_trisurf(basecirc_trans[0, :], basecirc_trans[1, :], basecirc_trans[2, :], color=color, edgecolor='none', alpha=alpha, linewidth=0, antialiased=True, shade=True)
+        # ax.plot_trisurf(basecirc_trans[0, :], basecirc_trans[1, :], basecirc_trans[2, :], color=color, edgecolor='none', alpha=alpha, linewidth=0, antialiased=True, shade=True)
+        # patch(ax, basecirc_trans[0, :], basecirc_trans[1, :], basecirc_trans[2, :], color)
 
         # Loop to draw each cylindrical segment for tube
-        for i in range(starttube, endtube - 1):
-            basecirc_trans = g[i, :].reshape(4, 4) @ basecirc  # current frame circle points
-            basecirc_trans_ahead = g[i + 1, :].reshape(4, 4) @ basecirc  # next frame circle points
+        seg_x, seg_y, seg_z = [], [], []
+        for i in range(start_tube, end_tube):
+            T_point = g[i, :].reshape((4, 4)).T
+            basecirc_trans = T_point @ basecirc
+            seg_x.extend(basecirc_trans[0, :])
+            seg_y.extend(basecirc_trans[1, :])
+            seg_z.extend(basecirc_trans[2, :])
+
+            # basecirc_trans = g[i, :].reshape(4, 4) @ basecirc  # current frame circle points
+            # basecirc_trans_ahead = g[i + 1, :].reshape(4, 4) @ basecirc  # next frame circle points
 
             # loop to draw each square patch for this segment
-            for k in range(radial_pts - 1):
-                xedge = np.array([basecirc_trans[0, k], basecirc_trans[0, k + 1], basecirc_trans_ahead[0, k + 1], basecirc_trans_ahead[0, k]])
-                yedge = np.array([basecirc_trans[1, k], basecirc_trans[1, k + 1], basecirc_trans_ahead[1, k + 1], basecirc_trans_ahead[1, k]])
-                zedge = np.array([basecirc_trans[2, k], basecirc_trans[2, k + 1], basecirc_trans_ahead[2, k + 1], basecirc_trans_ahead[2, k]])
+            # for k in range(radial_pts - 1):
+            #     xedge = np.array([basecirc_trans[0, k], basecirc_trans[0, k + 1], basecirc_trans_ahead[0, k + 1], basecirc_trans_ahead[0, k]])
+            #     yedge = np.array([basecirc_trans[1, k], basecirc_trans[1, k + 1], basecirc_trans_ahead[1, k + 1], basecirc_trans_ahead[1, k]])
+            #     zedge = np.array([basecirc_trans[2, k], basecirc_trans[2, k + 1], basecirc_trans_ahead[2, k + 1], basecirc_trans_ahead[2, k]])
+
+            #     print(k)
+            #     print(xedge)
+            #     print(yedge)
+            #     print(zedge)
+            #     print()
+
+            #     patch(ax, xedge, yedge, zedge, color)
 
                 # ax.plot_trisurf(xedge, yedge, zedge, color=color, edgecolor='none', alpha=alpha, linewidth=0)
-                verts = [list(zip(xedge, yedge, zedge))]
-                ax.add_collection(Poly3DCollection(verts, alpha=alpha, facecolor=color, edgecolor='none', linewidth=0))
+                # verts = [list(zip(xedge, yedge, zedge))]
+                # ax.add_collection(Poly3DCollection(verts, alpha=alpha, facecolor=color, edgecolor='none', linewidth=0))
 
+        ax.plot_trisurf(seg_x, seg_y, seg_z)
+        start_tube = end_tube
 
     # Projections
     if projections:
@@ -170,12 +187,22 @@ def draw_ctcr(g: np.ndarray[np.ndarray[np.double]], tube_end: np.ndarray[np.uint
 
 
 if "__main__" == __name__:
-    from robotindependentmapping import robotindependentmapping
-
     kappa = np.array([1/30e-3, 1/40e-3, 1/15e-3])
     phi = np.array([0, np.deg2rad(160), np.deg2rad(30)])
     ell = np.array([50e-3, 70e-3, 25e-3])
     pts_per_seg = np.array([30])
 
     g = robotindependentmapping(kappa, phi, ell, pts_per_seg)
-    draw_ctcr(g, np.array([30, 60, 90]).reshape(3, 1), np.array([2e-3, 1.5e-3, 1e-3]).reshape(3, 1))
+    draw_ctcr(g, np.array([30, 60, 90]), np.array([2e-3, 1.5e-3, 1e-3]))
+
+    # fig = plt.figure()
+    # # fig.set_size_inches(1280/100, 1024/100) # converting pixel dimensions to inches
+    # ax = fig.add_subplot(111, projection='3d')
+
+    # x = np.linspace(-10, 10, 100)
+    # x, y = np.meshgrid(x, x)
+    # z = x*y
+
+    # # ax.plot_trisurf(x, y, x**2)
+    # ax.plot(x.flatten(), y.flatten(), z.flatten())
+    # plt.show()

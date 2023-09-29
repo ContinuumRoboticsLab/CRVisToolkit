@@ -14,7 +14,7 @@ def null_space(A, rcond=None):
     return Q
 
 
-def draw_tdcr(g: np.ndarray[np.double], seg_end: np.ndarray[np.uint8], r_disk: np.double=2.5*1e-3, r_height: np.double=1.5*1e-3, tipframe: bool=True, segframe: bool=False, baseframe: bool=False, projections: bool=False, baseplate: bool=False):
+def draw_tdcr(g: np.ndarray[float], seg_end: np.ndarray[int], r_disk: float=2.5*1e-3, r_height: float=1.5*1e-3, tipframe: bool=True, segframe: bool=False, baseframe: bool=False, projections: bool=False, baseplate: bool=False):
     '''
     DRAW_CTCR Creates a figure of a concentric tube continuum robot (ctcr)
 
