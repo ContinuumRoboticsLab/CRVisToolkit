@@ -55,7 +55,11 @@ def draw_tdcr(g: np.ndarray[float], seg_end: np.ndarray[int], r_disk: float=2.5*
     ax = setupfigure(g=g, seg_end=seg_end, tipframe=tipframe, segframe=segframe, baseframe=baseframe, projections=projections, baseplate=baseplate)
 
     numseg = seg_end.size
-    col = np.linspace(0.2, 0.8, numseg, endpoint=True)
+
+    if numseg == 1:
+        col = np.array([0.8])
+    else:
+        col = np.linspace(0.2, 0.8, numseg)
 
     # Backbone
     start = 0

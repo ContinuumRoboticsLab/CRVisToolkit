@@ -54,8 +54,12 @@ def draw_ctcr(g: np.ndarray[np.ndarray[float]], tube_end: np.ndarray[int], r_tub
     numtubes = tube_end.size
     radial_pts = 16  # resolution (num point on circular cross section, increase for high detail level)
     tcirc = np.linspace(0, 2*np.pi, radial_pts)
-    col = np.linspace(0.2, 0.8, numtubes)
     alpha = 1  # 0 = transparent
+
+    if numtubes == 1:
+        col = np.array([0.8])
+    else:
+        col = np.linspace(0.2, 0.8, numtubes)
 
     ## draw tubes
     start_tube = 0
