@@ -78,9 +78,9 @@ function [fig] = draw_tdcr(g,seg_end,r_disk,r_height,options)
     
     %% Projections
     if options.projections
-        plot3(g(:,13), ax.YLim(1)*ones(length(g)), g(:,15), 'LineWidth', 2, 'Color',[0 1 0]); % project in x-z axis
-        plot3(ax.XLim(1)*ones(length(g)), g(:,14), g(:,15), 'LineWidth', 2, 'Color',[1 0 0]); % project in y-z axis
-        plot3(g(:,13), g(:,14), zeros(length(g)), 'LineWidth', 2, 'Color',[0 0 1]); % project in x-y axis
+        plot3(g(:,13), ax.YLim(1)*ones(size(g, 1)), g(:,15), 'LineWidth', 2, 'Color',[0 1 0]); % project in x-z axis
+        plot3(ax.XLim(1)*ones(size(g, 1)), g(:,14), g(:,15), 'LineWidth', 2, 'Color',[1 0 0]); % project in y-z axis
+        plot3(g(:,13), g(:,14), zeros(size(g, 1)), 'LineWidth', 2, 'Color',[0 0 1]); % project in x-y axis
     end
 
     %% tendons
