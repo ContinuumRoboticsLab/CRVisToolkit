@@ -120,7 +120,7 @@ def setupfigure(g: np.ndarray[float], seg_end: np.ndarray[int], tipframe: bool, 
     return ax
 
 
-def nullspace(A, atol=1e-13, rtol=0):
+def nullspace(A: np.ndarray[float], atol: float=1e-13, rtol: float=0):
     """
     Compute an approximate basis for the nullspace of A.
 
