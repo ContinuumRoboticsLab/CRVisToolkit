@@ -30,6 +30,7 @@ function [fig] = draw_ctcr(g,tube_end,r_tube,options)
         tube_end (1,:) uint8 %tube end indices
         r_tube (1,:) double % tube radius
         options.tipframe (1,1) {mustBeNumericOrLogical} = 1
+        options.segframe (1,1) {mustBeNumericOrLogical} = 0
         options.baseframe (1,1) {mustBeNumericOrLogical} = 0
         options.projections (1,1) {mustBeNumericOrLogical} = 0
         options.baseplate (1,1) {mustBeNumericOrLogical} = 1
@@ -112,9 +113,9 @@ function [fig] = draw_ctcr(g,tube_end,r_tube,options)
 
     %% Projections
     if options.projections
-        plot3(g(:,13), ax.YLim(1)*ones(length(g)), g(:,15), 'LineWidth', 2, 'Color',[0 0 0]); % project in x-z axis
-        plot3(ax.XLim(1)*ones(length(g)), g(:,14), g(:,15), 'LineWidth', 2, 'Color',[0 0 0]); % project in y-z axis
-        plot3(g(:,13), g(:,14), zeros(length(g)), 'LineWidth', 2, 'Color',[0 0 0]); % project in x-y axis
+        plot3(g(:,13), ax.YLim(1)*ones(size(g, 1)), g(:,15), 'LineWidth', 2, 'Color',[0 1 0]); % project in x-z axis
+        plot3(ax.XLim(1)*ones(size(g, 1)), g(:,14), g(:,15), 'LineWidth', 2, 'Color',[1 0 0]); % project in y-z axis
+        plot3(g(:,13), g(:,14), zeros(size(g, 1)), 'LineWidth', 2, 'Color',[0 0 1]); % project in x-y axis
     end
 
     %% base plate
@@ -130,11 +131,19 @@ function [fig] = draw_ctcr(g,tube_end,r_tube,options)
         patch([-1 1 1 -1]*squaresize,[1 1 1 1]*squaresize,[-1 -1 0 0]*thickness,color)
     end
 
-    %% frames
-    if options.tipframe
+    %% Coordinate Frames
+    if options.tipframe && ~options.segframe
         quiver3(g(end,13),g(end,14),g(end,15),g(end,1),g(end,2),g(end,3),0.01,'LineWidth',3,'Color',[1 0 0]);
         quiver3(g(end,13),g(end,14),g(end,15),g(end,5),g(end,6),g(end,7),0.01,'LineWidth',3,'Color',[0 1 0])
         quiver3(g(end,13),g(end,14),g(end,15),g(end,9),g(end,10),g(end,11),0.01,'LineWidth',3,'Color',[0 0 1]);
+    end  
+    
+    if options.segframe
+        for i=1:numtubes
+            quiver3(g(tube_end(i),13),g(tube_end(i),14),g(tube_end(i),15),g(tube_end(i),1),g(tube_end(i),2),g(tube_end(i),3),0.01,'LineWidth',3,'Color',[1 0 0]);
+            quiver3(g(tube_end(i),13),g(tube_end(i),14),g(tube_end(i),15),g(tube_end(i),5),g(tube_end(i),6),g(tube_end(i),7),0.01,'LineWidth',3,'Color',[0 1 0])
+            quiver3(g(tube_end(i),13),g(tube_end(i),14),g(tube_end(i),15),g(tube_end(i),9),g(tube_end(i),10),g(tube_end(i),11),0.01,'LineWidth',3,'Color',[0 0 1]);
+        end
     end
 
     if options.baseframe
