@@ -7,7 +7,7 @@ from utils import nullspace, setupfigure
 
 def draw_tdcr(g: np.ndarray[float], seg_end: np.ndarray[int], r_disk: float=2.5*1e-3, r_height: float=1.5*1e-3, tipframe: bool=True, segframe: bool=False, baseframe: bool=False, projections: bool=False, baseplate: bool=True):
     '''
-    DRAW_CTCR Creates a figure of a concentric tube continuum robot (ctcr)
+    DRAW_TDCR Creates a figure of a tendon-driven continuum robot (tdcr)
 
     Takes a matrix with nx16 entries, where n is the number
     of points on the backbone curve. For each point on the curve, the 4x4
