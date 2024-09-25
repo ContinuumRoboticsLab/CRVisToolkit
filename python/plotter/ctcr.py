@@ -1,4 +1,5 @@
 import numpy as np
+import json
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
@@ -38,16 +39,18 @@ def draw_ctcr(
     Copyright: 2023 Continuum Robotics Laboratory, University of Toronto
     """
 
+    g = curve.g
+
     if (
-        np.max(curve.tube_end) > curve.g.shape[0]
-        or curve.tube_end.size != plotter_settings.r_tube.size
+        np.max(curve.seg_end) > curve.g.shape[0]
+        or curve.seg_end.size != plotter_settings.r_tube.size
     ):
         raise ValueError("Dimension mismatch")
 
     # Setup figures
     ax = setupfigure(curve, plotter_settings)
 
-    numtubes = curve.tube_end.size
+    numtubes = curve.seg_end.size
     radial_pts = 16  # resolution (num point on circular cross section, increase for high detail level)
     tcirc = np.linspace(0, 2 * np.pi, radial_pts)
     alpha = 1  # 0 = transparent
@@ -60,7 +63,7 @@ def draw_ctcr(
     ## draw tubes
     start_tube = 0
     for j in range(numtubes):
-        end_tube = curve.tube_end[j]
+        end_tube = curve.seg_end[j]
         color = [col[j], col[j], col[j]]
 
         # points on a circle in the local x-y plane
@@ -123,20 +126,9 @@ def draw_ctcr(
     plt.show()
 
 
-if "__main__" == __name__:
-    kappa = np.array([1 / 30e-3, 1 / 40e-3, 1 / 15e-3])
-    phi = np.array([0, np.deg2rad(160), np.deg2rad(30)])
-    ell = np.array([50e-3, 70e-3, 25e-3])
-    pts_per_seg = np.array([30])
+def plot_from_file(json_file_path):
+    with open(json_file_path, "r") as file:
+        curve_data = json.load(file)
 
-    g = robotindependentmapping(kappa, phi, ell, pts_per_seg)
-    draw_ctcr(
-        g,
-        np.array([30, 60, 90]),
-        np.array([2e-3, 1.5e-3, 1e-3]),
-        tipframe=True,
-        segframe=True,
-        baseframe=True,
-        projections=True,
-        baseplate=True,
-    )
+    curve = CRDiscreteCurve.from_json(curve_data)
+    draw_ctcr(curve)

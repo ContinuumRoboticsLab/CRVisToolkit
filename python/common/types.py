@@ -22,8 +22,8 @@ class PlotterSettings:
     """
     tipframe: bool = True
     segframe: bool = False
-    baseframe: bool = False
-    projections: bool = False
+    baseframe: bool = True
+    projections: bool = True
     baseplate: bool = True
 
 @dataclass
@@ -51,7 +51,7 @@ class CTCRPlotterSettings(PlotterSettings):
     r_tube: ndarray
         Radii of tubes
     """
-    r_tube: np.ndarray[float] = np.array([2.5, 2.0, 1.5]) * 1e-3
+    r_tube: np.ndarray[float] = np.array([2.5, 2.0, 1.5, 1.0]) * 1e-3
 
 
 class CRDiscreteCurve:

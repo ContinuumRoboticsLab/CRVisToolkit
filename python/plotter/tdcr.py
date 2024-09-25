@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import json
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
 from common.utils import nullspace, setupfigure
@@ -172,22 +173,9 @@ def draw_tdcr(
 
     plt.show()
 
-
-if "__main__" == __name__:
-    import json
-
-    data = {}
-    with open("./tdcr_curve_examples.json", "r") as f:
-        data = json.load(f)
-
-    # draw_tdcr(np.array(data["onesegtdcr"]), np.array([10]), tipframe=True, segframe=True, baseframe=True, projections=True, baseplate=True)
-    # draw_tdcr(np.array(data["threesegtdcr"]), np.array([10, 20, 30]), tipframe=True, segframe=True, baseframe=True, projections=True, baseplate=True)
-    draw_tdcr(
-        np.array(data["foursegtdcr"]),
-        np.array([15, 30, 45, 60]),
-        tipframe=True,
-        segframe=True,
-        baseframe=True,
-        projections=True,
-        baseplate=True,
-    )
+def plot_from_file(json_file_path):
+    with open(json_file_path, "r") as f:
+        curve_data = json.load(f)
+        
+    curve = CRDiscreteCurve.from_json(curve_data)
+    draw_tdcr(curve)
