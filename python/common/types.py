@@ -77,13 +77,11 @@ class CRDiscreteCurve:
         if isinstance(g, list):
             g = np.array(g)
         
-        if g[0].shape != (1, 16):
-            for i in range(len(g)):
-                for j in range (len(g[i])):
-                    if g[i][j].shape != (1, 16):
-                        g[i][j] = g[i][j].reshape(1, 16)
+        # try reshaping all elements of g to (1, 16)
+        for i in range(len(g)):
+            if g[i].shape != (16,):
+                g[i] = g[i].reshape(16)
 
-        # reshape elements of g to 4x4 -> 1x16 if need be
         self.g = g
         self.seg_end = seg_end
     
@@ -91,5 +89,4 @@ class CRDiscreteCurve:
     def from_json(cls, data: dict):
         g = np.array(data["g"])
         seg_end = np.array(data["seg_end"])
-        print(g)
         return cls(g=g, seg_end=seg_end)
