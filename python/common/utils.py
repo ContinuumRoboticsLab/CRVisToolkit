@@ -281,8 +281,8 @@ def robotindependentmapping(
     Returns
     -------
     g : ndarray
-        (mx16) backbone curve with m 4x4 transformation matrices, where m is
-            total number of points, reshaped into 1x16 vector (columnwise)
+        (mx4x4) backbone curve with m 4x4 transformation matrices, where m is
+            total number of points
 
     Author: Jessica Burgner-Kahrs <jbk@cs.toronto.edu>
     Date: 2022/02/16
@@ -300,7 +300,7 @@ def robotindependentmapping(
         )  # Create an array that is numseg long with the num points repeated
 
     g = np.zeros(
-        (np.sum(pts_per_seg), 16)
+        (np.sum(pts_per_seg), 4, 4)
     )  # Stores the transformation matrices of all the points in all the segments as rows
 
     p_count = 0  # Points counter
@@ -337,13 +337,9 @@ def robotindependentmapping(
             else:  # To avoid division by zero
                 T_temp[:, 3] = [0, 0, j * (ell[i] / pts_per_seg[i]), 1]
 
-            g[p_count, :] = (T_base @ T_temp).T.reshape(
-                (1, 16)
-            )  # A matlab reshape is column-wise and not row-wise
+            g[p_count, :] = T_base @ T_temp
             p_count += 1
 
-        T_base = (
-            g[p_count - 1, :].reshape(4, 4).T
-        )  # lastmost point's transformation matrix is the new base
+        T_base = g[p_count - 1, :]
 
     return g

@@ -3,7 +3,7 @@ import json
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
-from common.utils import robotindependentmapping, setupfigure
+from common.utils import setupfigure
 from common.types import CTCRPlotterSettings, CRDiscreteCurve
 
 
