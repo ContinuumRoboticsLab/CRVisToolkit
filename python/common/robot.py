@@ -6,7 +6,7 @@ from math import cos as c
 from math import sqrt
 
 
-class ContinuousCurvatureSegment:
+class ConstantCurvatureSegment:
     """
     a parametric representation of a Continuum robot segment.
 
@@ -19,12 +19,16 @@ class ContinuousCurvatureSegment:
         kappa: float | None = None,
         phi: float | None = None,
         length: float | None = None,
-        len_limits: float | tuple[float, float] | None = None,
+        is_extensible: bool = False,
+        len_limits: tuple[float, float] | None = None,
         max_curvature: float | None = None,
     ):
+        # robot actuation limits
         self.max_curvature = max_curvature
         self.len_limits = len_limits
+        self.is_extensible = is_extensible
 
+        # robot actuation state
         self.kappa = kappa
         self.phi = phi
         self.length = length
@@ -40,6 +44,16 @@ class ContinuousCurvatureSegment:
         return (
             self.kappa is not None and self.phi is not None and self.length is not None
         )
+
+    @property
+    def n(self):
+        """
+        returns the degrees of freedom in the configuration space
+        """
+        if self.is_extensible:
+            return 3
+        else:
+            return 2
 
     def set_config(
         self,
@@ -91,15 +105,19 @@ class ContinuousCurvatureSegment:
         )
 
 
-class ContinuousCurvatureCR:
+class ConstantCurvatureCR:
     """
     a piecewise continuous curvature representation of a continuum robot
 
     defined by a series of independent segments
     """
 
-    def __init__(self, segments: list[ContinuousCurvatureSegment]):
+    def __init__(self, segments: list[ConstantCurvatureSegment]):
         self.segments = segments
+        self.num_segments = len(segments)
+
+        # n is degrees of freedom in configuration space across all segments
+        self.n = sum([seg.n for seg in segments])
 
     def is_valid(self):
         """
@@ -108,9 +126,13 @@ class ContinuousCurvatureCR:
         if not all([seg.is_valid() for seg in self.segments]):
             raise ValueError("All segments must be valid")
 
+    @property
+    def num_segments(self):
+        return len(self.segments)
+
     def as_discrete_curve(
         self, pts_per_seg: int | None = None, max_len: float | None = None
-    ) -> np.ndarray[float]:
+    ) -> CRDiscreteCurve:
         """
         exports the entire backbone curve as a CRDiscreteCurve object,
         so that it can be plotted
@@ -139,8 +161,6 @@ class ContinuousCurvatureCR:
                 coords.append(transformed.T.reshape(1, 16))
 
             pose_n = transformed
-            print("pose_n:\n", pose_n)
-            breakpoint()
 
         seg_end = np.cumsum([seg.shape[0] for seg in coords])
         coords = np.vstack(coords)
