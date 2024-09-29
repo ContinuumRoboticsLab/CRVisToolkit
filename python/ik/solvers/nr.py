@@ -11,7 +11,7 @@ The Jacobian is computed using the finite differences method.
 import numpy as np
 
 from common.robot import ConstantCurvatureCR
-from ik.base_solver import IterativeIkSolver, CcIkSettings, IkResult
+from ik.solvers.base_solver import IterativeIkSolver, CcIkSettings, IkResult
 
 
 class NewtonRhapsonIkSettings(CcIkSettings):

@@ -18,3 +18,23 @@ class SE3IkTarget(IkTarget):
 
     def __init__(self, pose: np.array[float]):
         self.pose = pose
+
+
+class R3IkTarget(IkTarget):
+    """
+    the target of the IK problem is a R3 position, agnostic to orientation,
+    represented as a 3x1 numpy array
+    """
+
+    def __init__(self, pose: np.array[float]):
+        self.pose = pose
+
+
+class SO3IkTarget(IkTarget):
+    """
+    the target of the IK problem is a SO(3) orientation, agnostic to position,
+    represented as a 3x3 numpy array
+    """
+
+    def __init__(self, pose: np.array[float]):
+        self.pose = pose
