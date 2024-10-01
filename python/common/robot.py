@@ -1,9 +1,11 @@
 import numpy as np
-from common.utils import robotindependentmapping
-from common.types import CRDiscreteCurve
 from math import sin as s
 from math import cos as c
 from math import sqrt
+
+from common.utils import robotindependentmapping
+from common.types import CRDiscreteCurve
+from common.coordinates import CrConfigurationType
 
 
 class ConstantCurvatureSegment:
@@ -22,7 +24,11 @@ class ConstantCurvatureSegment:
         is_extensible: bool = False,
         len_limits: tuple[float, float] | None = None,
         max_curvature: float | None = None,
+        repr_type: CrConfigurationType = CrConfigurationType.KPL,
     ):
+        # representation metadata
+        self.repr_type = repr_type
+
         # robot actuation limits
         self.max_curvature = max_curvature
         self.len_limits = len_limits
@@ -104,6 +110,18 @@ class ConstantCurvatureSegment:
             np.array([num_pts]),
         )
 
+    def state_vector(
+        self, repr_type: CrConfigurationType | None = None
+    ) -> np.ndarray[float]:
+        if repr_type is not None:
+            repr_type = self.repr_type
+
+        if repr_type != CrConfigurationType.KPL:
+            # TODO: implement more representations using coordinates.py
+            raise NotImplementedError("Only KPL representation is supported for now")
+
+        return np.array([self.kappa, self.phi, self.length])
+
 
 class ConstantCurvatureCR:
     """
@@ -129,6 +147,10 @@ class ConstantCurvatureCR:
     @property
     def num_segments(self):
         return len(self.segments)
+
+    @property
+    def n(self):
+        return sum([seg.n for seg in self.segments])
 
     def as_discrete_curve(
         self, pts_per_seg: int | None = None, max_len: float | None = None
@@ -166,3 +188,13 @@ class ConstantCurvatureCR:
         coords = np.vstack(coords)
 
         return CRDiscreteCurve(coords, seg_end)
+
+    def state_vector(self) -> np.ndarray[float]:
+        """
+        returns the configuration space state of the robot as
+        as a single (n x 1) column vector
+
+        the state is often referred to in literature as theta
+        """
+
+        return np.vstack([seg.state_vector() for seg in self.segments])
