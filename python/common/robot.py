@@ -122,6 +122,41 @@ class ConstantCurvatureSegment:
 
         return np.array([self.kappa, self.phi, self.length])
 
+    def t_matrix(self):
+        """
+        returns the transformation matrix of the segment
+        """
+        s_p = s(self.phi)
+        c_p = c(self.phi)
+        s_ks = s(self.kappa * self.length)
+        c_ks = c(self.kappa * self.length)
+
+        t_matrix = np.array(
+            [
+                [c_p * c_p * (c_ks - 1) + 1, s_p * c_p * (c_ks - 1), c_p * s_ks, 0],
+                [
+                    s_p * c_p * (c_ks - 1),
+                    c_p * c_p * (1 - c_ks) + c_ks,
+                    s_p * s_ks,
+                    0,
+                ],
+                [-c_p * s_ks, -s_p * s_ks, c_ks, 0],
+                [0, 0, 0, 0],
+            ]
+        )
+
+        if self.kappa != 0:
+            t_matrix[:, 3] = [
+                (c_p * (1 - c_ks)) / self.kappa,
+                (s_p * (1 - c_ks)) / self.kappa,
+                s_ks / self.kappa,
+                1,
+            ]
+        else:
+            t_matrix[:, 3] = [0, 0, self.length, 1]
+
+        return t_matrix
+
 
 class ConstantCurvatureCR:
     """
@@ -143,14 +178,6 @@ class ConstantCurvatureCR:
         """
         if not all([seg.is_valid() for seg in self.segments]):
             raise ValueError("All segments must be valid")
-
-    @property
-    def num_segments(self):
-        return len(self.segments)
-
-    @property
-    def n(self):
-        return sum([seg.n for seg in self.segments])
 
     def as_discrete_curve(
         self, pts_per_seg: int | None = None, max_len: float | None = None
@@ -182,7 +209,7 @@ class ConstantCurvatureCR:
                 # change back into columnwise
                 coords.append(transformed.T.reshape(1, 16))
 
-            pose_n = transformed
+            pose_n = np.dot(pose_n, seg.t_matrix())
 
         seg_end = np.cumsum([seg.shape[0] for seg in coords])
         coords = np.vstack(coords)
@@ -198,3 +225,29 @@ class ConstantCurvatureCR:
         """
 
         return np.vstack([seg.state_vector() for seg in self.segments])
+
+    def set_config(self, theta: list[np.ndarray[float]]):
+        """
+        updates the configuration of the robot to the given state
+        """
+
+        assert len(theta) == self.num_segments, "Invalid number of segments"
+
+        # update each segment's configuration
+        for i, seg in enumerate(self.segments):
+            assert theta[i].shape == (seg.n, 1), f"Invalid theta shape for segment {i}"
+            as_dict = {
+                "kappa": theta[i][0],
+                "phi": theta[i][1],
+                "length": theta[i][2],
+            }
+            seg.set_config(**as_dict)
+
+    def t_matrix(self):
+        """
+        returns the transformation matrix of the entire robot
+        """
+        t_matrix = np.eye(4)
+        for seg in self.segments:
+            t_matrix = t_matrix.dot(seg.t_matrix())
+        return t_matrix

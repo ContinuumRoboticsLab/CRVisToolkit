@@ -11,6 +11,7 @@ python = "^3.11"
 numpy = "^2.1.1"
 matplotlib = "^3.9.2"
 structlog = "^24.4.0"
+scipy = "^1.14.1"
 
 
 [build-system]
