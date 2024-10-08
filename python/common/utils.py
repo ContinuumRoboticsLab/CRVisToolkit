@@ -1,8 +1,65 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+from spatialmath import Twist3
 
 from common.types import CRDiscreteCurve, PlotterSettings
+
+
+def skew(v: np.ndarray[float]) -> np.ndarray[float]:
+    return np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])
+
+
+def se3_to_pose(se3: np.ndarray[float]) -> np.ndarray[float]:
+    """
+    Converts a 4x4 homogeneous transformation matrix to a 6x1 pose vector
+    """
+
+    so3 = se3[:3, :3]
+
+    theta = np.arccos((so3.trace() - 1) / 2)
+    if theta == 0:
+        rot = np.zeros(3)
+
+    else:
+        rot = (
+            1
+            / (2 * np.sin(theta))
+            * np.array(
+                [se3[2, 1] - se3[1, 2], se3[0, 2] - se3[2, 0], se3[1, 0] - se3[0, 1]]
+            )
+        )
+
+    return np.concatenate([se3[:3, 3], rot * theta])
+
+
+def pose_to_se3(pose: np.ndarray[float] | Twist3) -> np.ndarray[float]:
+    """
+    Converts a 6x1 pose vector to a 4x4 homogeneous transformation matrix
+
+    the first three elements should yield the translation, while the last three
+    should yield an axis-angle representation of the rotation
+    """
+
+    rotation = pose[3:]
+
+    k = np.array(
+        [
+            [0, -rotation[2], rotation[1]],
+            [rotation[2], 0, -rotation[0]],
+            [-rotation[1], rotation[0], 0],
+        ]
+    ) / np.linalg.norm(rotation)
+
+    r = (
+        np.eye(3)
+        + np.sin(np.linalg.norm(rotation)) * k
+        + (1 - np.cos(np.linalg.norm(rotation))) * k @ k
+    )
+
+    p = np.reshape(pose[:3], (3, 1))
+
+    return np.block([[r, p], [np.array([0, 0, 0, 1])]])
 
 
 def setupfigure(
@@ -37,14 +94,18 @@ def setupfigure(
     ax = fig.add_subplot(projection="3d", computed_zorder=False)
 
     # Axes, Labels
-    clearance = 0.03
-    curvelength = np.sum(np.linalg.norm(g[1:, 12:15] - g[:-1, 12:15], axis=1))
+    clearance = plotter_settings.clearance
     max_val_x = np.max(np.abs(g[:, 12])) + clearance
     max_val_y = np.max(np.abs(g[:, 13])) + clearance
+    max_val_z = np.max(np.abs(g[:, 14])) + clearance
     ax.set_box_aspect([1, 1, 1])  # set aspect ratio of the plot
-    ax.set_xlim(-max_val_x, max_val_x)
-    ax.set_ylim(-max_val_y, max_val_y)
-    ax.set_zlim(0, curvelength + clearance)
+
+    # change: scaling on all three axes should be the same
+    max_val = max(max_val_x, max_val_y, max_val_z / 2)
+
+    ax.set_xlim(-max_val, max_val)
+    ax.set_ylim(-max_val, max_val)
+    ax.set_zlim(0, max_val * 2)
     ax.set_xlabel("x (m)")
     ax.set_ylabel("y (m)")
     ax.set_zlabel("z (m)")

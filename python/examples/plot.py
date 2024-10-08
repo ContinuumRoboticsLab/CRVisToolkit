@@ -3,6 +3,13 @@ from common.robot import ConstantCurvatureCR, ConstantCurvatureSegment
 from plotter.tdcr import draw_tdcr
 from plotter.ctcr import draw_ctcr
 
+EXAMPLE_SEGMENTS = [
+    ConstantCurvatureSegment(1 / 30e-3, np.deg2rad(0), 50e-3),
+    ConstantCurvatureSegment(1 / 40e-3, np.deg2rad(160), 70e-3),
+    ConstantCurvatureSegment(1 / 15e-3, np.deg2rad(30), 25e-3),
+]
+EXAMPLE_CCR = ConstantCurvatureCR(EXAMPLE_SEGMENTS)
+
 
 def plott():
     seg1 = ConstantCurvatureSegment(1 / 30e-3, np.deg2rad(0), 50e-3)

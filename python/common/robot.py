@@ -1,9 +1,11 @@
 import numpy as np
+from numpy.typing import ArrayLike
 from math import sin as s
 from math import cos as c
 from math import sqrt
+from spatialmath import SE3
 
-from common.utils import robotindependentmapping
+from common.utils import robotindependentmapping, se3_to_pose
 from common.types import CRDiscreteCurve
 from common.coordinates import CrConfigurationType
 
@@ -113,14 +115,18 @@ class ConstantCurvatureSegment:
     def state_vector(
         self, repr_type: CrConfigurationType | None = None
     ) -> np.ndarray[float]:
-        if repr_type is not None:
+        if repr_type is None:
             repr_type = self.repr_type
 
         if repr_type != CrConfigurationType.KPL:
             # TODO: implement more representations using coordinates.py
             raise NotImplementedError("Only KPL representation is supported for now")
 
-        return np.array([self.kappa, self.phi, self.length])
+        # in an inextensible segment, the length is not considered a degree of freedom
+        if self.is_extensible:
+            return np.array([self.kappa, self.phi, self.length])
+        else:
+            return np.array([self.kappa, self.phi])
 
     def t_matrix(self):
         """
@@ -141,7 +147,7 @@ class ConstantCurvatureSegment:
                     0,
                 ],
                 [-c_p * s_ks, -s_p * s_ks, c_ks, 0],
-                [0, 0, 0, 0],
+                [0, 0, 0, 1],
             ]
         )
 
@@ -155,7 +161,7 @@ class ConstantCurvatureSegment:
         else:
             t_matrix[:, 3] = [0, 0, self.length, 1]
 
-        return t_matrix
+        return SE3(t_matrix)
 
 
 class ConstantCurvatureCR:
@@ -171,6 +177,11 @@ class ConstantCurvatureCR:
 
         # n is degrees of freedom in configuration space across all segments
         self.n = sum([seg.n for seg in segments])
+
+        self.repr_type = segments[0].repr_type
+        for seg in segments:
+            if seg.repr_type != self.repr_type:
+                raise ValueError("All segments must have the same representation type")
 
     def is_valid(self):
         """
@@ -224,30 +235,73 @@ class ConstantCurvatureCR:
         the state is often referred to in literature as theta
         """
 
-        return np.vstack([seg.state_vector() for seg in self.segments])
+        return np.hstack([seg.state_vector() for seg in self.segments])
 
     def set_config(self, theta: list[np.ndarray[float]]):
         """
         updates the configuration of the robot to the given state
         """
 
-        assert len(theta) == self.num_segments, "Invalid number of segments"
+        if isinstance(theta, list):
+            assert len(theta) == self.num_segments, "Invalid number of segments"
+
+        elif isinstance(theta, ArrayLike):
+            assert (
+                theta.size == self.n
+            ), f"Invalid number of degrees of freedom, expected {self.n}, got {theta.size}"
+            theta = theta.reshape(self.num_segments, -1)
+        else:
+            raise ValueError("Invalid theta type")
 
         # update each segment's configuration
         for i, seg in enumerate(self.segments):
-            assert theta[i].shape == (seg.n, 1), f"Invalid theta shape for segment {i}"
+            assert (
+                theta[i].size == seg.n
+            ), f"Invalid theta shape for segment {i} (got {theta[i].shape}, expected {(seg.n, 1)})"
+
             as_dict = {
                 "kappa": theta[i][0],
                 "phi": theta[i][1],
-                "length": theta[i][2],
             }
+
+            if seg.is_extensible:
+                as_dict["length"] = theta[i][2]
             seg.set_config(**as_dict)
+            # breakpoint()
+
+    def get_config(self):
+        """
+        returns the configuration of the robot as a list of dictionaries
+        """
+        return [seg.__dict__ for seg in self.segments]
 
     def t_matrix(self):
         """
         returns the transformation matrix of the entire robot
         """
-        t_matrix = np.eye(4)
+        t_matrix = SE3(np.eye(4))
         for seg in self.segments:
-            t_matrix = t_matrix.dot(seg.t_matrix())
-        return t_matrix
+            t_matrix = t_matrix * seg.t_matrix()
+        return SE3(t_matrix)
+
+    def pose_vector(self, theta: np.ndarray[float] | None = None) -> np.ndarray[float]:
+        """
+        returns the pose vector (m x 1) of the robot end-effector at the given state
+
+        theta is provided as an argument and not taken from the object
+        so that the method can be used in the numdifftools Jacobian,
+        but can still be determined using the "state_vector" method
+
+        the position is determined from the last column of the transformation matrix,
+        and the rotation axis/angle is determined using the matrix trace
+
+        ref: https://en.wikipedia.org/wiki/Axis%E2%80%93angle_representation#
+        """
+
+        if theta is not None:
+            self.set_config(theta)
+
+        # get the end-effector transformation matrix
+        t_matrix = self.t_matrix()
+
+        return se3_to_pose(t_matrix.A)

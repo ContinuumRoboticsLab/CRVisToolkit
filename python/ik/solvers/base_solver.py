@@ -13,6 +13,8 @@ from dataclasses import dataclass
 from enum import Enum
 from copy import deepcopy
 import numpy as np
+from numpy.typing import ArrayLike
+from spatialmath import SE3, Twist3
 
 from common.robot import ConstantCurvatureCR
 from ik.index import IkSolverType
@@ -34,8 +36,40 @@ class CcIkSettings:
         Tolerance for convergence
     """
 
-    tolerance: float = 1e-4
-    max_iter: int = 100
+    # tolerance for position convergence in meters
+    position_tolerance: float = 1e-5
+
+    # tolerance for orientation convergence in radians
+    orientation_tolerance: float = 1e-5
+
+    max_iter: int = 10
+
+    def check_error_bounds(
+        self, d_position: np.ndarray[float], d_orientation: np.ndarray[float]
+    ):
+        """
+        checks if the error is within the bounds specified by the settings
+
+        position error is measured as the norm of the difference between the
+        target and current position vectors
+
+        orientation error is measured as the norm of the difference between the
+        target and current orientation vectors, in the axis-angle representation
+        """
+        pos_error = np.linalg.norm(d_position)
+        ori_error = np.linalg.norm(d_orientation)
+
+        if self.position_tolerance is None:
+            position_check = True
+        else:
+            position_check = pos_error < self.position_tolerance
+
+        if self.orientation_tolerance is None:
+            orientation_check = True
+        else:
+            orientation_check = ori_error < self.orientation_tolerance
+
+        return (position_check and orientation_check, (pos_error, ori_error))
 
 
 class IkResult(Enum):
@@ -61,9 +95,22 @@ class CcIkSolver:
 
     solver_type: IkSolverType
 
-    def __init__(self, cr: ConstantCurvatureCR, settings: CcIkSettings, **kwargs):
+    def __init__(
+        self,
+        cr: ConstantCurvatureCR,
+        settings: CcIkSettings,
+        target_pose: np.ndarray[float] | SE3 | Twist3,
+        **kwargs,
+    ):
         self.cr = deepcopy(cr)
         self.settings = settings
+
+        if isinstance(target_pose, SE3):
+            self.target_pose = target_pose.twist()
+        elif isinstance(target_pose, ArrayLike):
+            self.target_pose = Twist3(target_pose)
+
+        self.target_pose = target_pose  # as a 6x1 pose vector
         self.solved = False
 
     def solve(self, *args, **kwargs):
@@ -89,16 +136,18 @@ class IterativeIkSolver(CcIkSolver):
         self,
         cr: ConstantCurvatureCR,
         settings: CcIkSettings,
-        initial_condition: np.array[float],
+        initial_condition: np.ndarray[float],  # robot configuration
+        target_pose: np.ndarray[float],
         **kwargs,
     ):
-        super().__init__(cr, settings, **kwargs)
+        super().__init__(cr, settings, target_pose, **kwargs)
         self.inital_condition = initial_condition
+        self.iter_count = 0
 
     def solve(self, *args, **kwargs):
         self._prepare_solver(*args, **kwargs)
 
-        while not self.stopping_condition:
+        while not self.stopping_condition[0]:
             self._perform_iteration(*args, **kwargs)
 
         self.solved = True
@@ -109,7 +158,7 @@ class IterativeIkSolver(CcIkSolver):
     def _perform_iteration(self, *args, **kwargs):
         raise NotImplementedError
 
-    def _compute_error(self, *args, **kwargs):
+    def _check_error_in_bounds(self, *args, **kwargs):
         raise NotImplementedError
 
     @property
