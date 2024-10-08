@@ -9,14 +9,12 @@ The Jacobian is computed using the finite differences method.
 """
 
 import numpy as np
-from scipy.linalg import logm
-from spatialmath import SE3
 
 from common.coordinates import CrConfigurationType
 from common.robot import ConstantCurvatureCR, ConstantCurvatureSegment
 from common.jacobian import jacobian
-from common.utils import pose_to_se3, se3_to_pose
 from ik.solvers.base_solver import IterativeIkSolver, CcIkSettings, IkResult
+from plotter.tdcr import draw_tdcr
 
 
 class NewtonRhapsonIkSettings(CcIkSettings):
@@ -72,7 +70,7 @@ class NewtonRhapsonIkSolver(IterativeIkSolver):
         if not cr.repr_type == CrConfigurationType.KPL:
             raise ValueError("Only KPL representation is supported for the NR solver")
 
-        self.theta_i = initial_condition
+        self.theta_i = np.reshape(initial_condition, (initial_condition.size, 1))
 
         super().__init__(
             cr,
@@ -97,28 +95,6 @@ class NewtonRhapsonIkSolver(IterativeIkSolver):
         """
         return jacobian(self.cr.pose_vector, self.cr.state_vector())
 
-    def __compute_twist(self):
-        """
-        compute the twist vector at the current solution
-        returns a (6 x 1) vector
-        """
-        # TODO: before implementing, we need a way to get the
-        # end-effector T matrix from the CR object
-
-        T = self.cr.t_matrix()
-        T_inv = SE3(np.linalg.inv(T.A))
-        product = T_inv.A @ pose_to_se3(self.target_pose)
-
-        if np.allclose(product, np.eye(4), atol=1e-4):
-            self.solved = True
-            return
-
-        twist_matrix = logm(product)
-        # twist_matrix[3, 3] = 1
-
-        twist = se3_to_pose(twist_matrix)
-        return twist
-
     def _perform_iteration(self, *args, **kwargs):
         """
         performs a single iteration of:
@@ -132,14 +108,10 @@ class NewtonRhapsonIkSolver(IterativeIkSolver):
         self._update_cr_configuration()
 
         j = self.__compute_jacobian()
-        v = self.__compute_twist()
 
-        if self.solved:
-            return
-
-        v = v.reshape((v.size, 1))
-
-        self.theta_i += np.linalg.pinv(j) @ v
+        diff = self.target_pose - self.cr.pose_vector()
+        d_theta = np.linalg.pinv(j) @ diff
+        self.theta_i += np.reshape(d_theta, (d_theta.size, 1))
 
         self.iter_count += 1
 
@@ -193,28 +165,64 @@ class NewtonRhapsonIkSolver(IterativeIkSolver):
 
 
 if __name__ == "__main__":
+    """
+    if the module is run as main, a couple examples of the NR solver will be run
+    """
     from math import pi
-    # TODO: create a real test case
 
-    # single-segment case
-    # seg1 = ConstantCurvatureSegment(1 / 0.1, pi / 4, 0.05)
-    seg1 = ConstantCurvatureSegment(1 / 0.11, -0.95 * pi, 0.05)
+    # Test Case 1: Single segment CR
+    print("**** Test Case 1: single-segment CR ****")
+    seg1 = ConstantCurvatureSegment(1 / 0.14, -0.8 * pi, 0.05)
     robot = ConstantCurvatureCR([seg1])
 
     target_robot = ConstantCurvatureCR([ConstantCurvatureSegment(1 / 0.11, -pi, 0.05)])
     print(
-        f"starting at: {robot.state_vector()} yields\n {robot.pose_vector(robot.state_vector())}"
+        f"starting curvature is: {robot.state_vector()} yielding state\n {robot.pose_vector(robot.state_vector())}"
     )
 
     # draw_tdcr(robot.as_discrete_curve(pts_per_seg=10))
     settings = NewtonRhapsonIkSettings()
 
-    # target pose: corresponds to kappa = 1/0.15, phi = -pi, ell = 0.05
     target_pose = target_robot.pose_vector()
 
     solver = NewtonRhapsonIkSolver(robot, settings, robot.state_vector(), target_pose)
     solver.solve()
 
-    print(
-        f"Solution at: {solver.theta_i}\nyields position: {solver.cr.pose_vector(solver.cr.state_vector())}\ntarget: {target_pose}"
+    print(f"Solution at: {solver.theta_i} after {solver.iter_count} iterations")
+    print(f"yields position: {solver.cr.pose_vector(solver.cr.state_vector())}")
+    print(f"\ntarget: {target_pose}")
+    print(f"Error: {solver.cr.pose_vector() - target_pose}")
+
+    draw_tdcr(solver.cr.as_discrete_curve(pts_per_seg=10))
+    draw_tdcr(target_robot.as_discrete_curve(pts_per_seg=10))
+
+    # Test Case 2: Multi-segment CR
+    print("\n**** Test Case 2: multiple-segment CR ****")
+
+    seg1 = ConstantCurvatureSegment(1 / 0.1, pi / 4, 0.05)
+    seg2 = ConstantCurvatureSegment(1 / 0.05, 0, 0.03)
+    robot = ConstantCurvatureCR([seg1, seg2])
+
+    target_robot = ConstantCurvatureCR(
+        [
+            ConstantCurvatureSegment(1 / 0.11, pi / 3, 0.05),
+            ConstantCurvatureSegment(1 / 0.1, pi / 10, 0.03),
+        ]
     )
+
+    print(
+        f"starting curvature is: {robot.state_vector()} yielding state\n {robot.pose_vector(robot.state_vector())}"
+    )
+
+    target_pose = target_robot.pose_vector()
+
+    solver = NewtonRhapsonIkSolver(robot, settings, robot.state_vector(), target_pose)
+    solver.solve()
+
+    print(f"Solution at: {solver.theta_i} after {solver.iter_count} iterations")
+    print(f"yields position: {solver.cr.pose_vector(solver.cr.state_vector())}")
+    print(f"\ntarget: {target_pose}")
+    print(f"Error: {solver.cr.pose_vector() - target_pose}")
+
+    draw_tdcr(solver.cr.as_discrete_curve(pts_per_seg=10))
+    draw_tdcr(target_robot.as_discrete_curve(pts_per_seg=10))

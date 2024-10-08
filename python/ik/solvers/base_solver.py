@@ -37,12 +37,12 @@ class CcIkSettings:
     """
 
     # tolerance for position convergence in meters
-    position_tolerance: float = 1e-5
+    position_tolerance: float = 1e-6
 
     # tolerance for orientation convergence in radians
-    orientation_tolerance: float = 1e-5
+    orientation_tolerance: float = 1e-6
 
-    max_iter: int = 10
+    max_iter: int = 100
 
     def check_error_bounds(
         self, d_position: np.ndarray[float], d_orientation: np.ndarray[float]
