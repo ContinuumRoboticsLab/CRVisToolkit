@@ -13,6 +13,7 @@ import numpy as np
 from common.coordinates import CrConfigurationType
 from common.robot import ConstantCurvatureCR
 from common.jacobian import jacobian
+
 from ik.solvers.base_solver import IterativeIkSolver, CcIkSettings, IkResult
 
 
@@ -94,6 +95,13 @@ class NewtonRhapsonIkSolver(IterativeIkSolver):
         """
         return jacobian(self.get_pose, self.cr.state_vector())
 
+    def __compute_twist(self):
+        """
+        computes the twist vector at the current solution
+        returns an (m x 1) vector
+        """
+        return self.ik_target_pose - self.get_pose()
+
     def _perform_iteration(self, *args, **kwargs):
         """
         performs a single iteration of:
@@ -103,15 +111,41 @@ class NewtonRhapsonIkSolver(IterativeIkSolver):
         object methods
         """
 
+        # breakpoint()
+        old_theta = self.theta_i
+
         # update the CR internal state
         self._update_cr_configuration()
 
         j = self.__compute_jacobian()
 
-        # should always have same dimensionality
-        diff = self.ik_target_pose - self.get_pose()
+        self.cr.set_config(old_theta)
 
-        d_theta = np.linalg.pinv(j) @ diff
+        pose = self.get_pose()
+
+        diff = self.ik_target_pose - pose
+
+        if j.shape[0] == j.shape[1]:
+            j_inv = np.linalg.inv(j)
+        else:
+            j_inv = np.linalg.pinv(j)
+
+        d_theta = j_inv @ diff
+
+        # breakpoint()
+        # if self.ik_target.target_type == IkTargetType.P3:
+        #     j = self.__compute_jacobian()
+
+        #     # should always have same dimensionality
+        #     diff = self.ik_target_pose - self.get_pose()
+
+        #     d_theta = np.linalg.pinv(j) @ diff
+
+        # elif self.ik_target.target_type == IkTargetType.SE3:
+        #     j = self.__compute_jacobian()
+
+        #     d_theta = np.linalg.pinv(j) @ self.__compute_twist()
+
         self.theta_i += np.reshape(d_theta, (d_theta.size, 1))
 
         self.iter_count += 1

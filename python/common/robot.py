@@ -268,7 +268,6 @@ class ConstantCurvatureCR:
             if seg.is_extensible:
                 as_dict["length"] = theta[i][2]
             seg.set_config(**as_dict)
-            # breakpoint()
 
     def get_config(self):
         """
@@ -298,12 +297,15 @@ class ConstantCurvatureCR:
 
         ref: https://en.wikipedia.org/wiki/Axis%E2%80%93angle_representation#
         """
+        old_theta = self.state_vector()
 
         if theta is not None:
             self.set_config(theta)
 
         # get the end-effector transformation matrix
         t_matrix = self.t_matrix()
+
+        self.set_config(old_theta)
 
         return se3_to_pose(t_matrix.A)
 

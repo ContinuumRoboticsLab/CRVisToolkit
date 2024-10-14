@@ -43,6 +43,19 @@ class CcIkSettings:
 
     max_iter: int = 100
 
+    @classmethod
+    def for_target_type(cls, target_type: IkTargetType):
+        """
+        returns a settings object with default values for the given target type
+        certain targets should set certain errors to None
+        """
+        if target_type == IkTargetType.P3:
+            return cls(orientation_tolerance=None)
+        elif target_type == IkTargetType.SO3:
+            return cls(position_tolerance=None)
+        else:
+            return cls()
+
     def check_error_bounds(
         self, d_position: np.ndarray[float], d_orientation: np.ndarray[float]
     ):
@@ -121,7 +134,8 @@ class CcIkSolver:
         assert self.solved, "The IK problem has not been solved yet"
         return self.cr
 
-    def get_pose(self, theta: np.ndarray[float]):
+    def get_pose(self, theta: np.ndarray[float] = None):
+        theta = theta if theta is not None else self.cr.state_vector()
         return self.cr.pose_for_target(self.ik_target.target_type, theta)
 
     @property
