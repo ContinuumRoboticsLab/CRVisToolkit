@@ -194,9 +194,3 @@ class AnalyticIkSolver(CcIkSolver):
     """
     Analytic IK solvers should inherit from this class
     """
-
-    def _solve_closed_form(self, *args, **kwargs):
-        """
-        private method to solve the IK problem
-        """
-        raise NotImplementedError

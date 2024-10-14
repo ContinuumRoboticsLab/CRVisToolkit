@@ -15,6 +15,7 @@ from common.robot import ConstantCurvatureCR
 from common.jacobian import jacobian
 
 from ik.solvers.base_solver import IterativeIkSolver, CcIkSettings, IkResult
+from ik.index import IkSolverType
 
 
 class NewtonRhapsonIkSettings(CcIkSettings):
@@ -43,6 +44,8 @@ class NewtonRhapsonIkSolver(IterativeIkSolver):
         The input should be a 3nx1 array as follows:
         [kappa_i, phi_i, length_i] for each segment i in the CR object
     """
+
+    solver_type = IkSolverType.NR
 
     def __init__(
         self,

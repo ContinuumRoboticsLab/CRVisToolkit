@@ -7,6 +7,7 @@ class IkTargetType(Enum):
     P3 = "P3"
     SO3 = "SO3"
     POSITION_POINTING = "POSITION_POINTING"
+    NEPPALLI = "NEPPALLI"
 
     @property
     def constraints(self):

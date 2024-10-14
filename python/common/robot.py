@@ -184,10 +184,11 @@ class ConstantCurvatureCR:
             if seg.repr_type != self.repr_type:
                 raise ValueError("All segments must have the same representation type")
 
-    def is_valid(self):
+    def _validate(self):
         """
         checks if the entire curve is valid - all segments must be valid
         """
+
         if not all([seg.is_valid() for seg in self.segments]):
             raise ValueError("All segments must be valid")
 
@@ -208,7 +209,7 @@ class ConstantCurvatureCR:
         ), "only one of pts_per_seg or max_len can be specified"
         assert pts_per_seg or max_len, "either pts_per_seg or max_len must be specified"
 
-        self.is_valid()
+        self._validate()
 
         pose_n = np.eye(4)
         coords = []
@@ -322,5 +323,14 @@ class ConstantCurvatureCR:
             case IkTargetType.SO3:
                 # return only the orientation part of the pose vector
                 return self.pose_vector(theta)[3:]
+            case IkTargetType.NEPPALLI:
+                return self.pose_vector(theta)
             case _:
                 raise ValueError("Invalid target type")
+
+    def _endpoints(self) -> np.ndarray[float]:
+        """
+        utility for testing Neppalli: returns the endpoints of the robot segments
+        """
+
+        return [seg.t_matrix().A[:3, 3] for seg in self.segments]
