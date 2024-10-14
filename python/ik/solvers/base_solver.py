@@ -13,8 +13,7 @@ from dataclasses import dataclass
 from enum import Enum
 from copy import deepcopy
 import numpy as np
-from numpy.typing import ArrayLike
-from spatialmath import SE3, Twist3
+from ik.target import IkTarget, IkTargetType
 
 from common.robot import ConstantCurvatureCR
 from ik.index import IkSolverType
@@ -94,23 +93,19 @@ class CcIkSolver:
     """
 
     solver_type: IkSolverType
+    accepted_target_types: list[IkTargetType]
 
     def __init__(
         self,
         cr: ConstantCurvatureCR,
         settings: CcIkSettings,
-        target_pose: np.ndarray[float] | SE3 | Twist3,
+        ik_target: IkTarget,
         **kwargs,
     ):
         self.cr = deepcopy(cr)
         self.settings = settings
 
-        if isinstance(target_pose, SE3):
-            self.target_pose = target_pose.twist()
-        elif isinstance(target_pose, ArrayLike):
-            self.target_pose = Twist3(target_pose)
-
-        self.target_pose = target_pose  # as a 6x1 pose vector
+        self.ik_target = ik_target
         self.solved = False
 
     def solve(self, *args, **kwargs):
@@ -126,6 +121,13 @@ class CcIkSolver:
         assert self.solved, "The IK problem has not been solved yet"
         return self.cr
 
+    def get_pose(self, theta: np.ndarray[float]):
+        return self.cr.pose_for_target(self.ik_target.target_type, theta)
+
+    @property
+    def ik_target_pose(self):
+        return self.ik_target.as_array()
+
 
 class IterativeIkSolver(CcIkSolver):
     """
@@ -137,10 +139,10 @@ class IterativeIkSolver(CcIkSolver):
         cr: ConstantCurvatureCR,
         settings: CcIkSettings,
         initial_condition: np.ndarray[float],  # robot configuration
-        target_pose: np.ndarray[float],
+        ik_target_pose: IkTarget,
         **kwargs,
     ):
-        super().__init__(cr, settings, target_pose, **kwargs)
+        super().__init__(cr, settings, ik_target_pose, **kwargs)
         self.inital_condition = initial_condition
         self.iter_count = 0
 
@@ -151,6 +153,8 @@ class IterativeIkSolver(CcIkSolver):
             self._perform_iteration(*args, **kwargs)
 
         self.solved = True
+
+        return self.stopping_condition[1]
 
     def _prepare_solver(self, *args, **kwargs):
         pass

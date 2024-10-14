@@ -8,6 +8,7 @@ from spatialmath import SE3
 from common.utils import robotindependentmapping, se3_to_pose
 from common.types import CRDiscreteCurve
 from common.coordinates import CrConfigurationType
+from ik.target import IkTargetType
 
 
 class ConstantCurvatureSegment:
@@ -305,3 +306,19 @@ class ConstantCurvatureCR:
         t_matrix = self.t_matrix()
 
         return se3_to_pose(t_matrix.A)
+
+    def pose_for_target(
+        self, target_type: IkTargetType, theta: np.ndarray[float] | None = None
+    ):
+        match target_type:
+            case IkTargetType.SE3 | IkTargetType.POSITION_POINTING:
+                # return full (6x1)
+                return self.pose_vector(theta)
+            case IkTargetType.P3:
+                # return only the position part of the pose vector
+                return self.pose_vector(theta)[:3]
+            case IkTargetType.SO3:
+                # return only the orientation part of the pose vector
+                return self.pose_vector(theta)[3:]
+            case _:
+                raise ValueError("Invalid target type")
