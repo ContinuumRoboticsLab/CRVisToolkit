@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import json
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
@@ -10,33 +9,34 @@ from common.types import CRDiscreteCurve, TDCRPlotterSettings
 def draw_tdcr(
     curve: CRDiscreteCurve,
     plotter_settings: TDCRPlotterSettings = TDCRPlotterSettings(),
+    show: bool = False,
 ):
     """
-    DRAW_TDCR Creates a figure of a tendon-driven continuum robot (tdcr)
+     DRAW_TDCR Creates a figure of a tendon-driven continuum robot (tdcr)
 
-    Takes a matrix with nx16 entries, where n is the number
-    of points on the backbone curve. For each point on the curve, the 4x4
-    transformation matrix is stored columnwise (16 entries). The x- and
-    y-axis span the material orientation and the z-axis is tangent to the
-    curve.
+     Takes a matrix with nx16 entries, where n is the number
+     of points on the backbone curve. For each point on the curve, the 4x4
+     transformation matrix is stored columnwise (16 entries). The x- and
+     y-axis span the material orientation and the z-axis is tangent to the
+     curve.
 
-   Parameters
-    ----------
-    curve: CRDiscreteCurve
-        a discrete point representation of a CR curve with multiple segments
-    plotter_settings: TDCRPlotterSettings
-        The paramters required to specify how a TDCR should be plotted. The
-        defaults are as specified in the class definition.
+    Parameters
+     ----------
+     curve: CRDiscreteCurve
+         a discrete point representation of a CR curve with multiple segments
+     plotter_settings: TDCRPlotterSettings
+         The paramters required to specify how a TDCR should be plotted. The
+         defaults are as specified in the class definition.
 
-    Outputs
-    -------
-    A matplotlib figure object
-        Figure object of the generated plot
+     Outputs
+     -------
+     A matplotlib figure object
+         Figure object of the generated plot
 
-    Author: Jessica Burgner-Kahrs <jbk@cs.toronto.edu>
-    Date: 2023/01/04
-    Version: 0.1
-    Copyright: 2023 Continuum Robotics Laboratory, University of Toronto
+     Author: Jessica Burgner-Kahrs <jbk@cs.toronto.edu>
+     Date: 2023/01/04
+     Version: 0.1
+     Copyright: 2023 Continuum Robotics Laboratory, University of Toronto
     """
 
     g = curve.g
@@ -171,11 +171,12 @@ def draw_tdcr(
 
         ax.plot_surface(x, y, z, color=color, shade=False, zorder=10)
 
-    plt.show()
+    return ax
+
 
 def plot_from_file(json_file_path):
     with open(json_file_path, "r") as f:
         curve_data = json.load(f)
-        
+
     curve = CRDiscreteCurve.from_json(curve_data)
     draw_tdcr(curve)

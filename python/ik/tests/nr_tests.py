@@ -9,7 +9,9 @@ Test Cases for the Newton-Rhapson Inverse Kinematics Solver
 """
 
 from math import pi
+import matplotlib.pyplot as plt
 from common.robot import ConstantCurvatureCR, ConstantCurvatureSegment
+from common.types import TDCRPlotterSettings
 from ik.target import SE3IkTarget, P3IkTarget
 from ik.solvers.nr import NewtonRhapsonIkSettings, NewtonRhapsonIkSolver
 import logging
@@ -64,20 +66,27 @@ def test_nr_1(plot, logger):
     se3_solver = NewtonRhapsonIkSolver(
         robot, NewtonRhapsonIkSettings(), robot.state_vector(), target_pose
     )
-    se3_res = _run_solver_test(target_robot, se3_solver, logger)
+    se3_res = se3_solver.solve()
 
     p3_solver = NewtonRhapsonIkSolver(
         robot, NewtonRhapsonIkSettings(), robot.state_vector(), target_position
     )
-    p3_res = _run_solver_test(target_robot, p3_solver, logger)
+    p3_res = p3_solver.solve()
 
     if plot:
-        logger.info("plotting position solution")
-        draw_tdcr(p3_solver.cr.as_discrete_curve(pts_per_seg=10))
-        logger.info("plotting pose solution")
-        draw_tdcr(se3_solver.cr.as_discrete_curve(pts_per_seg=10))
-        logger.info("plotting target robot")
-        draw_tdcr(target_robot.as_discrete_curve(pts_per_seg=10))
+        draw_tdcr(
+            p3_solver.cr.as_discrete_curve(pts_per_seg=10),
+            TDCRPlotterSettings(plot_title="NR base case 1 Position Solution"),
+        )
+        draw_tdcr(
+            se3_solver.cr.as_discrete_curve(pts_per_seg=10),
+            TDCRPlotterSettings(plot_title="NR base case 1 Pose Solution"),
+        )
+        draw_tdcr(
+            target_robot.as_discrete_curve(pts_per_seg=10),
+            TDCRPlotterSettings(plot_title="NR base case 1 Target Robot"),
+        )
+        plt.show()
 
     return (se3_res, p3_res)
 
@@ -118,12 +127,19 @@ def test_nr_2(plot, logger):
     p3_res = _run_solver_test(target_robot, p3_solver, logger)
 
     if plot:
-        logger.info("plotting position solution")
-        draw_tdcr(p3_solver.cr.as_discrete_curve(pts_per_seg=10))
-        logger.info("plotting pose solution")
-        draw_tdcr(se3_solver.cr.as_discrete_curve(pts_per_seg=10))
-        logger.info("plotting target robot")
-        draw_tdcr(target_robot.as_discrete_curve(pts_per_seg=10))
+        draw_tdcr(
+            p3_solver.cr.as_discrete_curve(pts_per_seg=10),
+            TDCRPlotterSettings(plot_title="NR base case 2 Position Solution"),
+        )
+        # draw_tdcr(
+        #     se3_solver.cr.as_discrete_curve(pts_per_seg=10),
+        #     TDCRPlotterSettings(plot_title="NR base case 2 Pose Solution"),
+        # )
+        draw_tdcr(
+            target_robot.as_discrete_curve(pts_per_seg=10),
+            TDCRPlotterSettings(plot_title="NR base case 2 Target Robot"),
+        )
+        plt.show()
 
     return (se3_res, p3_res)
 
@@ -166,12 +182,19 @@ def test_nr_3(plot, logger):
     p3_res = _run_solver_test(target_robot, p3_solver, logger)
 
     if plot:
-        logger.info("plotting position solution")
-        draw_tdcr(p3_solver.cr.as_discrete_curve(pts_per_seg=10))
-        logger.info("plotting pose solution")
-        draw_tdcr(se3_solver.cr.as_discrete_curve(pts_per_seg=10))
-        logger.info("plotting target robot")
-        draw_tdcr(target_robot.as_discrete_curve(pts_per_seg=10))
+        draw_tdcr(
+            p3_solver.cr.as_discrete_curve(pts_per_seg=10),
+            TDCRPlotterSettings(plot_title="NR base case 2 Position Solution"),
+        )
+        draw_tdcr(
+            se3_solver.cr.as_discrete_curve(pts_per_seg=10),
+            TDCRPlotterSettings(plot_title="NR base case 2 Pose Solution"),
+        )
+        draw_tdcr(
+            target_robot.as_discrete_curve(pts_per_seg=10),
+            TDCRPlotterSettings(plot_title="NR base case 2 Target Robot"),
+        )
+        plt.show()
 
     return (se3_res, p3_res)
 

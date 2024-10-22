@@ -28,6 +28,8 @@ class PlotterSettings:
     baseplate: bool = True
     clearance: float = 0.03
 
+    plot_title: str = "CR Plot"
+
 
 @dataclass
 class TDCRPlotterSettings(PlotterSettings):

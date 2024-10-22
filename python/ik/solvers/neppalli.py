@@ -91,19 +91,19 @@ class NeppalliIkSolver(AnalyticIkSolver):
         if the cache exists, then use it. Otherwise, calculate it
         """
 
-        # if hasattr(self.cr.segments[i], "theta"):
-        #     return self.cr.segments[i].theta
+        # if hasattr(self.cr.segments[i], "arc_angle"):
+        #     return self.cr.segments[i].arc_angle
 
         seg_i = self.cr.segments[i]
         p_i = self.segment_endpoints[i]
 
-        if p_i[2] > 0:
-            theta_i = np.acos(1 - seg_i.kappa * np.linalg.norm(p_i[:2]))
-        else:
-            theta_i = 2 * pi - np.acos(1 - seg_i.kappa * np.linalg.norm(p_i[:2]))
+        theta_i = np.acos(1 - seg_i.kappa * np.linalg.norm(p_i[:2]))
+
+        if p_i[2] <= 0:
+            theta_i = 2 * pi - theta_i
 
         # cache in object
-        setattr(seg_i, "theta", theta_i)
+        setattr(seg_i, "arc_angle", theta_i)
 
         return theta_i
 
@@ -143,10 +143,13 @@ class NeppalliIkSolver(AnalyticIkSolver):
         omega = self._get_segment_i_omega(i)
         theta = self._get_segment_i_theta(i)
 
+        p_cur = self.segment_endpoints[i]
+
         rotation = R.from_rotvec(-theta * omega)
 
         for j in range(i + 1, len(self.segment_endpoints)):
-            self.segment_endpoints[j] = rotation.apply(self.segment_endpoints[j])
+            p_next = self.segment_endpoints[j]
+            self.segment_endpoints[j] = rotation.as_matrix() @ (p_next - p_cur)
 
     def solve(self):
         """

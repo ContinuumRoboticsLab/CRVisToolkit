@@ -333,4 +333,10 @@ class ConstantCurvatureCR:
         utility for testing Neppalli: returns the endpoints of the robot segments
         """
 
-        return [seg.t_matrix().A[:3, 3] for seg in self.segments]
+        endpoints = []
+
+        for i in range(len(self.segments)):
+            new_cr = ConstantCurvatureCR(self.segments[: i + 1])
+            endpoints.append(new_cr.t_matrix().A[:3, 3])
+
+        return endpoints

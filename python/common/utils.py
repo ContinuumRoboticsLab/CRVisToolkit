@@ -91,7 +91,9 @@ def setupfigure(
     fig.set_size_inches(
         1280 / fig.dpi, 1024 / fig.dpi
     )  # converting pixel dimensions to inches
-    ax = fig.add_subplot(projection="3d", computed_zorder=False)
+    ax = fig.add_subplot(
+        projection="3d", computed_zorder=False, title=plotter_settings.plot_title
+    )
 
     # Axes, Labels
     clearance = plotter_settings.clearance
