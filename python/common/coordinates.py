@@ -5,6 +5,7 @@ representations of diffferent geometric objects. The module also provides conver
 """
 
 from enum import Enum
+from dataclasses import dataclass
 from numbers import Number
 
 
@@ -72,3 +73,58 @@ class CrSectionConfiguration:
         # instantiate the object with the required parameters
         for key in repr._required_params():
             setattr(self, key, kwargs[key])
+
+
+class ParamableCoord(Enum):
+    """
+    this enum specifies the different coordinates that can be
+    parameterized, but does not specify the parameter value.
+    """
+
+    # in euclidian coordinates
+    X = "x"
+    Y = "y"
+    Z = "z"
+
+    # in curvature parameters
+    KAPPA = "kappa"
+    PHI = "phi"
+    LENGTH = "length"
+
+    # the parameter's value can be set here
+    value: float
+
+    def is_euclidian(self) -> bool:
+        return self in {
+            ParamableCoord.X,
+            ParamableCoord.Y,
+            ParamableCoord.Z,
+        }
+
+    def is_curvatute_param(self) -> bool:
+        return self in {
+            ParamableCoord.KAPPA,
+            ParamableCoord.PHI,
+            ParamableCoord.LENGTH,
+        }
+
+
+@dataclass
+class CoordParamValue:
+    coordinate: ParamableCoord
+    value: float
+
+    def __post_init__(self):
+        if not isinstance(self.coordinate, ParamableCoord):
+            try:
+                self.coordinate = ParamableCoord(self.coordinate)
+            except Exception:
+                raise ValueError(
+                    f"{self.coordinate} is not a valid parameterizable coordinate"
+                )
+
+    def is_euclidian(self) -> bool:
+        return self.coordinate.is_euclidian()
+
+    def is_curvature_param(self) -> bool:
+        return self.coordinate.is_curvatute_param()

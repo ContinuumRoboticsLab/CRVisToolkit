@@ -6,6 +6,16 @@ from spatialmath import Twist3
 from common.types import CRDiscreteCurve, PlotterSettings
 
 
+def curvature_from_seg_endpoint(p: np.ndarray[float]):
+    assert p.size == 3, "The endpoint must be a 3D point"
+
+    sigma = np.linalg.norm(p)
+    eta = p[2] / np.linalg.norm(p)
+    phi = np.atan2(p[1], p[0])
+
+    return np.array([sigma, eta, phi])
+
+
 def skew(v: np.ndarray[float]) -> np.ndarray[float]:
     return np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])
 

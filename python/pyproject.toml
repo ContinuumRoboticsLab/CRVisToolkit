@@ -14,6 +14,7 @@ structlog = "^24.4.0"
 scipy = "^1.14.1"
 numdifftools = "^0.9.41"
 spatialmath-python = "^1.1.11"
+sympy = "^1.13.3"
 
 
 [build-system]

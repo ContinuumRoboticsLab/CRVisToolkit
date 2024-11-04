@@ -31,7 +31,7 @@ class IkTarget:
 
     target_type: IkTargetType
 
-    def as_array(self):
+    def as_array(self) -> np.ndarray[float]:
         return self.pose
 
 
