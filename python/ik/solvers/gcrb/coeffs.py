@@ -56,15 +56,27 @@ def c4_y(uq: np.ndarray, r_ti: np.ndarray, pt: np.ndarray) -> float:
 def c0_z(uq: np.ndarray, r_ti: np.ndarray, pt: np.ndarray) -> float:
     kap, lam, mu, nu = uq
 
-    num_t1 = kap * (r_ti[2][0] * pt[0] + r_ti[2][1] * pt[1] + r_ti[2][2] * pt[2])
-    num_t2 = lam * (r_ti[1][0] * pt[0] + r_ti[1][1] * pt[1] + r_ti[1][2] * pt[2])
-    num = nu * (num_t1 - num_t2)
+    t1_kap = kap * (r_ti[2][0] * pt[0] + r_ti[2][1] * pt[1] + r_ti[2][2] * pt[2])
+    t1_lam = lam * (r_ti[1][0] * pt[0] + r_ti[1][1] * pt[1] + r_ti[1][2] * pt[2])
+    t1 = nu * (t1_kap - t1_lam) / mu
 
-    den_t1 = kap * (r_ti[1][0] * pt[0] + r_ti[1][1] * pt[1] + r_ti[1][2] * pt[2])
-    den_t2 = lam * (r_ti[2][0] * pt[0] + r_ti[2][1] * pt[1] + r_ti[2][2] * pt[2])
-    den = -nu * (den_t1 + den_t2)
+    t2_kap = -kap * (r_ti[1][0] * pt[0] + r_ti[1][1] * pt[1] + r_ti[1][2] * pt[2])
+    t2_lam = -lam * (r_ti[2][0] * pt[0] + r_ti[2][1] * pt[1] + r_ti[2][2] * pt[2])
+    t2 = t2_kap + t2_lam
 
-    return num / den
+    return t1 + t2
+
+    # numerator = nu * (
+    #     kap * (r_ti[2][0] * pt[0] + r_ti[2][1] * pt[1] + r_ti[2][2] * pt[2])
+    #     - lam * (r_ti[1][0] * pt[0] + r_ti[1][1] * pt[1] + r_ti[1][2] * pt[2])
+    # )
+
+    # denominator = mu * (
+    #     - kap * (r_ti[1][0] * pt[0] + r_ti[1][1] * pt[1] + r_ti[1][2] * pt[2])
+    #     - lam * (r_ti[2][0] * pt[0] + r_ti[2][1] * pt[1] + r_ti[2][2] * pt[2])
+    # )
+
+    # return numerator / denominator
 
 
 def c1_z(uq: np.ndarray, r_ti: np.ndarray, pt: np.ndarray) -> float:
@@ -82,17 +94,18 @@ def c1_z(uq: np.ndarray, r_ti: np.ndarray, pt: np.ndarray) -> float:
     t4 = t4_num / mu
 
     return t1 + t2 + t3 + t4
+    # return (t1 + t2 + t3 + t4_num) / mu
 
 
 def c2_z(uq: np.ndarray, r_ti: np.ndarray) -> float:
     kap, lam, mu, nu = uq
 
-    t1 = 2 * mu * lam * (lam * r_ti[1][1] - kap * r_ti[2][1]) / mu
+    t1 = 2 * nu * lam * (lam * r_ti[1][1] - kap * r_ti[2][1]) / (mu**2)
 
-    t2 = -(-mu * r_ti[1][1] + lam * r_ti[1][0] - nu * r_ti[2][1] - kap * r_ti[2][0])
-    t2 = -t2 * nu / mu
+    t2_num = -mu * r_ti[1][1] + lam * r_ti[1][0] - nu * r_ti[2][1] - kap * r_ti[2][0]
+    t2 = -t2_num * nu / mu
 
-    t3 = -mu * r_ti[1][2] + kap * r_ti[1][0] - mu * r_ti[2][2] + lam * r_ti[2][0]
+    t3 = -mu * r_ti[1][2] + kap * r_ti[1][0] - nu * r_ti[2][2] + lam * r_ti[2][0]
 
     t4_1 = lam * r_ti[1][2] + kap * r_ti[1][1] - kap * r_ti[2][2] + lam * r_ti[2][1]
     t4 = -lam * t4_1 / mu

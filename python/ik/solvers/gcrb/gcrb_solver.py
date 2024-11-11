@@ -3,13 +3,15 @@ from spatialmath import UnitQuaternion
 from copy import deepcopy
 
 from common.robot import ConstantCurvatureCR
-from common.utils import curvature_from_seg_endpoint
+from common.utils import curvature_to_se3
 from common.coordinates import CoordParamValue, ParamableCoord
 
 from ik.solvers.base_solver import CcIkSettings, AnalyticIkSolver, IkResult
 from ik.target import IkTarget, IkTargetType
 
+
 from ik.solvers.gcrb.coeffs import c0_z, c1_z, c2_z, c3_z, c4_z
+from ik.solvers.gcrb.utils import sep_as_curvature, sep_from_seg_endpoint
 
 
 class GcrbIkSettings(CcIkSettings):
@@ -48,6 +50,7 @@ class GcrbSolver2(AnalyticIkSolver):
 
         # the target rotation and position
         se3 = self.ik_target.as_array()
+        self.target_pose = se3
         self.target_rotation = se3[:3, :3]
         self.r_ti = self.target_rotation.T
         self.target_position = se3[:3, 3]
@@ -106,14 +109,19 @@ class GcrbSolver2(AnalyticIkSolver):
         c0, c1, c2, c3, c4 = self._get_coeffs_z()
 
         z = self.parameter.value
-        disc = np.sqrt((c2 * z + c1) ** 2 - 4 * c4(c3 * z**2 + c0 * z))
-        x1 = (-c2 * z - c1 + disc) / (2 * c4)
-        x2 = (-c2 * z - c1 - disc) / (2 * c4)
 
-        _, lam, nu, mu = self.target_quaternion
+        a = c4
+        b = c2 * z + c1
+        c = c3 * (z**2) + c0 * z
 
-        y1 = -(lam * x1 + mu * z) / nu
-        y2 = -(lam * x2 + mu * z) / nu
+        disc = np.sqrt((b**2) - 4 * a * c)
+        x1 = (-b + disc) / (2 * a)
+        x2 = (-b - disc) / (2 * a)
+
+        _, lam, mu, nu = self.target_quaternion
+
+        y1 = -(lam * x1 + nu * z) / mu
+        y2 = -(lam * x2 + nu * z) / mu
 
         return np.array([x1, y1, z]), np.array([x2, y2, z])
 
@@ -132,6 +140,28 @@ class GcrbSolver2(AnalyticIkSolver):
             case _:
                 raise ValueError("Invalid coordinate")
 
+    def _config_from_junction(
+        self, junction: np.ndarray[float]
+    ) -> list[np.ndarray[float]]:
+        """
+        Given the junction position, find the curvature parameters
+        for the two segments
+        """
+        # find full curvature params for the first solution
+        seg1_sep = sep_from_seg_endpoint(junction)
+        seg1_curvature = sep_as_curvature(*seg1_sep)
+
+        # find segment 2
+        seg1_t = curvature_to_se3(seg1_curvature)
+        seg1_t_i = seg1_t.inv()
+        seg2_distal_pose = seg1_t_i * self.target_pose
+        seg2_distal_position = seg2_distal_pose[:3, 3]
+
+        seg2_sep = sep_from_seg_endpoint(seg2_distal_position)
+        seg2_curvature = sep_as_curvature(*seg2_sep)
+
+        return [seg1_curvature, seg2_curvature]
+
     def solve(self):
         """
         Solve the IK problem for the GcrbSolver2
@@ -145,19 +175,15 @@ class GcrbSolver2(AnalyticIkSolver):
         """
 
         junction1, junction2 = self.solve_segment_junction()
-
-        # find full curvature params for the first solution
-        sol1_seg1_curvature = curvature_from_seg_endpoint(junction1)
-        sol1_seg2_coordinates = self.r_ti @ (self.target_position - junction1)
-        sol1_seg2_curvature = curvature_from_seg_endpoint(sol1_seg2_coordinates)
-
-        # find full curvature params for the second solution
-        sol2_seg1_curvature = curvature_from_seg_endpoint(junction2)
-        sol2_seg2_coordinates = self.r_ti @ (self.target_position - junction2)
-        sol2_seg2_curvature = curvature_from_seg_endpoint(sol2_seg2_coordinates)
-
-        # solutions obtained, set the CRs
-        self.cr.set_config([sol1_seg1_curvature, sol1_seg2_curvature])
-        self.cr2.set_config([sol2_seg1_curvature, sol2_seg2_curvature])
+        print(f"junction1: {junction1}")
+        print(f"junction2: {junction2}")
+        self.cr.set_config(self._config_from_junction(junction1))
+        self.cr2.set_config(self._config_from_junction(junction2))
 
         return IkResult.SUCCESS
+
+
+if __name__ == "__main__":
+    from ik.tests import gcrb_tests
+
+    gcrb_tests.run(plot=True)

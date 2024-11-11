@@ -10,8 +10,3 @@ determine the closed-form solutions in different formulations, and second,
 the actual implementation of the closed-form solver, which makes use of the
 output of the sympy script but does not ever use sympy itself at runtime.
 """
-
-from ik.solvers.gcrb.gcrb_solver import GcrbSolver
-
-
-__all__ = ["GcrbSolver"]

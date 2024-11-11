@@ -1,19 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
-from spatialmath import Twist3
+from spatialmath import SE3, Twist3
 
 from common.types import CRDiscreteCurve, PlotterSettings
-
-
-def curvature_from_seg_endpoint(p: np.ndarray[float]):
-    assert p.size == 3, "The endpoint must be a 3D point"
-
-    sigma = np.linalg.norm(p)
-    eta = p[2] / np.linalg.norm(p)
-    phi = np.atan2(p[1], p[0])
-
-    return np.array([sigma, eta, phi])
 
 
 def skew(v: np.ndarray[float]) -> np.ndarray[float]:
@@ -70,6 +60,46 @@ def pose_to_se3(pose: np.ndarray[float] | Twist3) -> np.ndarray[float]:
     p = np.reshape(pose[:3], (3, 1))
 
     return np.block([[r, p], [np.array([0, 0, 0, 1])]])
+
+
+def curvature_to_se3(curvature: np.ndarray[float]) -> SE3:
+    """
+    takes an array of curvature parameters (kappa, phi, length) and returns
+    the SE3 transformation matrix of the corresponding segment.
+    """
+
+    kappa, phi, length = curvature
+
+    s_p = np.sin(phi)
+    c_p = np.cos(phi)
+    s_ks = np.sin(kappa * length)
+    c_ks = np.cos(kappa * length)
+
+    t_matrix = np.array(
+        [
+            [c_p * c_p * (c_ks - 1) + 1, s_p * c_p * (c_ks - 1), c_p * s_ks, 0],
+            [
+                s_p * c_p * (c_ks - 1),
+                c_p * c_p * (1 - c_ks) + c_ks,
+                s_p * s_ks,
+                0,
+            ],
+            [-c_p * s_ks, -s_p * s_ks, c_ks, 0],
+            [0, 0, 0, 1],
+        ]
+    )
+
+    if kappa != 0:
+        t_matrix[:, 3] = [
+            (c_p * (1 - c_ks)) / kappa,
+            (s_p * (1 - c_ks)) / kappa,
+            s_ks / kappa,
+            1,
+        ]
+    else:
+        t_matrix[:, 3] = [0, 0, length, 1]
+
+    return SE3(t_matrix)
 
 
 def setupfigure(
