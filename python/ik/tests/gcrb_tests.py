@@ -7,11 +7,11 @@ Tests for the GCRB analytic IK solver.
 from math import pi
 import numpy as np
 import matplotlib.pyplot as plt
+from spatialmath import UnitQuaternion
 
 from common.robot import ConstantCurvatureCR, ConstantCurvatureSegment
 from common.coordinates import CoordParamValue, ParamableCoord
 from common.types import TDCRPlotterSettings
-from common.utils import pose_to_se3
 
 from ik.target import SE3IkTarget
 from ik.solvers.gcrb.gcrb_solver import GcrbSolver2, GcrbIkSettings
@@ -27,8 +27,8 @@ def test_base_case(logger, plot=False):
     a two-segment, unrandomized base case
     """
 
-    segment1 = ConstantCurvatureSegment(1 / 0.1, pi / 3, 0.05, is_extensible=True)
-    segment2 = ConstantCurvatureSegment(1 / 0.2, pi / 4, 0.035, is_extensible=True)
+    segment1 = ConstantCurvatureSegment(1 / 0.1, pi / 6, 0.05, is_extensible=True)
+    segment2 = ConstantCurvatureSegment(1 / 0.05, pi / 2, 0.05, is_extensible=True)
     target_robot = ConstantCurvatureCR([segment1, segment2])
     target_pose = target_robot.pose_vector()
 
@@ -40,7 +40,7 @@ def test_base_case(logger, plot=False):
     coord_param = CoordParamValue(ParamableCoord.Z, target_robot_junction[2])
 
     settings = GcrbIkSettings()
-    ik_target = SE3IkTarget(pose_to_se3(target_pose))
+    ik_target = SE3IkTarget(target_robot.t_matrix().A)
 
     robot = ConstantCurvatureCR(
         [
@@ -48,6 +48,7 @@ def test_base_case(logger, plot=False):
             ConstantCurvatureSegment(1, 1, 1, is_extensible=True),
         ]
     )
+
     solver = GcrbSolver2(robot, settings, ik_target, coord_param)
     solver.solve()
 
@@ -88,7 +89,61 @@ def test_base_case(logger, plot=False):
         plt.show()
 
 
+def paper_provided_test():
+    pt = np.array([2.64, 0.92, -0.26])
+    qt = UnitQuaternion(np.array([0.87, 0.13, -0.27, 0.4]))
+
+    robot = ConstantCurvatureCR(
+        [
+            ConstantCurvatureSegment(1, 1, 1, is_extensible=True),
+            ConstantCurvatureSegment(1, 1, 1, is_extensible=True),
+        ]
+    )
+
+    r3 = qt.R
+
+    pose = np.eye(4)
+    pose[:3, :3] = r3
+    pose[:3, 3] = pt
+
+    ik_target = SE3IkTarget(pose)
+    settings = GcrbIkSettings()
+
+    solver = GcrbSolver2(
+        robot, settings, ik_target, CoordParamValue(ParamableCoord.Z, -3)
+    )
+
+    solver.solve()
+
+    print(solver.cr._endpoints())
+    print(solver.cr2._endpoints())
+    print(f"desired junction: {[1.4, -3.8, -3]}")
+
+
+def singularity_test():
+    pose = np.eye(4)
+    position = np.array([0, 0, 5])
+    pose[:3, 3] = position
+
+    robot = ConstantCurvatureCR(
+        [
+            ConstantCurvatureSegment(1, 1, 1, is_extensible=True),
+            ConstantCurvatureSegment(1, 1, 1, is_extensible=True),
+        ]
+    )
+
+    ik_target = SE3IkTarget(pose)
+    settings = GcrbIkSettings()
+
+    solver = GcrbSolver2(
+        robot, settings, ik_target, CoordParamValue(ParamableCoord.Z, 2.5)
+    )
+    solver.solve()
+
+
 def run(loglevel=logging.INFO, plot=False):
     logging.basicConfig(level=loglevel)
     logger = logging.getLogger(__name__)
     test_base_case(logger, plot)
+    # paper_provided_test()
+    # singularity_test()

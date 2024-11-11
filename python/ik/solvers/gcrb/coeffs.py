@@ -66,18 +66,6 @@ def c0_z(uq: np.ndarray, r_ti: np.ndarray, pt: np.ndarray) -> float:
 
     return t1 + t2
 
-    # numerator = nu * (
-    #     kap * (r_ti[2][0] * pt[0] + r_ti[2][1] * pt[1] + r_ti[2][2] * pt[2])
-    #     - lam * (r_ti[1][0] * pt[0] + r_ti[1][1] * pt[1] + r_ti[1][2] * pt[2])
-    # )
-
-    # denominator = mu * (
-    #     - kap * (r_ti[1][0] * pt[0] + r_ti[1][1] * pt[1] + r_ti[1][2] * pt[2])
-    #     - lam * (r_ti[2][0] * pt[0] + r_ti[2][1] * pt[1] + r_ti[2][2] * pt[2])
-    # )
-
-    # return numerator / denominator
-
 
 def c1_z(uq: np.ndarray, r_ti: np.ndarray, pt: np.ndarray) -> float:
     kap, lam, mu, nu = uq
@@ -94,7 +82,6 @@ def c1_z(uq: np.ndarray, r_ti: np.ndarray, pt: np.ndarray) -> float:
     t4 = t4_num / mu
 
     return t1 + t2 + t3 + t4
-    # return (t1 + t2 + t3 + t4_num) / mu
 
 
 def c2_z(uq: np.ndarray, r_ti: np.ndarray) -> float:

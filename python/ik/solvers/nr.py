@@ -114,7 +114,6 @@ class NewtonRhapsonIkSolver(IterativeIkSolver):
         object methods
         """
 
-        # breakpoint()
         old_theta = self.theta_i
 
         # update the CR internal state
@@ -135,7 +134,6 @@ class NewtonRhapsonIkSolver(IterativeIkSolver):
 
         d_theta = j_inv @ diff
 
-        # breakpoint()
         # if self.ik_target.target_type == IkTargetType.P3:
         #     j = self.__compute_jacobian()
 

@@ -330,7 +330,7 @@ class ConstantCurvatureCR:
 
     def _endpoints(self) -> np.ndarray[float]:
         """
-        utility for testing Neppalli: returns the endpoints of the robot segments
+        utility for testing Neppalli/GCRB: returns the endpoints of the robot segments
         """
 
         endpoints = []
