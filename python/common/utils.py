@@ -62,6 +62,23 @@ def pose_to_se3(pose: np.ndarray[float] | Twist3) -> np.ndarray[float]:
     return np.block([[r, p], [np.array([0, 0, 0, 1])]])
 
 
+def se3_to_uq(se3: np.ndarray[float]):
+    so3 = se3[:3, :3]
+
+    _, eigenvecs = np.linalg.eig(so3[:3, :3])
+
+    for i in range(3):
+        ev = eigenvecs[:, i]
+        if np.isreal(ev).all():
+            ev = ev.real
+            break
+        if i == 2:
+            raise ValueError("No real eigenvectors found")
+
+    theta = np.acos((np.linalg.trace(so3[:3, :3]) - 1) / 2)
+    return np.hstack([np.cos(theta / 2), np.sin(theta / 2) * ev])
+
+
 def curvature_to_se3(curvature: np.ndarray[float]) -> SE3:
     """
     takes an array of curvature parameters (kappa, phi, length) and returns

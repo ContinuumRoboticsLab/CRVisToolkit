@@ -1,9 +1,9 @@
 import numpy as np
-from spatialmath import SE3, UnitQuaternion
+from spatialmath import SE3
 from copy import deepcopy
 
 from common.robot import ConstantCurvatureCR
-from common.utils import curvature_to_se3
+from common.utils import curvature_to_se3, se3_to_uq
 from common.coordinates import CoordParamValue, ParamableCoord
 
 from ik.solvers.base_solver import CcIkSettings, AnalyticIkSolver, IkResult
@@ -49,14 +49,21 @@ class GcrbSolver2(AnalyticIkSolver):
         ), "GcrbSolver2 only supports SE3 targets"
 
         # the target rotation and position
-        se3 = SE3(self.ik_target.as_array())
-        self.target_pose = se3.A
-        self.target_rotation = se3.A[:3, :3]
-        self.r_ti = se3.A[:3, :3].T
-        self.target_position = se3.A[:3, 3]
+        # se3 = SE3(self.ik_target.as_array())
+        # self.target_pose = se3.A
+        # self.target_rotation = se3.A[:3, :3]
+        # self.r_ti = se3.A[:3, :3].T
+        # self.target_position = se3.A[:3, 3]
+        # self.target_quaternion = UnitQuaternion(self.target_rotation).A
 
+        # applies implicit validation on the input
+        se3 = SE3(self.ik_target.as_array()).A
+        self.target_pose = np.ndarray.copy(se3)
+        self.target_rotation = np.ndarray.copy(se3)[:3, :3]
+        self.r_ti = np.ndarray.copy(se3)[:3, :3].T
+        self.target_position = np.ndarray.copy(se3)[:3, 3]
         # determine R4 quaternion representation of target rotation
-        self.target_quaternion = UnitQuaternion(self.target_rotation).A
+        self.target_quaternion = se3_to_uq(self.target_rotation)
 
         self.cr2 = deepcopy(self.cr)
 
@@ -84,8 +91,15 @@ class GcrbSolver2(AnalyticIkSolver):
         c2 = c2_z(self.target_quaternion, self.r_ti)
         c3 = c3_z(self.target_quaternion, self.r_ti)
         c4 = c4_z(self.target_quaternion, self.r_ti)
-
         return c0, c1, c2, c3, c4
+
+        # c0_alt = c0_sub(self.target_quaternion, self.r_ti, self.target_position)
+        # c1_alt = c1_sub(self.target_quaternion, self.r_ti, self.target_position)
+        # c2_alt = c2_sub(self.target_quaternion, self.r_ti)
+        # c3_alt = c3_sub(self.target_quaternion, self.r_ti)
+        # c4_alt = c4_sub(self.target_quaternion, self.r_ti, self.target_position)
+
+        # return c0_alt, c1_alt, c2_alt, c3_alt, c4_alt
 
     def _solve_segment_junction_x(self):
         """
@@ -117,6 +131,8 @@ class GcrbSolver2(AnalyticIkSolver):
         disc = b**2 - 4 * a * c
         if disc < 0:
             raise ValueError("No real solutions")
+        elif disc == 0:
+            print("Warning: only one solution")
         disc = np.sqrt(disc)
 
         x1 = (-b + disc) / (2 * a)
@@ -127,7 +143,6 @@ class GcrbSolver2(AnalyticIkSolver):
         y1 = -(lam * x1 + nu * z) / mu
         y2 = -(lam * x2 + nu * z) / mu
 
-        breakpoint()
         return np.array([x1, y1, z]), np.array([x2, y2, z])
 
     def solve_segment_junction(self):

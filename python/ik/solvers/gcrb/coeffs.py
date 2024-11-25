@@ -64,7 +64,7 @@ def c0_z(uq: np.ndarray, r_ti: np.ndarray, pt: np.ndarray) -> float:
     t2_lam = -lam * (r_ti[2][0] * pt[0] + r_ti[2][1] * pt[1] + r_ti[2][2] * pt[2])
     t2 = t2_kap + t2_lam
 
-    return t1 + t2
+    return -t1 + t2
 
 
 def c1_z(uq: np.ndarray, r_ti: np.ndarray, pt: np.ndarray) -> float:
