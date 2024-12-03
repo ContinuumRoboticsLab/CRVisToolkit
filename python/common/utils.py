@@ -69,13 +69,27 @@ def se3_to_uq(se3: np.ndarray[float]):
 
     for i in range(3):
         ev = eigenvecs[:, i]
-        if np.isreal(ev).all():
+        if np.isreal(ev).all() and not np.allclose(ev, np.array([0, 0, 0])):
             ev = ev.real
             break
         if i == 2:
             raise ValueError("No real eigenvectors found")
 
+    # some work needed to verify the sign of theta
+    if np.allclose(ev, np.array([1, 0, 0])):
+        helper = np.array([0, 1, 0])
+    else:
+        helper = np.array([1, 0, 0])
+
+    orthogonal = np.cross(ev, helper)
+
     theta = np.acos((np.linalg.trace(so3[:3, :3]) - 1) / 2)
+
+    if np.cross(orthogonal, so3.dot(orthogonal)).dot(ev) > 0:
+        theta = np.abs(theta)
+    else:
+        theta = -np.abs(theta)
+
     return np.hstack([np.cos(theta / 2), np.sin(theta / 2) * ev])
 
 

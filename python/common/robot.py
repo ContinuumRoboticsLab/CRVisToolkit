@@ -152,7 +152,7 @@ class ConstantCurvatureSegment:
             ]
         )
 
-        if self.kappa != 0:
+        if not np.isclose(self.kappa, 0):
             t_matrix[:, 3] = [
                 (c_p * (1 - c_ks)) / self.kappa,
                 (s_p * (1 - c_ks)) / self.kappa,

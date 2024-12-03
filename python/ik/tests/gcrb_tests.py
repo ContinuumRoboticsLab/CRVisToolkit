@@ -16,6 +16,8 @@ from common.utils import uq_to_so3
 from ik.target import SE3IkTarget
 from ik.solvers.gcrb.gcrb_solver import GcrbSolver2, GcrbIkSettings
 
+from spatialmath import SO3
+
 
 from plotter.tdcr import draw_tdcr
 
@@ -28,7 +30,7 @@ def test_base_case(logger, plot=False):
     """
 
     segment1 = ConstantCurvatureSegment(1 / 0.1, pi / 6, 0.05, is_extensible=True)
-    segment2 = ConstantCurvatureSegment(1 / 0.05, pi / 2, 0.05, is_extensible=True)
+    segment2 = ConstantCurvatureSegment(1 / 0.05, 2 * pi / 3, 0.05, is_extensible=True)
     target_robot = ConstantCurvatureCR([segment1, segment2])
     target_pose = target_robot.pose_vector()
 
@@ -55,9 +57,6 @@ def test_base_case(logger, plot=False):
 
     soln1 = solver.cr.pose_for_target(ik_target.target_type)
     soln2 = solver.cr2.pose_for_target(ik_target.target_type)
-
-    # print(f"soln1 endpoint 1: {solver.cr._endpoints()[0]}")
-    # print(f"soln2 endpoint 1: {solver.cr2._endpoints()[0]}")
 
     diff1 = np.linalg.norm(soln1 - target_pose)
     diff2 = np.linalg.norm(soln2 - target_pose)
@@ -122,7 +121,13 @@ def paper_provided_test():
     print(f"desired junction: {[1.4, -3.8, -3]}")
 
 
-def singularity_test():
+def singularity_test(logger):
+    """
+    three kinds of singularities to test:
+    1. when kappa is 1, there is no rotation at al
+    2. when mu and lambda are zero, there is only rotation about the z-axis
+    3. mu is zero and there is no rotation about the y-axis
+    """
     pose = np.eye(4)
     position = np.array([0, 0, 5])
     pose[:3, 3] = position
@@ -142,11 +147,74 @@ def singularity_test():
     )
     solver.solve()
 
-    print(solver.cr._endpoints())
+    state = solver.cr.state_vector()
+    assert np.isclose(state, [0, 0, 2.5, 0, 0, 2.5]).all()
+
+    logger.info("Rotation no-op test passed")
+
+    # try rotation only about z-axis
+    pose = np.eye(4)
+    position = np.array([0, 0, 5])
+    pose[:3, 3] = position
+    pose[:3, :3] = SO3.Rz(pi / 2).A
+
+    ik_target = SE3IkTarget(pose)
+    settings = GcrbIkSettings()
+
+    solver = GcrbSolver2(
+        robot, settings, ik_target, CoordParamValue(ParamableCoord.Z, 2.5)
+    )
+    solver.solve()
+    assert np.isclose(solver.cr.state_vector(), [0, pi / 2, 2.5, 0, 0, 2.5]).all()
+    assert np.isclose(solver.cr2.state_vector(), [0, 0, 2.5, 0, pi / 2, 2.5]).all()
+
+    logger.info("Rotation about z-axis test passed")
+
+    # try rotation only about y-axis
+    segment1 = ConstantCurvatureSegment(1 / 0.1, 0.5, 0.05, is_extensible=True)
+    segment2 = ConstantCurvatureSegment(
+        1 / (2.5 * 0.05 / pi), pi / 2, 0.05, is_extensible=True
+    )
+    target_robot = ConstantCurvatureCR([segment1, segment2])
+    target_pose = target_robot.pose_vector()
+
+    target_robot_junction = target_robot._endpoints()[0]
+    coord_param = CoordParamValue(ParamableCoord.Z, target_robot_junction[2])
+
+    settings = GcrbIkSettings()
+    ik_target = SE3IkTarget(target_robot.t_matrix().A)
+
+    robot = ConstantCurvatureCR(
+        [
+            ConstantCurvatureSegment(1, 1, 1, is_extensible=True),
+            ConstantCurvatureSegment(1, 1, 1, is_extensible=True),
+        ]
+    )
+
+    solver = GcrbSolver2(robot, settings, ik_target, coord_param)
+    solver.solve()
+
+    soln1 = solver.cr.pose_for_target(ik_target.target_type)
+    soln2 = solver.cr2.pose_for_target(ik_target.target_type)
+
+    diff1 = np.linalg.norm(soln1 - target_pose)
+    diff2 = np.linalg.norm(soln2 - target_pose)
+
+    logger.info(f"soln1 error: {diff1}")
+    logger.info(f"soln2 error: {diff2}")
+    if diff1 < 1e-6 and diff2 < 1e-6:
+        logger.info("GCRB singular mu case passed")
+    else:
+        if diff1 < 1e-6:
+            logger.error("GCRB singular mu yielded valid soln 1, but not soln 2")
+        elif diff2 < 1e-6:
+            logger.error("GCRB singular mu yielded valid soln 2, but not soln 1")
+        else:
+            logger.error("GCRB singular mu case failed (two invalid solutions)")
 
 
 def test_curvature_from_junction():
-    segment1 = ConstantCurvatureSegment(1 / 0.1, pi / 6, 0.05, is_extensible=True)
+    segment1 = ConstantCurvatureSegment(1 / 0.1, pi / 2, 0.05, is_extensible=True)
     segment2 = ConstantCurvatureSegment(1 / 0.05, pi / 2, 0.05, is_extensible=True)
     target_robot = ConstantCurvatureCR([segment1, segment2])
 
@@ -180,5 +248,5 @@ def run(loglevel=logging.INFO, plot=False):
     logger = logging.getLogger(__name__)
     test_base_case(logger, plot)
     # paper_provided_test()
-    singularity_test()
-    # test_curvature_from_junction()
+    singularity_test(logger)
+    test_curvature_from_junction()

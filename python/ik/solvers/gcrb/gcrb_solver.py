@@ -42,7 +42,7 @@ class GcrbSolver2(AnalyticIkSolver):
     solution can be obtained by calling .cr2
     """
 
-    ZERO_TOLERANCE = 1e-6
+    ZERO_TOLERANCE = 1e-4
 
     def __init__(
         self,
@@ -125,7 +125,6 @@ class GcrbSolver2(AnalyticIkSolver):
         Solve for the x, y coordinates of the junction position
         when the z-value is known
         """
-
         if np.abs(self.target_quaternion[2]) < self.ZERO_TOLERANCE:
             # if solving with z, singular when mu is zero
             return self._solve_segment_junction_z_singular()
@@ -159,8 +158,6 @@ class GcrbSolver2(AnalyticIkSolver):
         """
         case where mu is zero
         """
-
-        breakpoint()
 
         _, lambda_, _, nu = self.target_quaternion
 
@@ -216,7 +213,6 @@ class GcrbSolver2(AnalyticIkSolver):
         seg1_sep = sep_from_seg_endpoint(junction)
         seg1_curvature = sep_as_curvature(*seg1_sep)
 
-        breakpoint()
         # find segment 2
         seg1_t = curvature_to_se3(seg1_curvature)
         seg1_t_i = seg1_t.inv()
@@ -240,8 +236,6 @@ class GcrbSolver2(AnalyticIkSolver):
         return
         """
 
-        breakpoint()
-
         if np.abs(self.target_quaternion[0] - 1) < self.ZERO_TOLERANCE:
             if self.parameter.coordinate != ParamableCoord.Z:
                 raise ValueError("Invalid coordinate for singularity")
@@ -261,7 +255,7 @@ class GcrbSolver2(AnalyticIkSolver):
             return IkResult.SUCCESS
         elif (
             np.abs(self.target_quaternion[1]) < self.ZERO_TOLERANCE
-            and np.abs(self.target_quaterion[2]) < self.ZERO_TOLERANCE
+            and np.abs(self.target_quaternion[2]) < self.ZERO_TOLERANCE
         ):
             # singularity condition 2: when mu and nu are zero, there is only rotation about the z-axis
             if self.parameter.coordinate != ParamableCoord.Z:
@@ -274,12 +268,10 @@ class GcrbSolver2(AnalyticIkSolver):
             phi = 2 * np.arcsin(nu)
 
             self.cr.set_config([np.array([0, phi, l1]), np.array([0, 0, l2])])
-            self.cr2.set_config([[0, 0, l1], [0, phi, l2]])
+            self.cr2.set_config([np.array([0, 0, l1]), np.array([0, phi, l2])])
             return IkResult.SUCCESS
 
         junction1, junction2 = self.solve_segment_junction()
-        print(f"junction1: {junction1}")
-        print(f"junction2: {junction2}")
         self.cr.set_config(self._config_from_junction(junction1))
         self.cr2.set_config(self._config_from_junction(junction2))
 

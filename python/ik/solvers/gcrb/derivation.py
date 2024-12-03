@@ -98,8 +98,6 @@ sing_expr = collect(sing_expr, z)
 C0s = sing_expr.coeff(z)
 sing_expr = sing_expr - C0s * z
 
-breakpoint()
-
 
 def params_as_subs_value(
     uq: list[float] | None = None,
