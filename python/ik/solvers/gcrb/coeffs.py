@@ -124,3 +124,76 @@ def c4_z(uq: np.ndarray, r_ti: np.ndarray) -> float:
     t3 = -t3_num * lam / mu
 
     return t1 + t2 + t3
+
+
+"""
+coefficients for the respective singular cases for each parametrized axis
+
+these parameter values were determined using the sympy solver - source code can be found in
+ik/solvers/gcrb/derivation.py
+
+ex. when the z-axis value is parameterized, an expression of the following form is determined:
+c4s * y ** 2 + c3s * z ** 2 + c2s * y * z + c1s * y + c0s * z = 0
+"""
+
+
+def c0s_z(uq: np.ndarray, r_ti: np.ndarray, pt: np.ndarray) -> float:
+    kappa, lambda_, _, _ = uq
+    pt_i, pt_j, pt_k = pt
+    r_ti_21, r_ti_22, r_ti_23 = r_ti[1]
+    r_ti_31, r_ti_32, r_ti_33 = r_ti[2]
+
+    res = kappa * (pt_i * r_ti_21 + pt_j * r_ti_22 + pt_k * r_ti_23) + lambda_ * (
+        2 * pt_i * r_ti_31 + 2 * pt_j * r_ti_32 + 2 * pt_k * r_ti_33
+    )
+    return res
+
+
+def c1s_z(uq: np.ndarray, r_ti: np.ndarray, pt: np.ndarray) -> float:
+    kappa, lambda_, _, nu = uq
+    pt_i, pt_j, pt_k = pt
+    r_ti_21, r_ti_22, r_ti_23 = r_ti[1]
+    r_ti_31, r_ti_32, r_ti_33 = r_ti[2]
+
+    res = (
+        kappa * (pt_i * r_ti_21 + pt_j * r_ti_22 + pt_k * r_ti_23)
+        + lambda_ * (pt_i * r_ti_31 + pt_j * r_ti_32 + pt_k * r_ti_33)
+        + (nu**2 * pt_i * r_ti_31 + nu**2 * pt_j * r_ti_32 + nu**2 * pt_k * r_ti_33)
+        / lambda_
+    )
+
+    return res
+
+
+def c2s_z(uq: np.ndarray, r_ti: np.ndarray) -> float:
+    kappa, lambda_, _, nu = uq
+    r_ti_21, r_ti_22, r_ti_23 = r_ti[1]
+    r_ti_31, r_ti_32, r_ti_33 = r_ti[2]
+
+    res = (
+        kappa * (-r_ti_22 + r_ti_33)
+        + lambda_ * (-r_ti_23 - r_ti_32)
+        + nu * r_ti_21
+        + (-kappa * nu * r_ti_31 - nu**2 * r_ti_32) / lambda_
+    )
+    return res
+
+
+def c3s_z(uq: np.ndarray, r_ti: np.ndarray) -> float:
+    kappa, lambda_, _, nu = uq
+    r_ti_21, _, r_ti_23 = r_ti[1]
+    r_ti_31, _, r_ti_33 = r_ti[2]
+
+    res = (
+        -kappa * r_ti_23
+        - lambda_ * r_ti_33
+        + nu * r_ti_31
+        + (kappa * nu * r_ti_21 - nu**2 * r_ti_33) / lambda_
+        + nu**3 * r_ti_31 / lambda_**2
+    )
+    return res
+
+
+def c4s_z(uq: np.ndarray, r_ti: np.ndarray) -> float:
+    kappa, lambda_, _, _ = uq
+    return kappa * r_ti[2][1] - lambda_ * r_ti[1][1]

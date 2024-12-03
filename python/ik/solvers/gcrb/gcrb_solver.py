@@ -10,7 +10,18 @@ from ik.solvers.base_solver import CcIkSettings, AnalyticIkSolver, IkResult
 from ik.target import IkTarget, IkTargetType
 
 
-from ik.solvers.gcrb.coeffs import c0_z, c1_z, c2_z, c3_z, c4_z
+from ik.solvers.gcrb.coeffs import (
+    c0_z,
+    c1_z,
+    c2_z,
+    c3_z,
+    c4_z,
+    c0s_z,
+    c1s_z,
+    c2s_z,
+    c3s_z,
+    c4s_z,
+)
 from ik.solvers.gcrb.utils import sep_as_curvature, sep_from_seg_endpoint
 
 
@@ -30,6 +41,8 @@ class GcrbSolver2(AnalyticIkSolver):
     if .cr is called, one of the two solutions arbitrarily is returned. The alternate
     solution can be obtained by calling .cr2
     """
+
+    ZERO_TOLERANCE = 1e-6
 
     def __init__(
         self,
@@ -93,14 +106,6 @@ class GcrbSolver2(AnalyticIkSolver):
         c4 = c4_z(self.target_quaternion, self.r_ti)
         return c0, c1, c2, c3, c4
 
-        # c0_alt = c0_sub(self.target_quaternion, self.r_ti, self.target_position)
-        # c1_alt = c1_sub(self.target_quaternion, self.r_ti, self.target_position)
-        # c2_alt = c2_sub(self.target_quaternion, self.r_ti)
-        # c3_alt = c3_sub(self.target_quaternion, self.r_ti)
-        # c4_alt = c4_sub(self.target_quaternion, self.r_ti, self.target_position)
-
-        # return c0_alt, c1_alt, c2_alt, c3_alt, c4_alt
-
     def _solve_segment_junction_x(self):
         """
         Solve for the y, z coordinates of the junction position
@@ -120,6 +125,11 @@ class GcrbSolver2(AnalyticIkSolver):
         Solve for the x, y coordinates of the junction position
         when the z-value is known
         """
+
+        if np.abs(self.target_quaternion[2]) < self.ZERO_TOLERANCE:
+            # if solving with z, singular when mu is zero
+            return self._solve_segment_junction_z_singular()
+
         c0, c1, c2, c3, c4 = self._get_coeffs_z()
 
         z = self.parameter.value
@@ -145,11 +155,46 @@ class GcrbSolver2(AnalyticIkSolver):
 
         return np.array([x1, y1, z]), np.array([x2, y2, z])
 
+    def _solve_segment_junction_z_singular(self):
+        """
+        case where mu is zero
+        """
+
+        breakpoint()
+
+        _, lambda_, _, nu = self.target_quaternion
+
+        z = self.parameter.value
+        x = -nu * z / lambda_
+
+        c0s_z_val = c0s_z(self.target_quaternion, self.r_ti, self.target_position)
+        c1s_z_val = c1s_z(self.target_quaternion, self.r_ti, self.target_position)
+        c2s_z_val = c2s_z(self.target_quaternion, self.r_ti)
+        c3s_z_val = c3s_z(self.target_quaternion, self.r_ti)
+        c4s_z_val = c4s_z(self.target_quaternion, self.r_ti)
+
+        a = c4s_z_val
+        b = c2s_z_val * z + c1s_z_val
+        c = c3s_z_val * (z**2) + c0s_z_val * z
+
+        disc = b**2 - 4 * a * c
+        if disc < 0:
+            raise ValueError("No real solutions")
+        elif disc == 0:
+            print("Warning: only one solution")
+        disc = np.sqrt(disc)
+
+        y1 = (-b + disc) / (2 * a)
+        y2 = (-b - disc) / (2 * a)
+
+        return np.array([x, y1, z]), np.array([x, y2, z])
+
     def solve_segment_junction(self):
         """
         Solve for the R3 coordinates of the junction between the
         two segments
         """
+
         match self.parameter.coordinate:
             case ParamableCoord.X:
                 return self._solve_segment_junction_x()
@@ -171,6 +216,7 @@ class GcrbSolver2(AnalyticIkSolver):
         seg1_sep = sep_from_seg_endpoint(junction)
         seg1_curvature = sep_as_curvature(*seg1_sep)
 
+        breakpoint()
         # find segment 2
         seg1_t = curvature_to_se3(seg1_curvature)
         seg1_t_i = seg1_t.inv()
@@ -193,6 +239,43 @@ class GcrbSolver2(AnalyticIkSolver):
         seg2 = self.junction_to_segment(junction, 1)
         return
         """
+
+        breakpoint()
+
+        if np.abs(self.target_quaternion[0] - 1) < self.ZERO_TOLERANCE:
+            if self.parameter.coordinate != ParamableCoord.Z:
+                raise ValueError("Invalid coordinate for singularity")
+            # singularity case 1: when kappa is 1, there is no rotation
+            self.cr.set_config(
+                [
+                    np.array([0, 0, self.parameter.value]),
+                    np.array([0, 0, self.target_position[2] - self.parameter.value]),
+                ]
+            )
+            self.cr2.set_config(
+                [
+                    np.array([0, 0, self.parameter.value]),
+                    np.array([0, 0, self.target_position[2] - self.parameter.value]),
+                ]
+            )
+            return IkResult.SUCCESS
+        elif (
+            np.abs(self.target_quaternion[1]) < self.ZERO_TOLERANCE
+            and np.abs(self.target_quaterion[2]) < self.ZERO_TOLERANCE
+        ):
+            # singularity condition 2: when mu and nu are zero, there is only rotation about the z-axis
+            if self.parameter.coordinate != ParamableCoord.Z:
+                raise ValueError("Invalid coordinate for singularity")
+
+            l1 = self.parameter.value
+            l2 = self.target_position[2] - l1
+
+            nu = self.target_quaternion[3]
+            phi = 2 * np.arcsin(nu)
+
+            self.cr.set_config([np.array([0, phi, l1]), np.array([0, 0, l2])])
+            self.cr2.set_config([[0, 0, l1], [0, phi, l2]])
+            return IkResult.SUCCESS
 
         junction1, junction2 = self.solve_segment_junction()
         print(f"junction1: {junction1}")

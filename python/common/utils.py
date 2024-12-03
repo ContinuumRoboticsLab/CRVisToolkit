@@ -79,6 +79,13 @@ def se3_to_uq(se3: np.ndarray[float]):
     return np.hstack([np.cos(theta / 2), np.sin(theta / 2) * ev])
 
 
+def uq_to_so3(uq: np.ndarray[float]) -> np.ndarray[float]:
+    theta = 2 * np.arccos(uq[0])
+    w = uq[1:] / np.linalg.norm(uq[1:])
+    k = skew(w)
+    return np.eye(3) + np.sin(theta) * k + (1 - np.cos(theta)) * k.dot(k)
+
+
 def curvature_to_se3(curvature: np.ndarray[float]) -> SE3:
     """
     takes an array of curvature parameters (kappa, phi, length) and returns

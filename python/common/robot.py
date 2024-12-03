@@ -73,8 +73,8 @@ class ConstantCurvatureSegment:
         """
         updates/sets the configuration of the segment
         """
-        self.kappa = kappa if kappa else self.kappa
-        self.phi = phi if phi else self.phi
+        self.kappa = kappa if kappa is not None else self.kappa
+        self.phi = phi if phi is not None else self.phi
         self.length = length if length else self.length
 
     @property

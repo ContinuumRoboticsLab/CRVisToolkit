@@ -34,11 +34,11 @@ y_expr = -(lambda_ * x + nu * z) / mu
 eqn_22b = -(-mu * x + lambda_ * y + kappa * z) * h2.dot(d - pt)
 eqn_22c = -(nu * x + kappa * y - lambda_ * z) * h3.dot(d - pt)
 
-expression = eqn_22b - eqn_22c
-expression = expression.subs(y, y_expr)
+sing_expr = eqn_22b - eqn_22c
+sing_expr = sing_expr.subs(y, y_expr)
 
 # collect the terms
-poly = expression.as_poly().as_expr()
+poly = sing_expr.as_poly().as_expr()
 
 
 poly = collect(poly, x**2)
@@ -69,7 +69,36 @@ C1 = collect(C1, pt_i)
 C1 = collect(C1, pt_j)
 C1 = collect(C1, pt_k)
 
-# define coefficient values as params
+
+# calculation somewhat different when mu is zero
+eqn_22b_alt = eqn_22b.subs(mu, 0)
+eqn_22c_alt = eqn_22c.subs(mu, 0)
+sing_expr = eqn_22b_alt - eqn_22c_alt
+sing_expr = sing_expr.subs(x, -(nu / lambda_) * z)
+
+sing_expr = sing_expr.as_poly().as_expr()
+
+sing_expr = collect(sing_expr, y**2)
+C4s = sing_expr.coeff(y**2)
+sing_expr = sing_expr - C4s * y**2
+
+sing_expr = collect(sing_expr, z**2)
+C3s = sing_expr.coeff(z**2)
+sing_expr = sing_expr - C3s * z**2
+
+sing_expr = collect(sing_expr, y * z)
+C2s = sing_expr.coeff(y * z)
+sing_expr = sing_expr - C2s * y * z
+
+sing_expr = collect(sing_expr, y)
+C1s = sing_expr.coeff(y)
+sing_expr = sing_expr - C1s * y
+
+sing_expr = collect(sing_expr, z)
+C0s = sing_expr.coeff(z)
+sing_expr = sing_expr - C0s * z
+
+breakpoint()
 
 
 def params_as_subs_value(
