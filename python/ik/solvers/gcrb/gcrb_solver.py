@@ -236,9 +236,9 @@ class GcrbSolver2(AnalyticIkSolver):
     def solve(self):
         self.try_solve()
 
-        # if not self.is_success():
-        #     self.target_quaternion[1:] *= -1
-        #     self.try_solve()
+        if not self.is_success():
+            self.target_quaternion[1:] *= -1
+            self.try_solve()
 
     def try_solve(self):
         """

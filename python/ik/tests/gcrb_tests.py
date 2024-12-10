@@ -261,7 +261,7 @@ def test_curvature_from_junction():
 def run(loglevel=logging.INFO, plot=False):
     logging.basicConfig(level=loglevel)
     logger = logging.getLogger(__name__)
-    # test_base_case(logger, plot)
+    test_base_case(logger, plot)
     # paper_provided_test()
     singularity_test(logger)
     test_curvature_from_junction()
