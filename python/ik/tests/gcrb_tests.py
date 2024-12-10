@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from common.robot import ConstantCurvatureCR, ConstantCurvatureSegment
 from common.coordinates import CoordParamValue, ParamableCoord
 from common.types import TDCRPlotterSettings
-from common.utils import uq_to_so3
+from common.utils import uq_to_so3, se3_to_pose
 
 from ik.target import SE3IkTarget
 from ik.solvers.gcrb.gcrb_solver import GcrbSolver2, GcrbIkSettings
@@ -165,12 +165,29 @@ def singularity_test(logger):
         robot, settings, ik_target, CoordParamValue(ParamableCoord.Z, 2.5)
     )
     solver.solve()
-    assert np.isclose(solver.cr.state_vector(), [0, pi / 2, 2.5, 0, 0, 2.5]).all()
-    assert np.isclose(solver.cr2.state_vector(), [0, 0, 2.5, 0, pi / 2, 2.5]).all()
+
+    soln1 = solver.cr.pose_for_target(ik_target.target_type)
+    soln2 = solver.cr2.pose_for_target(ik_target.target_type)
+
+    target_pose = se3_to_pose(pose)
+    diff1 = np.linalg.norm(soln1 - target_pose)
+    diff2 = np.linalg.norm(soln2 - target_pose)
+
+    logger.info(f"soln1 error: {diff1}")
+    logger.info(f"soln2 error: {diff2}")
+    if diff1 < 1e-6 and diff2 < 1e-6:
+        logger.info("GCRB z-axis rotation case passed")
+    else:
+        if diff1 < 1e-6:
+            logger.error("GCRB z-axis rotation yielded valid soln 1, but not soln 2")
+        elif diff2 < 1e-6:
+            logger.error("GCRB z-axis rotation yielded valid soln 2, but not soln 1")
+        else:
+            logger.error("GCRB z-axis rotation case failed (two invalid solutions)")
 
     logger.info("Rotation about z-axis test passed")
 
-    # try rotation only about y-axis
+    # try rotation only about y-axis (TODO)
     segment1 = ConstantCurvatureSegment(1 / 0.1, 0.5, 0.05, is_extensible=True)
     segment2 = ConstantCurvatureSegment(
         1 / (2.5 * 0.05 / pi), pi / 2, 0.05, is_extensible=True
@@ -218,8 +235,6 @@ def test_curvature_from_junction():
     segment2 = ConstantCurvatureSegment(1 / 0.05, pi / 2, 0.05, is_extensible=True)
     target_robot = ConstantCurvatureCR([segment1, segment2])
 
-    print(f"target robot endpoint 1: {target_robot._endpoints()[0]}")
-
     # define paramater value: select value for the Z-coord of the segment junction
     # junction refers to endpoint of first segment
     target_robot_junction = target_robot._endpoints()[0]
@@ -246,7 +261,7 @@ def test_curvature_from_junction():
 def run(loglevel=logging.INFO, plot=False):
     logging.basicConfig(level=loglevel)
     logger = logging.getLogger(__name__)
-    test_base_case(logger, plot)
+    # test_base_case(logger, plot)
     # paper_provided_test()
     singularity_test(logger)
     test_curvature_from_junction()

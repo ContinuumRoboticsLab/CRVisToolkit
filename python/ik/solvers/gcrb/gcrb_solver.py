@@ -3,7 +3,7 @@ from spatialmath import SE3
 from copy import deepcopy
 
 from common.robot import ConstantCurvatureCR
-from common.utils import curvature_to_se3, se3_to_uq
+from common.utils import curvature_to_se3, se3_to_uq, se3_to_pose
 from common.coordinates import CoordParamValue, ParamableCoord
 
 from ik.solvers.base_solver import CcIkSettings, AnalyticIkSolver, IkResult
@@ -224,7 +224,23 @@ class GcrbSolver2(AnalyticIkSolver):
 
         return [seg1_curvature, seg2_curvature]
 
+    def is_success(self):
+        taraget_pose_as_vector = se3_to_pose(self.target_pose)
+
+        return np.allclose(
+            self.cr.pose_for_target(self.ik_target.target_type), taraget_pose_as_vector
+        ) or np.allclose(
+            self.cr2.pose_for_target(self.ik_target.target_type), taraget_pose_as_vector
+        )
+
     def solve(self):
+        self.try_solve()
+
+        # if not self.is_success():
+        #     self.target_quaternion[1:] *= -1
+        #     self.try_solve()
+
+    def try_solve(self):
         """
         Solve the IK problem for the GcrbSolver2
         """
@@ -257,6 +273,7 @@ class GcrbSolver2(AnalyticIkSolver):
             np.abs(self.target_quaternion[1]) < self.ZERO_TOLERANCE
             and np.abs(self.target_quaternion[2]) < self.ZERO_TOLERANCE
         ):
+            # breakpoint()
             # singularity condition 2: when mu and nu are zero, there is only rotation about the z-axis
             if self.parameter.coordinate != ParamableCoord.Z:
                 raise ValueError("Invalid coordinate for singularity")
@@ -265,7 +282,7 @@ class GcrbSolver2(AnalyticIkSolver):
             l2 = self.target_position[2] - l1
 
             nu = self.target_quaternion[3]
-            phi = 2 * np.arcsin(nu)
+            phi = 2 * np.asin(nu)
 
             self.cr.set_config([np.array([0, phi, l1]), np.array([0, 0, l2])])
             self.cr2.set_config([np.array([0, 0, l1]), np.array([0, phi, l2])])

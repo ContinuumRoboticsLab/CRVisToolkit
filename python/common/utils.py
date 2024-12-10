@@ -62,7 +62,7 @@ def pose_to_se3(pose: np.ndarray[float] | Twist3) -> np.ndarray[float]:
     return np.block([[r, p], [np.array([0, 0, 0, 1])]])
 
 
-def se3_to_uq(se3: np.ndarray[float]):
+def se3_to_uq(se3: np.ndarray[float], mult: float = 1):
     so3 = se3[:3, :3]
 
     _, eigenvecs = np.linalg.eig(so3[:3, :3])
@@ -89,6 +89,8 @@ def se3_to_uq(se3: np.ndarray[float]):
         theta = np.abs(theta)
     else:
         theta = -np.abs(theta)
+
+    theta *= mult
 
     return np.hstack([np.cos(theta / 2), np.sin(theta / 2) * ev])
 
