@@ -148,7 +148,7 @@ def test_nr_3(plot, logger):
     """
     testing a three-segment inextensible robot
     """
-    logger.info("**** Test Case 2: two-segment extensible CR****")
+    logger.info("**** Test Case 3: three-segment inextensible CR****")
 
     seg1 = ConstantCurvatureSegment(1 / 0.14, -0.8 * pi, 0.05)
     seg2 = ConstantCurvatureSegment(1 / 0.06, 0.4 * pi, 0.03)

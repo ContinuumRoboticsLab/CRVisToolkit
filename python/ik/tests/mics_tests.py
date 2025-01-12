@@ -31,6 +31,7 @@ def test_mics_nominations(logger):
     logger.info(
         f"number of candidate MICS starters: {len(solver.mics_starting_points)}"
     )
+    logger.info(f"{res}")
     # for soln in solver.mics_starting_points:
     # print(soln)
 

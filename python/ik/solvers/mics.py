@@ -6,7 +6,10 @@ from common.robot import ConstantCurvatureCR
 from common.utils import se3_to_uq, se3_to_pose
 
 from ik.solvers.base_solver import CcIkSettings, CcIkSolver, IkResult
-from ik.target import IkTarget
+from ik.solvers.nr import NewtonRhapsonIkSettings, NewtonRhapsonIkSolver
+from ik.target import IkTarget, SE3IkTarget
+
+from copy import deepcopy
 
 
 GAMMA_VAL = 0.5 + 1 / np.pi
@@ -23,6 +26,7 @@ class MicsSolverSettings(CcIkSettings):
     num_t_steps = 100
     max_numerical_solver_iterations = 100
     zero_tolerance = 1e-6
+    numerical_solver_settings = NewtonRhapsonIkSettings()
 
 
 class MicsSolver(CcIkSolver):
@@ -76,7 +80,7 @@ class MicsSolver(CcIkSolver):
         self.n1 = np.linalg.cross(self.n0, np.array([0, 0, 1]))
         self.n2 = np.linalg.cross(self.n0, self.n1)
 
-        self.u = np.array(n[1], n[0], 0)
+        self.u = np.array([n[1], n[0], 0])
         self.v = np.linalg.cross(n, self.u)
         self.P = np.column_stack([self.u, self.v, n])
         # self.P = np.column_stack([self.n1, self.n2, self.n0])
@@ -90,10 +94,8 @@ class MicsSolver(CcIkSolver):
         implements eqn (40) in the MICS paper, term by term
         """
 
-        l3 = self.cr.segments[2].length  # noqa
-
-        r3t = self.r0 + self.norm_r01 * np.array(
-            [np.cos(2 * np.pi * t), np.sin(2 * np.pi * t), 0]
+        r3t = self.r0 + self.norm_r01 * self.P @ np.array(
+            [np.sin(2 * np.pi * t), np.cos(2 * np.pi * t), 0]
         )
 
         return r3t
@@ -225,16 +227,53 @@ class MicsSolver(CcIkSolver):
 
         self.cr.set_config(np.array([[kappa1, phi1], [kappa2, phi2], [kappa3, phi3]]))
 
+    def _numerical_correction(self):
+        """
+        assumes own robot state has already been set, and attempts to perform
+        NR minimization from this point
+        """
+        robot_copy = deepcopy(self.cr)
+
+        numerical_solver = NewtonRhapsonIkSolver(
+            robot_copy,
+            self.settings.numerical_solver_settings,
+            robot_copy.state_vector(),
+            SE3IkTarget(se3_to_pose(self.target_pose)),
+        )
+
+        numerical_solver.solve()
+
+        _, (pos_error, ori_error) = numerical_solver._check_error_in_bounds()
+        error = np.linalg.norm(np.vstack([pos_error, ori_error]))
+
+        return (
+            error < self.settings.zero_tolerance,
+            numerical_solver.cr.state_vector(),
+            error,
+        )
+
     def solve(self, *args, **kwargs):
+        """
+        uses internally developed methods for determining r1, r2, r3 and the error
+        (these functions in the source code are not publicly available) but uses the same
+        logic as in the source MATLAB code for local error minimum detection
+        """
+
         t = 0
-        prev_error = None
-        cur_error = np.inf
+        i = 0
+        num_points = 0
+
+        errors = np.array(
+            [np.nan for _ in range(self.settings.max_numerical_solver_iterations)]
+        )
+        min_iter_nums = np.array(
+            [np.nan for _ in range(self.settings.max_numerical_solver_iterations)]
+        )
 
         local_min = []
 
-        # find all local minima
-        while t < 1:
-            # calculating the "next error"
+        # find all errors
+        while i < self.settings.max_numerical_solver_iterations:
             self.r3 = self._get_r3_approx(t)
             self.r1 = self._get_r1_approx()
 
@@ -245,20 +284,49 @@ class MicsSolver(CcIkSolver):
 
             if e1 > e2:
                 self.r2 = r2_cand_2
-                next_error = e2
+                err = e2
             else:
                 self.r2 = r2_cand_1
-                next_error = e1
+                err = e1
 
-            # local minimum check
-            if prev_error is not None:
-                if cur_error < next_error and cur_error <= prev_error:
+            # TODO: fill out the error checking to mirror the MATLAB logic line for line
+            if i == 0:
+                pass  # noqa
+            elif i == 1:
+                # always add first point
+                num_points += 1
+                local_min.append((self.r1, self.r2, self.r3))
+                min_iter_nums[num_points] = 1
+            else:
+                if err > errors[i - 1] and errors[i - 1] <= errors[i - 2]:
+                    num_points += 1
                     local_min.append((self.r1, self.r2, self.r3))
+                    min_iter_nums[num_points] = i - 1
 
-            prev_error = cur_error
-            cur_error = next_error
-
+            errors[i] = err
             t += self.t_step
+            i += 1
+
+        # check limits of search space
+        if t == 1:  # first, last point will coincide
+            if errors[1] > errors[0] and errors[0] <= errors[2]:
+                # first/last point is a local min
+                num_points += 1
+                local_min.append((self.r1, self.r2, self.r3))
+                min_iter_nums[num_points] = 1
+            else:
+                local_min = local_min[1:]
+                min_iter_nums = min_iter_nums[1:]
+
+        else:  # step size not divisor of 1, check both ends
+            if errors[0] > errors[-1] and errors[-1] <= errors[-2]:
+                num_points += 1
+                local_min.append((self.r1, self.r2, self.r3))
+                min_iter_nums[num_points] = i - 1
+            if errors[1] > errors[0] and errors[0] <= errors[2]:
+                num_points += 1
+                local_min.append((self.r1, self.r2, self.r3))
+                min_iter_nums[num_points] = 1
 
         # try numerical correction (NR) for all candidate local minima
         if len(local_min) == 0:
@@ -268,14 +336,22 @@ class MicsSolver(CcIkSolver):
         self.mics_starting_points = local_min
 
         post_correction_errors = []
-        for r1, r2, r3 in local_min:
-            # r1, r2, r3 = self._numerical_correction(r1, r2, r3)
-            error = self._get_error(r1, r2, r3)
-            if error < self.settings.zero_tolerance or True:
+        for i, (r1, r2, r3) in enumerate(local_min):
+            try:
+                # set robot state from the local minima
                 self._set_state_from_r(r1, r2, r3)
-                # return IkResult.SUCCESS
+                # use the set robot state to start the numerical correction
+                converged, robot_state, error = self._numerical_correction()
+                post_correction_errors.append(error)
 
-            post_correction_errors.append(error)
+                if converged:
+                    self.cr.set_config(robot_state)
+                    return IkResult.SUCCESS
+            except Exception as e:
+                print(f"Unable to perform numerical convergence for local min {i}: {e}")
+
+        if len(post_correction_errors) == 0:
+            return IkResult.DIVERGED
 
         ind = np.argmin(post_correction_errors)
         r1, r2, r3 = local_min[ind]

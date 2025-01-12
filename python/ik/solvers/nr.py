@@ -128,7 +128,11 @@ class NewtonRhapsonIkSolver(IterativeIkSolver):
         diff = self.ik_target_pose - pose
 
         if j.shape[0] == j.shape[1]:
-            j_inv = np.linalg.inv(j)
+            try:
+                j_inv = np.linalg.inv(j)
+            except np.linalg.LinAlgError:
+                print("Singular matrix, using pseudo-inverse")
+                j_inv = np.linalg.pinv(j)
         else:
             j_inv = np.linalg.pinv(j)
 
