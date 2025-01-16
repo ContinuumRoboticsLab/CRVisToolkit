@@ -4,6 +4,9 @@ from ik.target import SE3IkTarget
 from ik.solvers.mics import MicsSolverSettings, MicsSolver
 import logging
 
+from plotter.tdcr import draw_tdcr, TDCRPlotterSettings
+from matplotlib import pyplot as plt
+
 
 def test_mics_nominations(logger):
     logger.info("**** Test Case 1: three-segment inextensible CR ****")
@@ -32,8 +35,21 @@ def test_mics_nominations(logger):
         f"number of candidate MICS starters: {len(solver.mics_starting_points)}"
     )
     logger.info(f"{res}")
-    # for soln in solver.mics_starting_points:
-    # print(soln)
+
+    soln_plot = solver.cr.as_discrete_curve(pts_per_seg=10)
+    solver.cr.set_config(
+        solver.mics_starting_point_configurations[solver.converged_starting_point]
+    )
+    mics_starter_plot = solver.cr.as_discrete_curve(pts_per_seg=10)
+    draw_tdcr(
+        soln_plot,
+        TDCRPlotterSettings(plot_title="MICS base case 1 Solution"),
+    )
+    draw_tdcr(
+        mics_starter_plot,
+        TDCRPlotterSettings(plot_title="MICS base case 1 MICS Starter"),
+    )
+    plt.show()
 
 
 def run(plot=False, loglevel=logging.INFO):

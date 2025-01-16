@@ -6,6 +6,49 @@ from spatialmath import SE3, Twist3
 from common.types import CRDiscreteCurve, PlotterSettings
 
 
+# mics matrix/quaternion operator utilities (many taken from MICS solver code)
+def up_star(q: np.ndarray[float]) -> np.ndarray[float]:
+    # conjugate of quaternion
+    delta = q[0]
+    epsilon = q[1:]
+    return np.array([delta, -epsilon[0], -epsilon[1], -epsilon[2]])
+
+
+def up_hat(v: np.ndarray[float]) -> np.ndarray[float]:
+    # compute the lie algebra of a vector
+    if np.size(v) == 3:
+        return np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])
+    else:
+        raise NotImplementedError("Only 3D vectors are supported")
+
+
+def up_plus(q: np.ndarray[float]) -> np.ndarray[float]:
+    # matrix for left mul of quaternions
+    delta = q[0]
+    epsilon = q[1:]
+    q_up_plus = np.block(
+        [
+            [delta, -epsilon.T],
+            [epsilon.reshape(3, 1), delta * np.eye(3) + up_hat(epsilon)],
+        ]
+    )
+
+    return q_up_plus
+
+
+def up_oplus(q: np.ndarray[float]) -> np.ndarray[float]:
+    # matrix for right mul of quaternions
+    delta = q[0]
+    epsilon = q[1:]
+    q_up_oplus = np.block(
+        [
+            [delta, -epsilon.T],
+            [epsilon.reshape(3, 1), delta * np.eye(3) - up_hat(epsilon)],
+        ]
+    )
+    return q_up_oplus
+
+
 def skew(v: np.ndarray[float]) -> np.ndarray[float]:
     return np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])
 

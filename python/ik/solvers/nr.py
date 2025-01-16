@@ -131,7 +131,7 @@ class NewtonRhapsonIkSolver(IterativeIkSolver):
             try:
                 j_inv = np.linalg.inv(j)
             except np.linalg.LinAlgError:
-                print("Singular matrix, using pseudo-inverse")
+                # print("Singular matrix, using pseudo-inverse")
                 j_inv = np.linalg.pinv(j)
         else:
             j_inv = np.linalg.pinv(j)
@@ -200,7 +200,7 @@ class NewtonRhapsonIkSolver(IterativeIkSolver):
         elif self.iter_count > self.settings.max_iter:
             return (True, IkResult.MAX_ITER)
         else:
-            print(f"Iteration {self.iter_count} - Error: {error}")
+            # print(f"Iteration {self.iter_count} - Error: {error}")
             return (False, None)
 
 
