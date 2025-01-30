@@ -80,9 +80,9 @@ class SO3IkTarget(IkTarget):
         self.pose = pose
 
 
-class PositionPointingIkTarget(IkTarget):
+class P3Direction(IkTarget):
     """
-    the position-pointing target specifies a target position and a target direction
+    the P3 Direction target specifies a target position and a target direction
 
     this imposes three constraints translationally and two constraints rotationally
     and provides an additional degree of freedom compared to the SE3 target
