@@ -157,7 +157,7 @@ class IterativeIkSolver(CcIkSolver):
         **kwargs,
     ):
         super().__init__(cr, settings, ik_target_pose, **kwargs)
-        self.iter_count = 0
+        self.iter_count = self.exec_time = None
 
     def solve(self, *args, **kwargs):
         self._prepare_solver(*args, **kwargs)

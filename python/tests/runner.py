@@ -25,16 +25,19 @@ class TestRunner:
         num_success = 0
 
         for i in tqdm(range(n)):
-            test_case_i = self.generator.generate_case(self.target_type)
+            try:
+                test_case_i = self.generator.generate_case(self.target_type)
 
-            result, execution_time = test_case_i.solve_with_solver(
-                self.solver_class, self.settings, debug_mode
-            )
+                result, execution_time = test_case_i.solve_with_solver(
+                    self.solver_class, self.settings, debug_mode
+                )
 
-            if result.is_success:
-                num_success += 1
+                if result.is_success:
+                    num_success += 1
 
-            avg_execution = (avg_execution * i + execution_time) / (i + 1)
+                avg_execution = (avg_execution * i + execution_time) / (i + 1)
+            except Exception as e:
+                print(f"Error in iteration {i}: {e}")
 
         print(f"Success rate: {num_success / n}")
         print(f"Execution time: {avg_execution}")

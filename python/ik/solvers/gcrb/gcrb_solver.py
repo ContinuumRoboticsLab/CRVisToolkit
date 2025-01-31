@@ -1,4 +1,5 @@
 import numpy as np
+import time
 from spatialmath import SE3
 from copy import deepcopy
 
@@ -252,11 +253,22 @@ class GcrbSolver2(AnalyticIkSolver):
         )
 
     def solve(self):
-        self.try_solve()
+        try_again = False
+        try:
+            start_time = time.time()
+            res = self.try_solve()
+            if self.is_success():
+                self.exec_time = time.time() - start_time
+                return res
+        except ValueError:
+            try_again = True
 
-        if not self.is_success():
+        if try_again or not self.is_success():
             self.target_quaternion[1:] *= -1
-            self.try_solve()
+            start_time = time.time()
+            res = self.try_solve()
+            self.exec_time = time.time() - start_time
+            return res
 
     def try_solve(self):
         """

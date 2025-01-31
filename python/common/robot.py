@@ -34,6 +34,8 @@ class RobotSegmentLimits:
     min_length: float = 0.04
     max_length: float = 0.04
 
+    is_extensible: bool = False
+
 
 class ConstantCurvatureSegment:
     """
@@ -198,7 +200,7 @@ class ConstantCurvatureSegment:
         phi = rng.uniform(limits.min_phi, limits.max_phi)
         length = rng.uniform(limits.min_length, limits.max_length)
 
-        return cls(theta / length, phi, length)
+        return cls(theta / length, phi, length, is_extensible=limits.is_extensible)
 
 
 class ConstantCurvatureCR:
