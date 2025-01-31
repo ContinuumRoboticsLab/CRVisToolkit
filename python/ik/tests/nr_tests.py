@@ -63,14 +63,10 @@ def test_nr_1(plot, logger):
 
     logger.info(f"target pose: {target_pose.pose}")
 
-    se3_solver = NewtonRhapsonIkSolver(
-        robot, NewtonRhapsonIkSettings(), robot.state_vector(), target_pose
-    )
+    se3_solver = NewtonRhapsonIkSolver(robot, NewtonRhapsonIkSettings(), target_pose)
     se3_res = se3_solver.solve()
 
-    p3_solver = NewtonRhapsonIkSolver(
-        robot, NewtonRhapsonIkSettings(), robot.state_vector(), target_position
-    )
+    p3_solver = NewtonRhapsonIkSolver(robot, NewtonRhapsonIkSettings(), target_position)
     p3_res = p3_solver.solve()
 
     if plot:
@@ -116,12 +112,8 @@ def test_nr_2(plot, logger):
 
     logger.info(f"target pose: {target_pose.pose}")
 
-    se3_solver = NewtonRhapsonIkSolver(
-        robot, settings, robot.state_vector(), target_pose
-    )
-    p3_solver = NewtonRhapsonIkSolver(
-        robot, settings, robot.state_vector(), target_position
-    )
+    se3_solver = NewtonRhapsonIkSolver(robot, settings, target_pose)
+    p3_solver = NewtonRhapsonIkSolver(robot, settings, target_position)
 
     se3_res = _run_solver_test(target_robot, se3_solver, logger)
     p3_res = _run_solver_test(target_robot, p3_solver, logger)
@@ -171,12 +163,8 @@ def test_nr_3(plot, logger):
 
     logger.info(f"target pose: {target_pose.pose}")
 
-    se3_solver = NewtonRhapsonIkSolver(
-        robot, settings, robot.state_vector(), target_pose
-    )
-    p3_solver = NewtonRhapsonIkSolver(
-        robot, settings, robot.state_vector(), target_position
-    )
+    se3_solver = NewtonRhapsonIkSolver(robot, settings, target_pose)
+    p3_solver = NewtonRhapsonIkSolver(robot, settings, target_position)
 
     se3_res = _run_solver_test(target_robot, se3_solver, logger)
     p3_res = _run_solver_test(target_robot, p3_solver, logger)

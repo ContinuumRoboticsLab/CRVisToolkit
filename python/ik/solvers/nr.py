@@ -15,6 +15,7 @@ from common.robot import ConstantCurvatureCR
 from common.jacobian import jacobian
 
 from ik.solvers.base_solver import IterativeIkSolver, CcIkSettings, IkResult
+from ik.target import IkTarget
 from ik.index import IkSolverType
 
 
@@ -51,14 +52,11 @@ class NewtonRhapsonIkSolver(IterativeIkSolver):
         self,
         cr: ConstantCurvatureCR,
         settings: NewtonRhapsonIkSettings,
-        initial_condition: np.ndarray[float] | list[float],
-        ik_target_pose: np.ndarray[float],
+        ik_target_pose: IkTarget,
         **kwargs,
     ):
-        if isinstance(initial_condition, list):
-            initial_condition = np.array(initial_condition)
-
         self.total_dof = sum([seg.n for seg in cr.segments])
+        initial_condition = cr.state_vector()
 
         # check if the initial condition is of valid dimensionality
         if initial_condition.shape != (self.total_dof, 1):

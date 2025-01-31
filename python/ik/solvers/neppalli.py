@@ -14,6 +14,7 @@ which the segments lengths will be determined.
 import numpy as np
 from scipy.spatial.transform import Rotation as R
 from math import pi
+from time import time
 
 from common.coordinates import CrConfigurationType
 from common.robot import ConstantCurvatureCR
@@ -27,7 +28,7 @@ class NeppalliIkSettings(CcIkSettings):
     pass
 
 
-class NeppalliIktarget(IkTarget):
+class NeppalliIkTarget(IkTarget):
     """
     The Neppalli solver requires its own IK target class
     since it does not target a single end-effector pose or
@@ -45,6 +46,10 @@ class NeppalliIktarget(IkTarget):
 
     def endpoints(self):
         return self.seg_endpoints
+
+    @classmethod
+    def from_target_robot(cls, target_robot):
+        return cls(target_robot._endpoints())
 
 
 class NeppalliIkSolver(AnalyticIkSolver):
@@ -67,7 +72,7 @@ class NeppalliIkSolver(AnalyticIkSolver):
         self,
         cr: ConstantCurvatureCR,
         settings: NeppalliIkSettings,
-        ik_target: NeppalliIktarget,
+        ik_target: NeppalliIkTarget,
         **kwargs,
     ):
         endpoints = ik_target.endpoints()
@@ -156,10 +161,12 @@ class NeppalliIkSolver(AnalyticIkSolver):
         solve the IK problem using the Neppalli closed form solution
         """
         try:
+            start_time = time()
             for i in range(len(self.cr.segments)):
                 self._solve_segment_i(i)
                 if i < len(self.cr.segments) - 1:
                     self._transform_next_segments(i)
+            self.exec_time = time() - start_time
 
         # TODO: catch less generic exceptions for solution unviable, etc.
         except Exception as e:

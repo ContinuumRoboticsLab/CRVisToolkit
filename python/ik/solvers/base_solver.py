@@ -13,6 +13,7 @@ from dataclasses import dataclass
 from enum import Enum
 from copy import deepcopy
 import numpy as np
+import time
 from ik.target import IkTarget, IkTargetType
 
 from common.robot import ConstantCurvatureCR
@@ -152,19 +153,20 @@ class IterativeIkSolver(CcIkSolver):
         self,
         cr: ConstantCurvatureCR,
         settings: CcIkSettings,
-        initial_condition: np.ndarray[float],  # robot configuration
         ik_target_pose: IkTarget,
         **kwargs,
     ):
         super().__init__(cr, settings, ik_target_pose, **kwargs)
-        self.inital_condition = initial_condition
         self.iter_count = 0
 
     def solve(self, *args, **kwargs):
         self._prepare_solver(*args, **kwargs)
 
+        start_time = time.time()
         while not self.stopping_condition[0]:
             self._perform_iteration(*args, **kwargs)
+
+        self.exec_time = time.time() - start_time
 
         self.solved = True
 

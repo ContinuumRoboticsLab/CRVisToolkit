@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 from common.robot import ConstantCurvatureCR, ConstantCurvatureSegment
 
-from ik.solvers.neppalli import NeppalliIkSettings, NeppalliIkSolver, NeppalliIktarget
+from ik.solvers.neppalli import NeppalliIkSettings, NeppalliIkSolver, NeppalliIkTarget
 
 from plotter.tdcr import draw_tdcr
 from common.types import TDCRPlotterSettings
@@ -37,7 +37,7 @@ def test_base_case(logger, plot=False):
     target_robot = ConstantCurvatureCR([segment])
     target_pose = target_robot.pose_vector()
 
-    ik_target = NeppalliIktarget(target_robot._endpoints())
+    ik_target = NeppalliIkTarget(target_robot._endpoints())
     settings = NeppalliIkSettings()
 
     solver = NeppalliIkSolver(
@@ -74,7 +74,7 @@ def test_base_case_2(logger, plot=False):
     target_robot = ConstantCurvatureCR([segment1, segment2])
     target_pose = target_robot.pose_vector()
 
-    ik_target = NeppalliIktarget(target_robot._endpoints())
+    ik_target = NeppalliIkTarget(target_robot._endpoints())
     settings = NeppalliIkSettings()
 
     solver = NeppalliIkSolver(
@@ -122,7 +122,7 @@ def test_neppalli_manyseg(logger, num_segs, plot=False):
     target_robot = ConstantCurvatureCR(segments)
     target_pose = target_robot.pose_vector()
 
-    ik_target = NeppalliIktarget(target_robot._endpoints())
+    ik_target = NeppalliIkTarget(target_robot._endpoints())
 
     settings = NeppalliIkSettings()
 

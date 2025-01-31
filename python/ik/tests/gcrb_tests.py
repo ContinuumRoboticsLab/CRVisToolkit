@@ -13,8 +13,7 @@ from common.coordinates import CoordParamValue, ParamableCoord
 from common.types import TDCRPlotterSettings
 from common.utils import uq_to_so3, se3_to_pose
 
-from ik.target import SE3IkTarget
-from ik.solvers.gcrb.gcrb_solver import GcrbSolver2, GcrbIkSettings
+from ik.solvers.gcrb.gcrb_solver import GcrbSolver2, GcrbIkSettings, GcrbIkTarget
 
 from spatialmath import SO3
 
@@ -43,7 +42,7 @@ def test_base_case(logger, plot=False):
 
     settings = GcrbIkSettings()
     ik_target_a = target_robot.t_matrix().A
-    ik_target = SE3IkTarget(ik_target_a)
+    ik_target = GcrbIkTarget(ik_target_a, coord_param)
 
     robot = ConstantCurvatureCR(
         [
@@ -52,7 +51,7 @@ def test_base_case(logger, plot=False):
         ]
     )
 
-    solver = GcrbSolver2(robot, settings, ik_target, coord_param)
+    solver = GcrbSolver2(robot, settings, ik_target)
     solver.solve()
 
     soln1 = solver.cr.pose_for_target(ik_target.target_type)
@@ -107,12 +106,10 @@ def paper_provided_test():
     pose[:3, :3] = r3
     pose[:3, 3] = pt
 
-    ik_target = SE3IkTarget(pose)
+    ik_target = GcrbIkTarget(pose, CoordParamValue(ParamableCoord.Z, 3))
     settings = GcrbIkSettings()
 
-    solver = GcrbSolver2(
-        robot, settings, ik_target, CoordParamValue(ParamableCoord.Z, 3)
-    )
+    solver = GcrbSolver2(robot, settings, ik_target)
 
     solver.solve()
 
@@ -139,12 +136,10 @@ def singularity_test(logger):
         ]
     )
 
-    ik_target = SE3IkTarget(pose)
+    ik_target = GcrbIkTarget(pose, CoordParamValue(ParamableCoord.Z, 2.5))
     settings = GcrbIkSettings()
 
-    solver = GcrbSolver2(
-        robot, settings, ik_target, CoordParamValue(ParamableCoord.Z, 2.5)
-    )
+    solver = GcrbSolver2(robot, settings, ik_target)
     solver.solve()
 
     state = solver.cr.state_vector()
@@ -158,12 +153,10 @@ def singularity_test(logger):
     pose[:3, 3] = position
     pose[:3, :3] = SO3.Rz(pi / 2).A
 
-    ik_target = SE3IkTarget(pose)
+    ik_target = GcrbIkTarget(pose, CoordParamValue(ParamableCoord.Z, 2.5))
     settings = GcrbIkSettings()
 
-    solver = GcrbSolver2(
-        robot, settings, ik_target, CoordParamValue(ParamableCoord.Z, 2.5)
-    )
+    solver = GcrbSolver2(robot, settings, ik_target)
     solver.solve()
 
     soln1 = solver.cr.pose_for_target(ik_target.target_type)
@@ -199,7 +192,7 @@ def singularity_test(logger):
     coord_param = CoordParamValue(ParamableCoord.Z, target_robot_junction[2])
 
     settings = GcrbIkSettings()
-    ik_target = SE3IkTarget(target_robot.t_matrix().A)
+    ik_target = GcrbIkTarget(target_robot.t_matrix().A, coord_param)
 
     robot = ConstantCurvatureCR(
         [
@@ -208,7 +201,7 @@ def singularity_test(logger):
         ]
     )
 
-    solver = GcrbSolver2(robot, settings, ik_target, coord_param)
+    solver = GcrbSolver2(robot, settings, ik_target)
     solver.solve()
 
     soln1 = solver.cr.pose_for_target(ik_target.target_type)
@@ -241,7 +234,7 @@ def test_curvature_from_junction():
     coord_param = CoordParamValue(ParamableCoord.Z, target_robot_junction[2])
 
     settings = GcrbIkSettings()
-    ik_target = SE3IkTarget(target_robot.t_matrix().A)
+    ik_target = GcrbIkTarget(target_robot.t_matrix().A, coord_param)
 
     robot = ConstantCurvatureCR(
         [
@@ -250,7 +243,7 @@ def test_curvature_from_junction():
         ]
     )
 
-    solver = GcrbSolver2(robot, settings, ik_target, coord_param)
+    solver = GcrbSolver2(robot, settings, ik_target)
 
     junction = target_robot._endpoints()[0]
     solution_config = np.hstack(solver._config_from_junction(junction))

@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.random import Generator
 from numpy.typing import ArrayLike
 from math import sin as s
 from math import cos as c
@@ -9,6 +10,29 @@ from common.utils import robotindependentmapping, se3_to_pose
 from common.types import CRDiscreteCurve
 from common.coordinates import CrConfigurationType
 from ik.target import IkTargetType
+
+from dataclasses import dataclass
+
+
+@dataclass
+class RobotSegmentLimits:
+    """
+    the actuable limits of a continuum robot segment using constant
+    curvature representation.
+
+    the internal represention uses the arc angle theta, the angle of the
+    bending plance phi, and theta the segment length. This implies a different
+    maximum curvature at various lengths.
+    """
+
+    min_theta: float = 0.0
+    max_theta: float = np.pi
+
+    min_phi: float = -np.pi
+    max_phi: float = np.pi
+
+    min_length: float = 0.04
+    max_length: float = 0.04
 
 
 class ConstantCurvatureSegment:
@@ -163,6 +187,18 @@ class ConstantCurvatureSegment:
             t_matrix[:, 3] = [0, 0, self.length, 1]
 
         return SE3(t_matrix)
+
+    @classmethod
+    def random(cls, rng: Generator, limits: RobotSegmentLimits):
+        """
+        generates a random segment within the given limits
+        """
+
+        theta = rng.uniform(limits.min_theta, limits.max_theta)
+        phi = rng.uniform(limits.min_phi, limits.max_phi)
+        length = rng.uniform(limits.min_length, limits.max_length)
+
+        return cls(theta / length, phi, length)
 
 
 class ConstantCurvatureCR:

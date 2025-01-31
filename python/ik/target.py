@@ -34,6 +34,15 @@ class IkTarget:
     def as_array(self) -> np.ndarray[float]:
         return self.pose
 
+    @classmethod
+    def from_target_robot(cls, target_robot):
+        """
+        uses the configuration of a robot to generate an inverse kinematics target
+        that is guaranteeed to have a solution.
+        """
+
+        raise NotImplementedError
+
 
 class SE3IkTarget(IkTarget):
     """
@@ -44,6 +53,10 @@ class SE3IkTarget(IkTarget):
 
     def __init__(self, pose: np.ndarray[float]):
         self.pose = pose
+
+    @classmethod
+    def from_target_robot(cls, target_robot):
+        return cls(target_robot.pose_vector())
 
 
 class P3IkTarget(IkTarget):
@@ -66,6 +79,10 @@ class P3IkTarget(IkTarget):
             raise ValueError("Invalid pose shape")
 
         self.pose = pose
+
+    @classmethod
+    def from_target_robot(cls, target_robot):
+        return cls(target_robot.pose_vector())
 
 
 class SO3IkTarget(IkTarget):
