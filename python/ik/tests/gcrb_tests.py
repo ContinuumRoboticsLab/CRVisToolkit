@@ -54,8 +54,8 @@ def test_base_case(logger, plot=False):
     solver = GcrbSolver2(robot, settings, ik_target)
     solver.solve()
 
-    soln1 = solver.cr.pose_for_target(ik_target.target_type)
-    soln2 = solver.cr2.pose_for_target(ik_target.target_type)
+    soln1 = solver.cr.pose_vector()
+    soln2 = solver.cr2.pose_vector()
 
     diff1 = np.linalg.norm(soln1 - target_pose)
     diff2 = np.linalg.norm(soln2 - target_pose)
@@ -159,8 +159,8 @@ def singularity_test(logger):
     solver = GcrbSolver2(robot, settings, ik_target)
     solver.solve()
 
-    soln1 = solver.cr.pose_for_target(ik_target.target_type)
-    soln2 = solver.cr2.pose_for_target(ik_target.target_type)
+    soln1 = solver.cr.pose_vector()
+    soln2 = solver.cr2.pose_vector()
 
     target_pose = se3_to_pose(pose)
     diff1 = np.linalg.norm(soln1 - target_pose)
@@ -204,8 +204,8 @@ def singularity_test(logger):
     solver = GcrbSolver2(robot, settings, ik_target)
     solver.solve()
 
-    soln1 = solver.cr.pose_for_target(ik_target.target_type)
-    soln2 = solver.cr2.pose_for_target(ik_target.target_type)
+    soln1 = solver.cr.pose_vector()
+    soln2 = solver.cr2.pose_vector()
 
     diff1 = np.linalg.norm(soln1 - target_pose)
     diff2 = np.linalg.norm(soln2 - target_pose)

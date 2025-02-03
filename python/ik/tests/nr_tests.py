@@ -12,7 +12,7 @@ from math import pi
 import matplotlib.pyplot as plt
 from common.robot import ConstantCurvatureCR, ConstantCurvatureSegment
 from common.types import TDCRPlotterSettings
-from ik.target import SE3IkTarget, P3IkTarget
+from ik.target import R6TwistIkTarget, P3IkTarget
 from ik.solvers.nr import NewtonRhapsonIkSettings, NewtonRhapsonIkSolver
 import logging
 
@@ -58,7 +58,7 @@ def test_nr_1(plot, logger):
         yielding state\n {robot.pose_vector(robot.state_vector())}"
     )
 
-    target_pose = SE3IkTarget(target_robot.pose_vector())
+    target_pose = R6TwistIkTarget(target_robot.pose_vector())
     target_position = P3IkTarget(target_robot.pose_vector())
 
     logger.info(f"target pose: {target_pose.pose}")
@@ -107,7 +107,7 @@ def test_nr_2(plot, logger):
 
     settings = NewtonRhapsonIkSettings()
 
-    target_pose = SE3IkTarget(target_robot.pose_vector())
+    target_pose = R6TwistIkTarget(target_robot.pose_vector())
     target_position = P3IkTarget(target_robot.pose_vector())
 
     logger.info(f"target pose: {target_pose.pose}")
@@ -158,7 +158,7 @@ def test_nr_3(plot, logger):
 
     settings = NewtonRhapsonIkSettings()
 
-    target_pose = SE3IkTarget(target_robot.pose_vector())
+    target_pose = R6TwistIkTarget(target_robot.pose_vector())
     target_position = P3IkTarget(target_robot.pose_vector())
 
     logger.info(f"target pose: {target_pose.pose}")

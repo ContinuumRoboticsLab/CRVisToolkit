@@ -202,6 +202,18 @@ class ConstantCurvatureSegment:
 
         return cls(theta / length, phi, length, is_extensible=limits.is_extensible)
 
+    @classmethod
+    def random_from_l(cls, length: float, rng: Generator, limits: RobotSegmentLimits):
+        """
+        generates a random segment within the given limits and provided
+        segment legnth
+        """
+
+        theta = rng.uniform(limits.min_theta, limits.max_theta)
+        phi = rng.uniform(limits.min_phi, limits.max_phi)
+
+        return cls(theta / length, phi, length, is_extensible=limits.is_extensible)
+
 
 class ConstantCurvatureCR:
     """
@@ -352,9 +364,11 @@ class ConstantCurvatureCR:
         self, target_type: IkTargetType, theta: np.ndarray[float] | None = None
     ):
         match target_type:
-            case IkTargetType.SE3 | IkTargetType.POSITION_POINTING:
+            case IkTargetType.R6 | IkTargetType.POSITION_POINTING:
                 # return full (6x1)
                 return self.pose_vector(theta)
+            case IkTargetType.SE3:
+                return self.t_matrix().A
             case IkTargetType.P3:
                 # return only the position part of the pose vector
                 return self.pose_vector(theta)[:3]

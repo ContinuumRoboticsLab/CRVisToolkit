@@ -4,6 +4,7 @@ from enum import Enum
 
 class IkTargetType(Enum):
     SE3 = "SE3"
+    R6 = "R6"
     P3 = "P3"
     SO3 = "SO3"
     POSITION_POINTING = "POSITION_POINTING"
@@ -50,6 +51,21 @@ class SE3IkTarget(IkTarget):
     """
 
     target_type = IkTargetType.SE3
+
+    def __init__(self, pose: np.ndarray[float]):
+        self.pose = pose
+
+    @classmethod
+    def from_target_robot(cls, target_robot):
+        return cls(target_robot.t_matrix())
+
+
+class R6TwistIkTarget(IkTarget):
+    """
+    an R6 target is a 6x1 numpy array representing a twist in 3D space
+    """
+
+    target_type = IkTargetType.R6
 
     def __init__(self, pose: np.ndarray[float]):
         self.pose = pose

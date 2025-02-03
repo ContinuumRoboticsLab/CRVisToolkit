@@ -1,5 +1,5 @@
 import numpy as np
-from ik.target import IkTargetType, SE3IkTarget, P3IkTarget, P3Direction
+from ik.target import IkTarget
 from ik.solvers.base_solver import IkResult, CcIkSolver, CcIkSettings
 
 from plotter.tdcr import draw_tdcr, TDCRPlotterSettings
@@ -8,8 +8,8 @@ from copy import deepcopy
 
 
 class IkTestCase:
-    def __init__(self, ik_target, starting_robot):
-        self.ik_target = ik_target
+    def __init__(self, target_robot, starting_robot):
+        self.target_robot = target_robot
         self.starting_robot = starting_robot
 
     def _get_pose(self) -> np.ndarray[float]:
@@ -18,34 +18,25 @@ class IkTestCase:
 
         return pose
 
-    def as_ik_target_type(self, type: IkTargetType) -> type[IkTargetType]:
-        """
-        construct an instance of target type provided - allows
-        for any `IkTestCase` to be used for any target type
-        """
-
-        match type.target_type:
-            case IkTargetType.SE3:
-                return SE3IkTarget()
-            case IkTargetType.P3:
-                return P3IkTarget
-            case IkTargetType.DIRECTION:
-                return P3Direction
-            case _:
-                raise ValueError("Invalid target type")
+    def as_target_type(self, ik_target_class: type[IkTarget]) -> IkTarget:
+        return ik_target_class.from_target_robot(self.target_robot)
 
     def solve_with_solver(
         self,
         solver_class: type[CcIkSolver],
         settings: CcIkSettings,
+        target_class: type[IkTarget],
         debug_mode: bool = False,
     ) -> tuple[IkResult, float]:
-        starter = self.starting_robot.as_discrete_curve(pts_per_seg=10)
-        solver = solver_class(deepcopy(self.starting_robot), settings, self.ik_target)
+        starter_plot = self.starting_robot.as_discrete_curve(pts_per_seg=10)
+
+        ik_target = self.as_target_type(target_class)
+
+        solver = solver_class(deepcopy(self.starting_robot), settings, ik_target)
         result = solver.solve()
         if debug_mode:
             # plot solutions
-            draw_tdcr(starter, TDCRPlotterSettings(plot_title="Starting Robot"))
+            draw_tdcr(starter_plot, TDCRPlotterSettings(plot_title="Starting Robot"))
             draw_tdcr(
                 solver.cr.as_discrete_curve(pts_per_seg=10),
                 TDCRPlotterSettings(plot_title="Solved Robot"),

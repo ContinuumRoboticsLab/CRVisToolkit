@@ -1,3 +1,4 @@
+import time
 import numpy as np
 from scipy.linalg import logm
 from spatialmath import SE3
@@ -7,7 +8,7 @@ from common.utils import se3_to_uq, se3_to_pose, up_star, up_plus, up_oplus
 
 from ik.solvers.base_solver import CcIkSettings, CcIkSolver, IkResult
 from ik.solvers.nr import NewtonRhapsonIkSettings, NewtonRhapsonIkSolver
-from ik.target import IkTarget, SE3IkTarget
+from ik.target import IkTarget, R6TwistIkTarget
 
 from copy import deepcopy
 
@@ -324,8 +325,7 @@ class MicsSolver(CcIkSolver):
         numerical_solver = NewtonRhapsonIkSolver(
             robot_copy,
             self.settings.numerical_solver_settings,
-            robot_copy.state_vector(),
-            SE3IkTarget(se3_to_pose(self.target_pose)),
+            R6TwistIkTarget(se3_to_pose(self.target_pose)),
         )
 
         numerical_solver.solve()
@@ -345,6 +345,8 @@ class MicsSolver(CcIkSolver):
         (these functions in the source code are not publicly available) but uses the same
         logic as in the source MATLAB code for local error minimum detection
         """
+
+        start = time.time()
 
         t = 0
         i = 0
@@ -434,10 +436,13 @@ class MicsSolver(CcIkSolver):
                 if converged:
                     self.converged_starting_point = i
                     self.cr.set_config(robot_state)
+                    self.exec_time = time.time() - start
                     return IkResult.SUCCESS
             except Exception as e:
+                self.exec_time = time.time() - start
                 print(f"Unable to perform numerical convergence for local min {i}: {e}")
 
+        self.exec_time = time.time() - start
         if len(post_correction_errors) == 0:
             return IkResult.DIVERGED
 
