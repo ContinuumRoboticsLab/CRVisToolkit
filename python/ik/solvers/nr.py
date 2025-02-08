@@ -19,11 +19,11 @@ from ik.target import IkTarget
 from ik.index import IkSolverType
 
 
-class NewtonRhapsonIkSettings(CcIkSettings):
+class NewtonRaphsonIkSettings(CcIkSettings):
     pass
 
 
-class NewtonRhapsonIkSolver(IterativeIkSolver):
+class NewtonRaphsonIkSolver(IterativeIkSolver):
     """
     Implementation of the Newton-Rhapson method for inverse kinematics.
 
@@ -51,7 +51,7 @@ class NewtonRhapsonIkSolver(IterativeIkSolver):
     def __init__(
         self,
         cr: ConstantCurvatureCR,
-        settings: NewtonRhapsonIkSettings,
+        settings: NewtonRaphsonIkSettings,
         ik_target_pose: IkTarget,
         **kwargs,
     ):

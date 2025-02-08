@@ -13,14 +13,14 @@ import matplotlib.pyplot as plt
 from common.robot import ConstantCurvatureCR, ConstantCurvatureSegment
 from common.types import TDCRPlotterSettings
 from ik.target import R6TwistIkTarget, P3IkTarget
-from ik.solvers.nr import NewtonRhapsonIkSettings, NewtonRhapsonIkSolver
+from ik.solvers.nr import NewtonRaphsonIkSettings, NewtonRaphsonIkSolver
 import logging
 
 from plotter.tdcr import draw_tdcr
 
 
 def _run_solver_test(
-    target_robot: ConstantCurvatureCR, solver: NewtonRhapsonIkSolver, logger
+    target_robot: ConstantCurvatureCR, solver: NewtonRaphsonIkSolver, logger
 ):
     res = solver.solve()
     logger.info(f"Solution at: {solver.theta_i} after {solver.iter_count} iterations")
@@ -63,10 +63,10 @@ def test_nr_1(plot, logger):
 
     logger.info(f"target pose: {target_pose.pose}")
 
-    se3_solver = NewtonRhapsonIkSolver(robot, NewtonRhapsonIkSettings(), target_pose)
+    se3_solver = NewtonRaphsonIkSolver(robot, NewtonRaphsonIkSettings(), target_pose)
     se3_res = se3_solver.solve()
 
-    p3_solver = NewtonRhapsonIkSolver(robot, NewtonRhapsonIkSettings(), target_position)
+    p3_solver = NewtonRaphsonIkSolver(robot, NewtonRaphsonIkSettings(), target_position)
     p3_res = p3_solver.solve()
 
     if plot:
@@ -105,15 +105,15 @@ def test_nr_2(plot, logger):
         yielding state\n {robot.pose_vector(robot.state_vector())}"
     )
 
-    settings = NewtonRhapsonIkSettings()
+    settings = NewtonRaphsonIkSettings()
 
     target_pose = R6TwistIkTarget(target_robot.pose_vector())
     target_position = P3IkTarget(target_robot.pose_vector())
 
     logger.info(f"target pose: {target_pose.pose}")
 
-    se3_solver = NewtonRhapsonIkSolver(robot, settings, target_pose)
-    p3_solver = NewtonRhapsonIkSolver(robot, settings, target_position)
+    se3_solver = NewtonRaphsonIkSolver(robot, settings, target_pose)
+    p3_solver = NewtonRaphsonIkSolver(robot, settings, target_position)
 
     se3_res = _run_solver_test(target_robot, se3_solver, logger)
     p3_res = _run_solver_test(target_robot, p3_solver, logger)
@@ -156,15 +156,15 @@ def test_nr_3(plot, logger):
         yielding state\n {robot.pose_vector(robot.state_vector())}"
     )
 
-    settings = NewtonRhapsonIkSettings()
+    settings = NewtonRaphsonIkSettings()
 
     target_pose = R6TwistIkTarget(target_robot.pose_vector())
     target_position = P3IkTarget(target_robot.pose_vector())
 
     logger.info(f"target pose: {target_pose.pose}")
 
-    se3_solver = NewtonRhapsonIkSolver(robot, settings, target_pose)
-    p3_solver = NewtonRhapsonIkSolver(robot, settings, target_position)
+    se3_solver = NewtonRaphsonIkSolver(robot, settings, target_pose)
+    p3_solver = NewtonRaphsonIkSolver(robot, settings, target_position)
 
     se3_res = _run_solver_test(target_robot, se3_solver, logger)
     p3_res = _run_solver_test(target_robot, p3_solver, logger)

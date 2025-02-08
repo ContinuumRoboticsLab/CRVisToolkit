@@ -1,7 +1,7 @@
 from tests.runner import MultiSolverTestRunner
 from tests.generation.uniform import UniformDistributionGenerator
 
-from ik.solvers.nr import NewtonRhapsonIkSolver, NewtonRhapsonIkSettings
+from ik.solvers.nr import NewtonRaphsonIkSolver, NewtonRaphsonIkSettings
 from ik.solvers.neppalli import NeppalliIkSolver, NeppalliIkSettings, NeppalliIkTarget
 from ik.solvers.gcrb.gcrb_solver import GcrbSolver2, GcrbIkSettings, GcrbIkTarget
 from ik.solvers.mics import MicsSolver, MicsSolverSettings
@@ -20,8 +20,8 @@ def run_twoseg_ext_tests(iternum: int, seed=None):
     start = time.time()
     num_segs = 2
 
-    solver_classes = [NewtonRhapsonIkSolver, NeppalliIkSolver, GcrbSolver2]
-    settings = [NewtonRhapsonIkSettings(), NeppalliIkSettings(), GcrbIkSettings()]
+    solver_classes = [NewtonRaphsonIkSolver, NeppalliIkSolver, GcrbSolver2]
+    settings = [NewtonRaphsonIkSettings(), NeppalliIkSettings(), GcrbIkSettings()]
     target_types = [R6TwistIkTarget, NeppalliIkTarget, GcrbIkTarget]
 
     generator = UniformDistributionGenerator(
@@ -32,7 +32,7 @@ def run_twoseg_ext_tests(iternum: int, seed=None):
         generator, solver_classes, settings, target_types, num_segs
     )
     runner.run(iternum)
-    logger.info(f"finished tests in {time.time() - start} seconds")
+    logger.info("finished tests in {0:.2f} seconds".format(time.time() - start))
 
 
 def run_twoseg_inext_tests(iternum: int, seed=None):
@@ -40,8 +40,8 @@ def run_twoseg_inext_tests(iternum: int, seed=None):
     start = time.time()
     num_segs = 2
 
-    solver_classes = [NewtonRhapsonIkSolver, NeppalliIkSolver]
-    settings = [NewtonRhapsonIkSettings(), NeppalliIkSettings()]
+    solver_classes = [NewtonRaphsonIkSolver, NeppalliIkSolver]
+    settings = [NewtonRaphsonIkSettings(), NeppalliIkSettings()]
     target_types = [R6TwistIkTarget, NeppalliIkTarget]
 
     generator = UniformDistributionGenerator(
@@ -60,8 +60,8 @@ def run_threeseg_ext_tests(iternum: int, seed=None):
     start = time.time()
     num_segs = 3
 
-    solver_classes = [NewtonRhapsonIkSolver, NeppalliIkSolver]
-    settings = [NewtonRhapsonIkSettings(), NeppalliIkSettings()]
+    solver_classes = [NewtonRaphsonIkSolver, NeppalliIkSolver]
+    settings = [NewtonRaphsonIkSettings(), NeppalliIkSettings()]
     target_types = [R6TwistIkTarget, NeppalliIkTarget]
 
     generator = UniformDistributionGenerator(
@@ -80,8 +80,8 @@ def run_threeseg_inext_tests(iternum: int, seed=None):
     start = time.time()
     num_segs = 3
 
-    solver_classes = [NewtonRhapsonIkSolver, NeppalliIkSolver, MicsSolver]
-    settings = [NewtonRhapsonIkSettings(), NeppalliIkSettings(), MicsSolverSettings()]
+    solver_classes = [NewtonRaphsonIkSolver, NeppalliIkSolver, MicsSolver]
+    settings = [NewtonRaphsonIkSettings(), NeppalliIkSettings(), MicsSolverSettings()]
     target_types = [R6TwistIkTarget, NeppalliIkTarget, SE3IkTarget]
 
     generator = UniformDistributionGenerator(
@@ -97,10 +97,11 @@ def run_threeseg_inext_tests(iternum: int, seed=None):
 
 if __name__ == "__main__":
     SEED = 1006842534
+    ITERATIONS = 100
     start = time.time()
-    run_twoseg_ext_tests(1000, SEED)
-    # run_twoseg_inext_tests(100, SEED)
-    # run_threeseg_ext_tests(100, SEED)
+    run_twoseg_ext_tests(ITERATIONS, SEED)
+    # run_twoseg_inext_tests(ITERATIONS, SEED)
+    # run_threeseg_ext_tests(ITERATIONS, SEED)
     # run_threeseg_inext_tests(50, SEED)
 
-    logger.info(f"BENCHMARKS COMPLETED IN {time.time() - start} SECONDS")
+    # logger.info(f"BENCHMARKS COMPLETED IN {time.time() - start}s")

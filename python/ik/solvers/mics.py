@@ -7,7 +7,7 @@ from common.robot import ConstantCurvatureCR
 from common.utils import se3_to_uq, se3_to_pose, up_star, up_plus, up_oplus
 
 from ik.solvers.base_solver import CcIkSettings, CcIkSolver, IkResult
-from ik.solvers.nr import NewtonRhapsonIkSettings, NewtonRhapsonIkSolver
+from ik.solvers.nr import NewtonRaphsonIkSettings, NewtonRaphsonIkSolver
 from ik.target import IkTarget, R6TwistIkTarget
 
 from copy import deepcopy
@@ -35,7 +35,7 @@ class MicsSolverSettings(CcIkSettings):
     num_t_steps = 100
     max_numerical_solver_iterations = 100
     zero_tolerance = 1e-6
-    numerical_solver_settings = NewtonRhapsonIkSettings(max_iter=30)
+    numerical_solver_settings = NewtonRaphsonIkSettings(max_iter=30)
     num_r1_corrections = 2
     num_r3_corrrections = 1
 
@@ -322,7 +322,7 @@ class MicsSolver(CcIkSolver):
         """
         robot_copy = deepcopy(self.cr)
 
-        numerical_solver = NewtonRhapsonIkSolver(
+        numerical_solver = NewtonRaphsonIkSolver(
             robot_copy,
             self.settings.numerical_solver_settings,
             R6TwistIkTarget(se3_to_pose(self.target_pose)),
