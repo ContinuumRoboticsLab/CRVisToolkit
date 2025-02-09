@@ -1,5 +1,4 @@
 import numpy as np
-from numpy.random import Generator
 from numpy.typing import ArrayLike
 from math import sin as s
 from math import cos as c
@@ -189,30 +188,6 @@ class ConstantCurvatureSegment:
             t_matrix[:, 3] = [0, 0, self.length, 1]
 
         return SE3(t_matrix)
-
-    @classmethod
-    def random(cls, rng: Generator, limits: RobotSegmentLimits):
-        """
-        generates a random segment within the given limits
-        """
-
-        theta = rng.uniform(limits.min_theta, limits.max_theta)
-        phi = rng.uniform(limits.min_phi, limits.max_phi)
-        length = rng.uniform(limits.min_length, limits.max_length)
-
-        return cls(theta / length, phi, length, is_extensible=limits.is_extensible)
-
-    @classmethod
-    def random_from_l(cls, length: float, rng: Generator, limits: RobotSegmentLimits):
-        """
-        generates a random segment within the given limits and provided
-        segment legnth
-        """
-
-        theta = rng.uniform(limits.min_theta, limits.max_theta)
-        phi = rng.uniform(limits.min_phi, limits.max_phi)
-
-        return cls(theta / length, phi, length, is_extensible=limits.is_extensible)
 
 
 class ConstantCurvatureCR:
