@@ -20,7 +20,7 @@ from ik.index import IkSolverType
 
 
 class NewtonRaphsonIkSettings(CcIkSettings):
-    pass
+    clamp_theta = False
 
 
 class NewtonRaphsonIkSolver(IterativeIkSolver):
@@ -102,6 +102,20 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
         returns an (m x 1) vector
         """
         return self.ik_target_pose - self.get_pose()
+
+    def _update_theta(self, d_theta):
+        """
+        updates the theta configuration vector of the robot using the delta
+        theta `d_theta` computed in the iteration and applies clamping if
+        the setting is enabled.
+        """
+        new_theta_i = self.theta_i + d_theta
+
+        if self.settings.clamp_theta:
+            # TODO: iterate over all segments, clamp curvature
+            pass
+
+        self.theta_i = new_theta_i
 
     def _perform_iteration(self, *args, **kwargs):
         """

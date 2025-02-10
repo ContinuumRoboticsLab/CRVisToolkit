@@ -62,8 +62,9 @@ class NeppalliIkSolver(AnalyticIkSolver):
         the CR object to solve the IK for.
     settings: NeppalliIkSettings
         the settings for the solver
-    segment_endpoints: list[np.ndarray[float]]
-        the coordinates of the endpoints of the segments in the robot
+    ik_target: NeppalliIkTarget
+        the target for the IK problem - in the case of the Neppalli solver,
+        defined as a series of n robot segment endpoint coordinates.
     """
 
     solver_type = IkSolverType.NEPPALLI_CLOSED_FORM
@@ -96,9 +97,6 @@ class NeppalliIkSolver(AnalyticIkSolver):
         if the cache exists, then use it. Otherwise, calculate it
         """
 
-        # if hasattr(self.cr.segments[i], "arc_angle"):
-        #     return self.cr.segments[i].arc_angle
-
         seg_i = self.cr.segments[i]
         p_i = self.segment_endpoints[i]
 
@@ -106,9 +104,6 @@ class NeppalliIkSolver(AnalyticIkSolver):
 
         if p_i[2] <= 0:
             theta_i = 2 * pi - theta_i
-
-        # cache in object
-        setattr(seg_i, "arc_angle", theta_i)
 
         return theta_i
 
@@ -126,6 +121,7 @@ class NeppalliIkSolver(AnalyticIkSolver):
         kappa_i = 2 * np.linalg.norm(cur_p[:2]) / np.inner(cur_p, cur_p)
         phi_i = np.atan2(cur_p[1], cur_p[0])
 
+        # kappa, phi need to set for seg i for _get_segment_i_theta to work
         self.cr.segments[i].set_config(kappa=kappa_i, phi=phi_i)
 
         theta = self._get_segment_i_theta(i)

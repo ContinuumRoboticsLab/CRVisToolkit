@@ -80,9 +80,7 @@ class MicsSolver(CcIkSolver):
         n0 = self.B.T @ self.r
         n = n0 / np.linalg.norm(n0)
         l3 = self.cr.segments[2].length
-        self.r0 = (
-            GAMMA_VAL * d * l3 / np.linalg.norm(n0) * n
-        )  # this is how it's presented in the code?
+        self.r0 = GAMMA_VAL * d * l3 / np.linalg.norm(n0) * n
 
         self.norm_r01 = np.sqrt(1 - np.inner(self.r0, self.r0))
 
@@ -94,7 +92,7 @@ class MicsSolver(CcIkSolver):
         self.u = np.array([n[1], n[0], 0])
         self.v = np.linalg.cross(n, self.u)
         self.P = np.column_stack([self.u, self.v, n])
-        # self.P = np.column_stack([self.n1, self.n2, self.n0])
+
         # search settings
         self.t_step = 1 / settings.num_t_steps
 
@@ -153,11 +151,8 @@ class MicsSolver(CcIkSolver):
 
     def _get_r1_approx(self):
         """
-        implements equation (37) in the MICS paper
-
-        two equalities that must be satisfied. Using just one
-        may not provide sufficient information if some components
-        of n0 are zero components, so we use both
+        implements equation (37) in the MICS paper.
+        Both equalities are satisfied by the following.
         """
 
         d = self.q[3]

@@ -33,7 +33,7 @@ class GcrbIkSettings(CcIkSettings):
 class GcrbIkTarget(IkTarget):
     target_type = IkTargetType.SE3
 
-    def __init__(self, ee_target: np.ndarray, param: ParamableCoord):
+    def __init__(self, ee_target: np.ndarray, param: CoordParamValue):
         self.ee_target = SE3IkTarget(ee_target)
         self.param = param
 
@@ -75,18 +75,13 @@ class GcrbSolver2(AnalyticIkSolver):
         **kwargs,
     ):
         assert isinstance(ik_target, GcrbIkTarget), "Invalid target type"
+        assert (
+            ik_target.param.coordinate == ParamableCoord.Z
+        ), "Invalid parameter specified"
         super().__init__(cr, settings, ik_target, **kwargs)
 
         # the parameterized coordinate
         self.parameter = ik_target.param
-
-        # the target rotation and position
-        # se3 = SE3(self.ik_target.as_array())
-        # self.target_pose = se3.A
-        # self.target_rotation = se3.A[:3, :3]
-        # self.r_ti = se3.A[:3, :3].T
-        # self.target_position = se3.A[:3, 3]
-        # self.target_quaternion = UnitQuaternion(self.target_rotation).A
 
         # applies implicit validation on the input
         se3 = SE3(self.ik_target.as_array()).A
@@ -152,6 +147,7 @@ class GcrbSolver2(AnalyticIkSolver):
 
         z = self.parameter.value
 
+        # quadratic coefficients a, b, c
         a = c4
         b = c2 * z + c1
         c = c3 * (z**2) + c0 * z
@@ -175,7 +171,8 @@ class GcrbSolver2(AnalyticIkSolver):
 
     def _solve_segment_junction_z_singular(self):
         """
-        case where mu is zero
+        singularity case where mu (third j-coefficient) in the target orientation
+        unit quaternion is zero.
         """
 
         _, lambda_, _, nu = self.target_quaternion
@@ -283,9 +280,9 @@ class GcrbSolver2(AnalyticIkSolver):
         """
 
         if np.abs(self.target_quaternion[0] - 1) < self.ZERO_TOLERANCE:
+            # singularity case 1: when kappa is 1, there is no rotation
             if self.parameter.coordinate != ParamableCoord.Z:
                 raise ValueError("Invalid coordinate for singularity")
-            # singularity case 1: when kappa is 1, there is no rotation
             self.cr.set_config(
                 [
                     np.array([0, 0, self.parameter.value]),
@@ -303,7 +300,6 @@ class GcrbSolver2(AnalyticIkSolver):
             np.abs(self.target_quaternion[1]) < self.ZERO_TOLERANCE
             and np.abs(self.target_quaternion[2]) < self.ZERO_TOLERANCE
         ):
-            # breakpoint()
             # singularity condition 2: when mu and nu are zero, there is only rotation about the z-axis
             if self.parameter.coordinate != ParamableCoord.Z:
                 raise ValueError("Invalid coordinate for singularity")
