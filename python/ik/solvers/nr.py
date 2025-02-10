@@ -9,6 +9,7 @@ The Jacobian is computed using the finite differences method.
 """
 
 import numpy as np
+from dataclasses import dataclass
 
 from common.coordinates import CrConfigurationType
 from common.robot import ConstantCurvatureCR
@@ -19,8 +20,12 @@ from ik.target import IkTarget
 from ik.index import IkSolverType
 
 
+@dataclass
 class NewtonRaphsonIkSettings(CcIkSettings):
-    clamp_theta = False
+    position_tolerance: float = 1e-4
+    orientation_tolerance: float = 1e-4
+    max_iter: int = 100
+    clamp_theta: bool = True
 
 
 class NewtonRaphsonIkSolver(IterativeIkSolver):
@@ -103,7 +108,7 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
         """
         return self.ik_target_pose - self.get_pose()
 
-    def _update_theta(self, d_theta):
+    def __update_theta(self, d_theta):
         """
         updates the theta configuration vector of the robot using the delta
         theta `d_theta` computed in the iteration and applies clamping if
@@ -113,7 +118,18 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
 
         if self.settings.clamp_theta:
             # TODO: iterate over all segments, clamp curvature
-            pass
+            theta_index = 0
+            for seg in self.cr.segments:
+                theta_values = new_theta_i[theta_index : theta_index + seg.n]
+
+                kappa = theta_values[0]
+                new_kappa = np.clip(kappa, 0, seg.max_curvature)
+                new_theta_i[theta_index] = new_kappa
+
+                if seg.n == 3:  # segment is extensible
+                    length = theta_values[2]
+                    new_length = np.clip(length, seg.len_limits[0], seg.len_limits[1])
+                    new_theta_i[theta_index + 2] = new_length
 
         self.theta_i = new_theta_i
 
@@ -129,7 +145,6 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
         old_theta = self.theta_i
 
         # update the CR internal state
-        self._update_cr_configuration()
 
         j = self.__compute_jacobian()
 
@@ -150,30 +165,26 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
 
         d_theta = j_inv @ diff
 
-        # if self.ik_target.target_type == IkTargetType.P3:
-        #     j = self.__compute_jacobian()
-
-        #     # should always have same dimensionality
-        #     diff = self.ik_target_pose - self.get_pose()
-
-        #     d_theta = np.linalg.pinv(j) @ diff
-
-        # elif self.ik_target.target_type == IkTargetType.SE3:
-        #     j = self.__compute_jacobian()
-
-        #     d_theta = np.linalg.pinv(j) @ self.__compute_twist()
-
-        self.theta_i += np.reshape(d_theta, (d_theta.size, 1))
+        # self.theta_i += np.reshape(d_theta, (d_theta.size, 1))
+        self.__update_cr_configuration(d_theta)
 
         self.iter_count += 1
 
-    def _update_cr_configuration(self):
+    def __update_cr_configuration(self, d_theta):
         """
-        updates the CR object using the current solution
-        necessary for performing forward kinematics step
+        updates the CR object's configuration using the current iteration's delta
+        theta `d_theta`.
+
+        if the solver is configured to clamp the curvature parameters, then the
+        new theta will be clamped to within the valid range before the segment
+        is updated.
         """
 
-        # validate the parameters
+        # update self.theta_i, clamping if necessary
+        d_theta = np.reshape(d_theta, (d_theta.size, 1))
+        self.__update_theta(d_theta)
+
+        # validate the new parameters, then update the C
         if not self.theta_i.shape == (self.n, 1):
             try:
                 theta_i = self.theta_i.reshape((self.n, 1))

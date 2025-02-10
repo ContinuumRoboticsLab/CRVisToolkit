@@ -169,8 +169,6 @@ class IterativeIkSolver(CcIkSolver):
 
         self.exec_time = time.time() - start_time
 
-        self.solved = True
-
         return self.stopping_condition[1]
 
     def _prepare_solver(self, *args, **kwargs):

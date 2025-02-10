@@ -50,7 +50,7 @@ class ConstantCurvatureSegment:
         phi: float | None = None,
         length: float | None = None,
         is_extensible: bool = False,
-        len_limits: tuple[float, float] | None = None,
+        len_limits: tuple[float | None, float | None] = (None, None),
         max_curvature: float | None = None,
         repr_type: CrConfigurationType = CrConfigurationType.KPL,
     ):
