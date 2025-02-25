@@ -37,7 +37,7 @@ def test_base_case(logger, plot=False):
     target_robot = ConstantCurvatureCR([segment])
     target_pose = target_robot.pose_vector()
 
-    ik_target = NeppalliIkTarget(target_robot._endpoints())
+    ik_target = NeppalliIkTarget(target_robot.segment_endpoints())
     settings = NeppalliIkSettings()
 
     solver = NeppalliIkSolver(
@@ -74,7 +74,7 @@ def test_base_case_2(logger, plot=False):
     target_robot = ConstantCurvatureCR([segment1, segment2])
     target_pose = target_robot.pose_vector()
 
-    ik_target = NeppalliIkTarget(target_robot._endpoints())
+    ik_target = NeppalliIkTarget(target_robot.segment_endpoints())
     settings = NeppalliIkSettings()
 
     solver = NeppalliIkSolver(
@@ -122,7 +122,7 @@ def test_neppalli_manyseg(logger, num_segs, plot=False):
     target_robot = ConstantCurvatureCR(segments)
     target_pose = target_robot.pose_vector()
 
-    ik_target = NeppalliIkTarget(target_robot._endpoints())
+    ik_target = NeppalliIkTarget(target_robot.segment_endpoints())
 
     settings = NeppalliIkSettings()
 

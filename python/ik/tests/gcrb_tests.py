@@ -33,11 +33,11 @@ def test_base_case(logger, plot=False):
     target_robot = ConstantCurvatureCR([segment1, segment2])
     target_pose = target_robot.pose_vector()
 
-    print(f"target robot endpoint 1: {target_robot._endpoints()[0]}")
+    print(f"target robot endpoint 1: {target_robot.segment_endpoints()[0]}")
 
     # define paramater value: select value for the Z-coord of the segment junction
     # junction refers to endpoint of first segment
-    target_robot_junction = target_robot._endpoints()[0]
+    target_robot_junction = target_robot.segment_endpoints()[0]
     coord_param = CoordParamValue(ParamableCoord.Z, target_robot_junction[2])
 
     settings = GcrbIkSettings()
@@ -113,8 +113,8 @@ def paper_provided_test():
 
     solver.solve()
 
-    print(solver.cr._endpoints())
-    print(solver.cr2._endpoints())
+    print(solver.cr.segment_endpoints())
+    print(solver.cr2.segment_endpoints())
     print(f"desired junction: {[1.4, -3.8, -3]}")
 
 
@@ -188,7 +188,7 @@ def singularity_test(logger):
     target_robot = ConstantCurvatureCR([segment1, segment2])
     target_pose = target_robot.pose_vector()
 
-    target_robot_junction = target_robot._endpoints()[0]
+    target_robot_junction = target_robot.segment_endpoints()[0]
     coord_param = CoordParamValue(ParamableCoord.Z, target_robot_junction[2])
 
     settings = GcrbIkSettings()
@@ -230,7 +230,7 @@ def test_curvature_from_junction():
 
     # define paramater value: select value for the Z-coord of the segment junction
     # junction refers to endpoint of first segment
-    target_robot_junction = target_robot._endpoints()[0]
+    target_robot_junction = target_robot.segment_endpoints()[0]
     coord_param = CoordParamValue(ParamableCoord.Z, target_robot_junction[2])
 
     settings = GcrbIkSettings()
@@ -245,7 +245,7 @@ def test_curvature_from_junction():
 
     solver = GcrbSolver2(robot, settings, ik_target)
 
-    junction = target_robot._endpoints()[0]
+    junction = target_robot.segment_endpoints()[0]
     solution_config = np.hstack(solver._config_from_junction(junction))
     expected_solution = target_robot.state_vector()
     assert np.isclose(solution_config, expected_solution).all()

@@ -57,6 +57,7 @@ class CcIkSettings:
         else:
             return cls()
 
+    # check the orientation error checking in MICS, using matrix log
     def check_error_bounds(
         self, d_position: np.ndarray[float], d_orientation: np.ndarray[float]
     ):
@@ -161,8 +162,6 @@ class IterativeIkSolver(CcIkSolver):
         self.exec_time = None
 
     def solve(self, *args, **kwargs):
-        self._prepare_solver(*args, **kwargs)
-
         start_time = time.time()
         while not self.stopping_condition[0]:
             self._perform_iteration(*args, **kwargs)
@@ -170,9 +169,6 @@ class IterativeIkSolver(CcIkSolver):
         self.exec_time = time.time() - start_time
 
         return self.stopping_condition[1]
-
-    def _prepare_solver(self, *args, **kwargs):
-        pass
 
     def _perform_iteration(self, *args, **kwargs):
         raise NotImplementedError

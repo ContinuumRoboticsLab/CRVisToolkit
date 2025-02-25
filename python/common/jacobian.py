@@ -12,7 +12,7 @@ def jacobian(f: Callable, x: np.ndarray[float], epsilon: float = 1e-7):
     x = np.asarray(x)
     f_x = np.asarray(f(x))
 
-    assert len(f_x) == f_x.size, "f(x) must be a 1D array"
+    # assert len(f_x) == f_x.size, "f(x) must be a 1D array"
 
     jacobian = np.zeros((f_x.size, x.size))
 

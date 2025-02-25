@@ -280,7 +280,7 @@ class GcrbSolver2(AnalyticIkSolver):
         """
 
         if np.abs(self.target_quaternion[0] - 1) < self.ZERO_TOLERANCE:
-            # singularity case 1: when kappa is 1, there is no rotation
+            # singularity case 1: when kappa (from the unit quaternion ee orientation) is 1, there is no rotation
             if self.parameter.coordinate != ParamableCoord.Z:
                 raise ValueError("Invalid coordinate for singularity")
             self.cr.set_config(

@@ -5,7 +5,8 @@ from math import cos as c
 from math import sqrt
 from spatialmath import SE3
 
-from common.utils import robotindependentmapping, se3_to_pose
+from common.utils import se3_to_pose
+from common.jacobian import jacobian
 from common.types import CRDiscreteCurve
 from common.coordinates import CrConfigurationType
 from ik.target import IkTargetType
@@ -80,6 +81,10 @@ class ConstantCurvatureSegment:
         )
 
     @property
+    def theta(self):
+        return  # calculate theta
+
+    @property
     def n(self):
         """
         returns the degrees of freedom in the configuration space
@@ -114,29 +119,79 @@ class ConstantCurvatureSegment:
         return sigma
 
     def array_repr(
-        self, num_pts: int | None = None, max_len: float | None = None
+        self, pts_per_seg: int | None = None, max_len: float | None = None
     ) -> np.ndarray[float]:
         """
         returns a series of poses in a 4x4 matrix format
         """
 
-        assert num_pts is None or num_pts > 0, "num_pts must be a positive integer"
+        assert (
+            pts_per_seg is None or pts_per_seg > 0
+        ), "num_pts must be a positive integer"
         assert max_len is None or max_len > 0, "max_len must be a positive value"
         assert (
-            num_pts is None or max_len is None
+            pts_per_seg is None or max_len is None
         ), "only one of num_pts or max_len can be specified"
-        assert num_pts or max_len, "either num_pts or max_len must be specified"
+        assert pts_per_seg or max_len, "either num_pts or max_len must be specified"
 
         if max_len:
             assert self.length, "segment length must be specified"
-            num_pts = int(self.length / max_len)
+            pts_per_seg = int(self.length / max_len)
 
-        return robotindependentmapping(
-            np.array([self.kappa]),
-            np.array([self.phi]),
-            np.array([self.length]),
-            np.array([num_pts]),
-        )
+        # TODO: move logic directly under this function
+        if self.kappa.shape != self.phi.shape:
+            raise ValueError("Dimension mismatch.")
+
+        g = np.zeros(
+            (np.sum(pts_per_seg), 4, 4)
+        )  # Stores the transformation matrices of all the points in all the segments as rows
+
+        p_count = 0  # Points counter
+        T_base = np.eye(4)  # base starts off as identity
+
+        c_p = np.cos(self.phi)
+        s_p = np.sin(self.phi)
+
+        for i in range(pts_per_seg):
+            c_ks = np.cos(self.kappa * i * (self.length / pts_per_seg))
+            s_ks = np.sin(self.kappa * i * (self.length / pts_per_seg))
+
+            T_temp = np.array(
+                [
+                    [c_p * c_p * (c_ks - 1) + 1, s_p * c_p * (c_ks - 1), c_p * s_ks, 0],
+                    [
+                        s_p * c_p * (c_ks - 1),
+                        c_p * c_p * (1 - c_ks) + c_ks,
+                        s_p * s_ks,
+                        0,
+                    ],
+                    [-c_p * s_ks, -s_p * s_ks, c_ks, 0],
+                    [0, 0, 0, 0],
+                ]
+            )
+
+            if self.kappa != 0:
+                T_temp[:, 3] = [
+                    (c_p * (1 - c_ks)) / self.kappa,
+                    (s_p * (1 - c_ks)) / self.kappa,
+                    s_ks / self.kappa,
+                    1,
+                ]
+            else:  # To avoid division by zero
+                T_temp[:, 3] = [0, 0, i * (self.length / pts_per_seg), 1]
+
+            g[p_count, :] = T_base @ T_temp
+            p_count += 1
+
+        T_base = g[p_count - 1, :]
+
+        return g
+        # return robotindependentmapping(
+        #     np.array([self.kappa]),
+        #     np.array([self.phi]),
+        #     np.array([self.length]),
+        #     np.array([num_pts]),
+        # )
 
     def state_vector(
         self, repr_type: CrConfigurationType | None = None
@@ -153,6 +208,31 @@ class ConstantCurvatureSegment:
             return np.array([self.kappa, self.phi, self.length])
         else:
             return np.array([self.kappa, self.phi])
+
+    def pose_vector(self, theta: np.ndarray[float] | None = None) -> np.ndarray[float]:
+        old_theta = self.state_vector()
+
+        if theta is not None:
+            args = {
+                "kappa": theta[0],
+                "phi": theta[1],
+            }
+            if len(theta) > 2:
+                args["length"] = theta[2]
+            self.set_config(**args)
+
+        se3_pose = self.t_matrix().A
+
+        if theta is not None:
+            args = {
+                "kappa": old_theta[0],
+                "phi": old_theta[1],
+            }
+            if len(old_theta) > 2:
+                args["length"] = old_theta[2]
+            self.set_config(**args)
+
+        return se3_to_pose(se3_pose)
 
     def t_matrix(self):
         """
@@ -217,6 +297,7 @@ class ConstantCurvatureCR:
         if not all([seg.is_valid() for seg in self.segments]):
             raise ValueError("All segments must be valid")
 
+    # TODO: rename, check MICS code
     def as_discrete_curve(
         self, pts_per_seg: int | None = None, max_len: float | None = None
     ) -> CRDiscreteCurve:
@@ -355,7 +436,8 @@ class ConstantCurvatureCR:
             case _:
                 raise ValueError("Invalid target type")
 
-    def _endpoints(self) -> np.ndarray[float]:
+    # make not private function
+    def segment_endpoints(self) -> np.ndarray[float]:
         """
         utility for testing Neppalli/GCRB: returns the endpoints of the robot segments
         """
@@ -367,3 +449,17 @@ class ConstantCurvatureCR:
             endpoints.append(new_cr.t_matrix().A[:3, 3])
 
         return endpoints
+
+    def get_body_jacobian(self):
+        """
+        computes the robot body jacobian using the robot's current configuration,
+        returning a 6xn matrix.
+        """
+
+        segment_jacobians = []
+
+        for seg in self.segments:
+            seg_jacobian = jacobian(seg.pose_vector, seg.state_vector())
+            segment_jacobians.append(seg_jacobian)
+
+        return np.hstack(segment_jacobians)

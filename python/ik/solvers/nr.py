@@ -9,6 +9,7 @@ The Jacobian is computed using the finite differences method.
 """
 
 import numpy as np
+from scipy.linalg import logm
 from dataclasses import dataclass
 
 from common.coordinates import CrConfigurationType
@@ -16,8 +17,10 @@ from common.robot import ConstantCurvatureCR
 from common.jacobian import jacobian
 
 from ik.solvers.base_solver import IterativeIkSolver, CcIkSettings, IkResult
-from ik.target import IkTarget
+from ik.target import IkTarget, IkTargetType
 from ik.index import IkSolverType
+
+from common.utils import se3_to_pose
 
 
 @dataclass
@@ -25,7 +28,7 @@ class NewtonRaphsonIkSettings(CcIkSettings):
     position_tolerance: float = 1e-4
     orientation_tolerance: float = 1e-4
     max_iter: int = 100
-    clamp_theta: bool = True
+    clamp_theta: bool = False
 
 
 class NewtonRaphsonIkSolver(IterativeIkSolver):
@@ -78,6 +81,8 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
 
         self.theta_i = np.reshape(initial_condition, (initial_condition.size, 1))
 
+        self.n = self.total_dof
+
         super().__init__(
             cr,
             settings,
@@ -86,20 +91,22 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
             **kwargs,
         )
 
-    def _prepare_solver(self, *args, **kwargs):
-        # prepare method-specific attributes
-
-        # dimensionality of the solution
-        self.n = self.total_dof
-        # dimensionality of relevant task space
-        self.ik_target.target_type.constraints
+    def __get_theta(self):
+        """
+        returns the current configuration vector of the CR object
+        as it should be used for determining the Jacobian.
+        """
+        return self.cr.state_vector()
 
     def __compute_jacobian(self):
         """
         compute the Jacobian matrix at the current solution
         returns an (m x n) matrix
         """
-        return jacobian(self.get_pose, self.cr.state_vector())
+        if self.ik_target.target_type == IkTargetType.SE3:
+            return self.cr.get_body_jacobian()
+        else:
+            return jacobian(self.get_pose, self.cr.state_vector())
 
     def __compute_twist(self):
         """
@@ -150,20 +157,29 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
 
         self.cr.set_config(old_theta)
 
+        # returns according to the current target type
         pose = self.get_pose()
 
-        diff = self.ik_target_pose - pose
-
-        if j.shape[0] == j.shape[1]:
-            try:
-                j_inv = np.linalg.inv(j)
-            except np.linalg.LinAlgError:
-                # print("Singular matrix, using pseudo-inverse")
-                j_inv = np.linalg.pinv(j)
+        if self.ik_target.target_type == IkTargetType.SE3:
+            target_in_body = np.linalg.inv(pose) @ self.ik_target_pose.A
+            twist_matrix = logm(target_in_body)
+            twist_vector = se3_to_pose(twist_matrix)
+            diff = twist_vector
+            j_body_pinv = np.linalg.pinv(j)
+            d_theta = j_body_pinv @ diff
         else:
-            j_inv = np.linalg.pinv(j)
+            diff = self.ik_target_pose - pose
 
-        d_theta = j_inv @ diff
+            if j.shape[0] == j.shape[1]:
+                try:
+                    j_inv = np.linalg.inv(j)
+                except np.linalg.LinAlgError:
+                    # print("Singular matrix, using pseudo-inverse")
+                    j_inv = np.linalg.pinv(j)
+            else:
+                j_inv = np.linalg.pinv(j)
+
+            d_theta = j_inv @ diff
 
         # self.theta_i += np.reshape(d_theta, (d_theta.size, 1))
         self.__update_cr_configuration(d_theta)
