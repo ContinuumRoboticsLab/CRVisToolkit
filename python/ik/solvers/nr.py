@@ -20,7 +20,7 @@ from ik.solvers.base_solver import IterativeIkSolver, CcIkSettings, IkResult
 from ik.target import IkTarget, IkTargetType
 from ik.index import IkSolverType
 
-from common.utils import se3_to_pose
+from common.utils import se3_to_pose, up_vee
 
 
 @dataclass
@@ -149,40 +149,30 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
         object methods
         """
 
-        old_theta = self.theta_i
+        # breakpoint()
+        # old_theta = self.theta_i
 
         # update the CR internal state
 
-        j = self.__compute_jacobian()
+        # self.cr.set_config(old_theta)
 
-        self.cr.set_config(old_theta)
+        # returns according to the current target type - in this case, SE(3) pose matrix
+        pose = self.cr.t_matrix()
+        vee = up_vee(logm(np.linalg.inv(pose) @ self.ik_target.pose.A))
 
-        # returns according to the current target type
-        pose = self.get_pose()
-
-        if self.ik_target.target_type == IkTargetType.SE3:
-            target_in_body = np.linalg.inv(pose) @ self.ik_target_pose.A
-            twist_matrix = logm(target_in_body)
-            twist_vector = se3_to_pose(twist_matrix)
-            diff = twist_vector
-            j_body_pinv = np.linalg.pinv(j)
-            d_theta = j_body_pinv @ diff
+        error = np.linalg.norm(vee)
+        if error < 1e-2:
+            self.solved = True
+            return
         else:
-            diff = self.ik_target_pose - pose
+            # perform update step
+            j = self.__compute_jacobian()
+            xi = self.cr._get_body_xi()
 
-            if j.shape[0] == j.shape[1]:
-                try:
-                    j_inv = np.linalg.inv(j)
-                except np.linalg.LinAlgError:
-                    # print("Singular matrix, using pseudo-inverse")
-                    j_inv = np.linalg.pinv(j)
-            else:
-                j_inv = np.linalg.pinv(j)
+            xi += np.linalg.pinv(j) @ vee
 
-            d_theta = j_inv @ diff
-
-        # self.theta_i += np.reshape(d_theta, (d_theta.size, 1))
-        self.__update_cr_configuration(d_theta)
+            # set current robot state using xi
+            self.cr._set_state_from_xi(xi)
 
         self.iter_count += 1
 
@@ -222,7 +212,10 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
         for position and orientation separately
         """
 
-        error = self.get_pose() - self.ik_target_pose
+        if self.ik_target.target_type == IkTargetType.SE3:
+            error = self.cr.pose_vector() - se3_to_pose(self.ik_target_pose.A)
+        else:
+            error = self.get_pose() - self.ik_target_pose
 
         # of form (check result, (position error, orientation error))
         error_res = self.settings.check_error_bounds(error[:3], error[3:])

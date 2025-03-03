@@ -42,14 +42,15 @@ def test_nr_1(plot, logger):
 
     logger.info("**** Test Case 1: two-segment inextensible CR ****")
 
-    seg1 = ConstantCurvatureSegment(1 / 0.1, pi / 4, 0.05)
-    seg2 = ConstantCurvatureSegment(1 / 0.05, 0, 0.03)
+    seg1 = ConstantCurvatureSegment(1 / 0.09, pi / 4, 0.05)
+    seg2 = ConstantCurvatureSegment(1 / 0.01, 0, 0.03)
     robot = ConstantCurvatureCR([seg1, seg2])
+    starter_plot = robot.as_discrete_curve(pts_per_seg=10)
 
     target_robot = ConstantCurvatureCR(
         [
-            ConstantCurvatureSegment(1 / 0.11, pi / 3, 0.05),
-            ConstantCurvatureSegment(1 / 0.07, pi / 10, 0.03),
+            ConstantCurvatureSegment(1 / 0.4, pi / 3, 0.05),
+            ConstantCurvatureSegment(1 / 0.07, pi / 5, 0.03),
         ]
     )
 
@@ -59,20 +60,34 @@ def test_nr_1(plot, logger):
     )
 
     target_pose = SE3IkTarget.from_target_robot(target_robot)
-    target_position = P3IkTarget.from_target_robot(target_robot)
+    # target_position = P3IkTarget.from_target_robot(target_robot)
 
     logger.info(f"target pose: {target_pose.pose}")
 
     se3_solver = NewtonRaphsonIkSolver(robot, NewtonRaphsonIkSettings(), target_pose)
     se3_res = se3_solver.solve()
 
-    p3_solver = NewtonRaphsonIkSolver(robot, NewtonRaphsonIkSettings(), target_position)
-    p3_solver.solve()
+    logger.info(f"performed {se3_solver.iter_count} iterations")
+    logger.info(
+        f"Solution at: {se3_solver.cr.state_vector()} yielding pose\
+        {se3_solver.cr.pose_vector(se3_solver.cr.state_vector())}"
+    )
+    logger.info(
+        f"Target state is {target_robot.state_vector()} yielding pose\
+        {target_robot.pose_vector(target_robot.state_vector())}"
+    )
+
+    # p3_solver = NewtonRaphsonIkSolver(robot, NewtonRaphsonIkSettings(), target_position)
+    # p3_solver.solve()
 
     if plot:
+        # draw_tdcr(
+        #     p3_solver.cr.as_discrete_curve(pts_per_seg=10),
+        #     TDCRPlotterSettings(plot_title="NR base case 1 Position Solution"),
+        # )
         draw_tdcr(
-            p3_solver.cr.as_discrete_curve(pts_per_seg=10),
-            TDCRPlotterSettings(plot_title="NR base case 1 Position Solution"),
+            starter_plot,
+            TDCRPlotterSettings(plot_title="NR base case 1 Starter Robot"),
         )
         draw_tdcr(
             se3_solver.cr.as_discrete_curve(pts_per_seg=10),
@@ -192,5 +207,5 @@ def run(plot=False, loglevel=logging.INFO):
     logging.basicConfig(level=loglevel, format=format)
     logger = logging.getLogger(__name__)
     test_nr_1(plot, logger)
-    test_nr_2(plot, logger)
-    test_nr_3(plot, logger)
+    # test_nr_2(plot, logger)
+    # test_nr_3(plot, logger)

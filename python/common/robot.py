@@ -6,7 +6,7 @@ from math import sqrt
 from spatialmath import SE3
 
 from common.utils import se3_to_pose
-from common.jacobian import jacobian
+from common.jacobian import body_jacobian
 from common.types import CRDiscreteCurve
 from common.coordinates import CrConfigurationType
 from ik.target import IkTargetType
@@ -139,8 +139,8 @@ class ConstantCurvatureSegment:
             pts_per_seg = int(self.length / max_len)
 
         # TODO: move logic directly under this function
-        if self.kappa.shape != self.phi.shape:
-            raise ValueError("Dimension mismatch.")
+        # if self.kappa.shape != self.phi.shape:
+        #     raise ValueError("Dimension mismatch.")
 
         g = np.zeros(
             (np.sum(pts_per_seg), 4, 4)
@@ -268,6 +268,14 @@ class ConstantCurvatureSegment:
             t_matrix[:, 3] = [0, 0, self.length, 1]
 
         return SE3(t_matrix)
+
+    def exp_coord(self):
+        """
+        returns the exponential coordinates of the segment
+        """
+        return self.length * np.array(
+            [-self.kappa * np.sin(self.phi), self.kappa * np.cos(self.phi), 0, 0, 0, 1]
+        )
 
 
 class ConstantCurvatureCR:
@@ -450,16 +458,44 @@ class ConstantCurvatureCR:
 
         return endpoints
 
+    def _get_body_xi(self):
+        """
+        determins xi, the exponential coordinates of the robot config, in a compact way
+        similar to how MICS represents the robot config. This returns the exponential
+        coordinate vector after having the segment length (considered constant for this
+        case) factored out.
+
+        This method is useful for performing numerical correction using an exponential
+        coordinate representation of the robot while considering segment length constant
+        """
+
+        xi_values = [seg.exp_coord() for seg in self.segments]
+        xi = np.hstack([np.array([xi[0], xi[1]]) for xi in xi_values])
+
+        return xi
+
+    def _set_state_from_xi(self, xi):
+        """
+        implemented alongside `_get_body_xi`, and is used to set robot configuration
+        (repr stored using kappa, phi) from the xi_values
+        """
+
+        assert len(xi) == len(self.segments) * 2, "Invalid xi shape"
+
+        for i, seg in enumerate(self.segments):
+            xi_values = xi[i * 2 : i * 2 + 2]
+            # can be derived using sum of squares trig identity
+            kappa = (np.linalg.norm(xi_values) % (2 * np.pi)) / seg.length
+
+            phi = np.atan2(-xi_values[0], xi_values[1])
+
+            seg.set_config(kappa, phi)
+
     def get_body_jacobian(self):
         """
         computes the robot body jacobian using the robot's current configuration,
         returning a 6xn matrix.
         """
+        xi = self._get_body_xi()
 
-        segment_jacobians = []
-
-        for seg in self.segments:
-            seg_jacobian = jacobian(seg.pose_vector, seg.state_vector())
-            segment_jacobians.append(seg_jacobian)
-
-        return np.hstack(segment_jacobians)
+        return body_jacobian([seg.length for seg in self.segments], xi)

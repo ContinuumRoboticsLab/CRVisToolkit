@@ -1,4 +1,6 @@
 import numpy as np
+from scipy.linalg import expm
+from common.utils import up_hat, invert_transformation, up_vee
 from typing import Callable
 
 
@@ -23,3 +25,109 @@ def jacobian(f: Callable, x: np.ndarray[float], epsilon: float = 1e-7):
         jacobian[:, i] = (f(x_i) - f_x) / epsilon
 
     return jacobian
+
+
+def _segment_body_jacobian(length, w1, w2):
+    """
+    calculates the body jacobian columns for a single segment using kappa and phi.
+
+    used as a helper function in calculating the full boyd jacobian
+    """
+    w = np.array([w1, w2, 0])
+    norm = np.linalg.norm(w)
+
+    if norm < 1e-6:
+        # only translation, split across the two coordinates
+        half_l = length / 2
+        translational = np.array(
+            [
+                [0, half_l, 0],
+                [-half_l, 0, 0],
+                [0, 0, 0],
+            ]
+        )
+        return np.vstack([np.eye(3), translational])
+
+    else:
+        m = (1 - np.cos(norm)) / norm**2
+        n = (norm - np.sin(norm)) / norm**3
+        p1_m = w1 / norm**2 - w1 * n - 2 * w1 * m / norm**2
+        p2_m = w2 / norm**2 - w2 * n - 2 * w2 * m / norm**2
+        p1_n = w1 * m / norm**2 - 3 * w1 * n / norm**2
+        p2_n = w2 * m / norm**2 - 3 * w2 * n / norm**2
+
+        temp = length * np.array(
+            [
+                [p1_m * w2, p2_m * w2 + m, 0],
+                [-p1_m * w1, -p2_m * w1, 0],
+                [-p1_n * n**2, -p2_n * n**2, 0],
+            ]
+        )
+
+        return np.vstack([np.eye(3) - m * up_hat(w) + n * up_hat(w) @ up_hat(w), temp])
+
+
+def body_jacobian_3seg(l1: float, l2: float, l3: float, xi: np.ndarray[float]):
+    """
+    determines the body jacobian for a 3-segment inextensible Continuum Robot
+    takes as arguments the segment lengths for all three segments (constant) and the
+    current configuration vector of the robot (6-vector of curvatures and plane angles)
+    """
+
+    j3 = _segment_body_jacobian(l3, xi[4], xi[5])
+
+    pose_3 = expm(up_hat(np.array([xi[4], xi[5], 0, 0, 0, l3])))
+    pose_3_inv = invert_transformation(pose_3)
+
+    j2 = _segment_body_jacobian(l2, xi[2], xi[3])
+    j2_c1 = up_vee(pose_3_inv @ up_hat(j2[:, 0]) @ pose_3)
+    j2_c2 = up_vee(pose_3_inv @ up_hat(j2[:, 1]) @ pose_3)
+    j2 = np.hstack([j2_c1, j2_c2])
+
+    pose_2 = expm(up_hat(np.array([xi[2], xi[3], 0, 0, l2, 0])))
+    pose_2_inv = invert_transformation(pose_2)
+
+    j1 = _segment_body_jacobian(l1, xi[0], xi[1])
+    j1_c1 = up_vee(pose_3_inv @ pose_2_inv @ up_hat(j1[:, 0]) @ pose_2)
+    j1_c2 = up_vee(pose_3_inv @ pose_2_inv @ up_hat(j1[:, 1]) @ pose_2)
+    j1 = np.hstack([j1_c1, j1_c2])
+
+    return np.hstack([j1, j2, j3])
+
+
+def body_jacobian(lengths: np.ndarray[float], xi: np.ndarray[float]):
+    """
+    determines the body jacobian for an n-segment inexensible Continuum Robot
+    """
+    n = len(lengths)
+
+    assert len(xi) == 2 * n, "xi must be a 2n-vector"
+
+    jacobian_columns = []
+    pose_inv_matrices = []
+
+    # iterate backwards
+    for i in range(n - 1, -1, -1):
+        kappa, phi = xi[2 * i], xi[2 * i + 1]
+        pose_i = expm(up_hat(np.array([kappa, phi, 0, 0, 0, lengths[i]])))
+        pose_i_inv = invert_transformation(pose_i)
+
+        ji = _segment_body_jacobian(lengths[i], kappa, phi)
+
+        inv_transformation = np.eye(4)
+        for prev_pose_inv in reversed(pose_inv_matrices):
+            inv_transformation = inv_transformation @ prev_pose_inv
+
+        pose_inv_matrices = [pose_i_inv] + pose_inv_matrices
+
+        j_c1 = up_vee(inv_transformation @ up_hat(ji[:, 0]) @ pose_i)
+        j_c2 = up_vee(inv_transformation @ up_hat(ji[:, 1]) @ pose_i)
+
+        j_c1 = np.reshape(j_c1, (6, 1))
+        j_c2 = np.reshape(j_c2, (6, 1))
+
+        ji = np.hstack([j_c1, j_c2])
+
+        jacobian_columns = [ji] + jacobian_columns
+
+    return np.hstack(jacobian_columns)

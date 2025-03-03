@@ -18,8 +18,27 @@ def up_hat(v: np.ndarray[float]) -> np.ndarray[float]:
     # compute the lie algebra of a vector
     if np.size(v) == 3:
         return np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])
+    elif np.size(v) == 6:
+        return np.array(
+            [
+                [0, -v[2], v[1], v[3]],
+                [v[2], 0, -v[0], v[4]],
+                [-v[1], v[0], 0, v[5]],
+                [0, 0, 0, 0],
+            ]
+        )
     else:
-        raise NotImplementedError("Only 3D vectors are supported")
+        raise NotImplementedError("Input not in R3/R6")
+
+
+def up_vee(m: np.ndarray[float]) -> np.ndarray[float]:
+    # compute the lie group of a matrix (3x3 -> 3x1 or 4x4 -> 4x1)
+    if m.shape == (3, 3):
+        return np.array([m[2, 1], m[0, 2], m[1, 0]])
+    elif m.shape == (4, 4):
+        return np.array([m[2, 1], m[0, 2], m[1, 0], m[0, 3], m[1, 3], m[2, 3]])
+    else:
+        raise NotImplementedError("Only 3x3 and 4x4 matrices are supported")
 
 
 def up_plus(q: np.ndarray[float]) -> np.ndarray[float]:
@@ -51,6 +70,17 @@ def up_oplus(q: np.ndarray[float]) -> np.ndarray[float]:
 
 def skew(v: np.ndarray[float]) -> np.ndarray[float]:
     return np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])
+
+
+def invert_transformation(se3: np.ndarray[float]) -> np.ndarray[float]:
+    """
+    efficient inversion of a 4x4 homogeneous transformation matrix
+    """
+
+    inv = np.eye(4)
+    inv[:3, :3] = se3[:3, :3].T
+    inv[:3, 3] = -se3[:3, :3].T @ se3[:3, 3]
+    return inv
 
 
 def se3_to_pose(se3: np.ndarray[float]) -> np.ndarray[float]:
