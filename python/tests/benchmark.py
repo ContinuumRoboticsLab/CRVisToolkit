@@ -1,10 +1,11 @@
+from ik.solvers.gcrb.gcrb_solver import GcrbIkSettings, GcrbIkTarget, GcrbSolver2
 from tests.runner import MultiSolverTestRunner
 from tests.generation.uniform import UniformDistributionGenerator
 
 from ik.solvers.nr import NewtonRaphsonIkSolver, NewtonRaphsonIkSettings
 from ik.solvers.neppalli import NeppalliIkSolver, NeppalliIkSettings, NeppalliIkTarget
 from ik.solvers.mics import MicsSolver, MicsSolverSettings
-from ik.target import R6TwistIkTarget, SE3IkTarget, P3IkTarget
+from ik.target import SE3IkTarget
 
 from common.robot import RobotSegmentLimits
 
@@ -19,12 +20,9 @@ def run_twoseg_ext_tests(iternum: int, seed=None):
     start = time.time()
     num_segs = 2
 
-    # solver_classes = [NewtonRaphsonIkSolver, NeppalliIkSolver, GcrbSolver2]
-    # settings = [NewtonRaphsonIkSettings(), NeppalliIkSettings(), GcrbIkSettings()]
-    # target_types = [R6TwistIkTarget, NeppalliIkTarget, GcrbIkTarget]
-    solver_classes = [NewtonRaphsonIkSolver, NewtonRaphsonIkSolver]
-    settings = [NewtonRaphsonIkSettings(), NewtonRaphsonIkSettings(clamp_theta=False)]
-    target_types = [P3IkTarget, R6TwistIkTarget]
+    solver_classes = [NewtonRaphsonIkSolver, NeppalliIkSolver, GcrbSolver2]
+    settings = [NewtonRaphsonIkSettings(), NeppalliIkSettings(), GcrbIkSettings()]
+    target_types = [SE3IkTarget, NeppalliIkTarget, GcrbIkTarget]
 
     generator = UniformDistributionGenerator(
         num_segs, RobotSegmentLimits(is_extensible=True), seed
@@ -44,7 +42,7 @@ def run_twoseg_inext_tests(iternum: int, seed=None):
 
     solver_classes = [NewtonRaphsonIkSolver, NeppalliIkSolver]
     settings = [NewtonRaphsonIkSettings(), NeppalliIkSettings()]
-    target_types = [R6TwistIkTarget, NeppalliIkTarget]
+    target_types = [SE3IkTarget, NeppalliIkTarget]
 
     generator = UniformDistributionGenerator(
         num_segs, RobotSegmentLimits(is_extensible=False), seed
@@ -64,7 +62,7 @@ def run_threeseg_ext_tests(iternum: int, seed=None):
 
     solver_classes = [NewtonRaphsonIkSolver, NeppalliIkSolver]
     settings = [NewtonRaphsonIkSettings(), NeppalliIkSettings()]
-    target_types = [R6TwistIkTarget, NeppalliIkTarget]
+    target_types = [SE3IkTarget, NeppalliIkTarget]
 
     generator = UniformDistributionGenerator(
         num_segs, RobotSegmentLimits(is_extensible=True), seed
@@ -84,7 +82,7 @@ def run_threeseg_inext_tests(iternum: int, seed=None):
 
     solver_classes = [NewtonRaphsonIkSolver, NeppalliIkSolver, MicsSolver]
     settings = [NewtonRaphsonIkSettings(), NeppalliIkSettings(), MicsSolverSettings()]
-    target_types = [R6TwistIkTarget, NeppalliIkTarget, SE3IkTarget]
+    target_types = [SE3IkTarget, NeppalliIkTarget, SE3IkTarget]
 
     generator = UniformDistributionGenerator(
         num_segs, RobotSegmentLimits(is_extensible=False), seed
@@ -101,9 +99,9 @@ if __name__ == "__main__":
     SEED = 1006842534
     ITERATIONS = 100
     start = time.time()
-    run_twoseg_ext_tests(ITERATIONS * 5, SEED)
+    # run_twoseg_ext_tests(ITERATIONS * 5, SEED)
     # run_twoseg_inext_tests(ITERATIONS, SEED)
     # run_threeseg_ext_tests(ITERATIONS, SEED)
-    # run_threeseg_inext_tests(50, SEED)
+    run_threeseg_inext_tests(ITERATIONS, SEED)
 
     # logger.info(f"BENCHMARKS COMPLETED IN {time.time() - start}s")

@@ -444,7 +444,6 @@ class ConstantCurvatureCR:
             case _:
                 raise ValueError("Invalid target type")
 
-    # make not private function
     def segment_endpoints(self) -> np.ndarray[float]:
         """
         utility for testing Neppalli/GCRB: returns the endpoints of the robot segments

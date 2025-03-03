@@ -4,11 +4,18 @@ from scipy.linalg import logm
 from spatialmath import SE3
 
 from common.robot import ConstantCurvatureCR
-from common.utils import se3_to_uq, se3_to_pose, up_star, up_plus, up_oplus
+from common.utils import (
+    se3_to_uq,
+    se3_to_pose,
+    up_star,
+    up_plus,
+    up_oplus,
+    invert_transformation,
+)
 
 from ik.solvers.base_solver import CcIkSettings, CcIkSolver, IkResult
 from ik.solvers.nr import NewtonRaphsonIkSettings, NewtonRaphsonIkSolver
-from ik.target import IkTarget, R6TwistIkTarget
+from ik.target import IkTarget
 
 from copy import deepcopy
 
@@ -279,7 +286,8 @@ class MicsSolver(CcIkSolver):
         T = SE3(T1 * T2 * T3)
 
         # error as defined in (42)
-        e = np.linalg.norm(se3_to_pose(logm(T.inv().A @ self.target_pose)))
+        t_inverse = invert_transformation(T.A)
+        e = np.linalg.norm(se3_to_pose(logm(t_inverse) @ self.target_pose))
         return e
 
     def _set_state_from_r(self, r1, r2, r3):
@@ -320,7 +328,7 @@ class MicsSolver(CcIkSolver):
         numerical_solver = NewtonRaphsonIkSolver(
             robot_copy,
             self.settings.numerical_solver_settings,
-            R6TwistIkTarget(se3_to_pose(self.target_pose)),
+            self.ik_target,
         )
 
         numerical_solver.solve()

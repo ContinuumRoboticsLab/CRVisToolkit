@@ -67,34 +67,6 @@ def _segment_body_jacobian(length, w1, w2):
         return np.vstack([np.eye(3) - m * up_hat(w) + n * up_hat(w) @ up_hat(w), temp])
 
 
-def body_jacobian_3seg(l1: float, l2: float, l3: float, xi: np.ndarray[float]):
-    """
-    determines the body jacobian for a 3-segment inextensible Continuum Robot
-    takes as arguments the segment lengths for all three segments (constant) and the
-    current configuration vector of the robot (6-vector of curvatures and plane angles)
-    """
-
-    j3 = _segment_body_jacobian(l3, xi[4], xi[5])
-
-    pose_3 = expm(up_hat(np.array([xi[4], xi[5], 0, 0, 0, l3])))
-    pose_3_inv = invert_transformation(pose_3)
-
-    j2 = _segment_body_jacobian(l2, xi[2], xi[3])
-    j2_c1 = up_vee(pose_3_inv @ up_hat(j2[:, 0]) @ pose_3)
-    j2_c2 = up_vee(pose_3_inv @ up_hat(j2[:, 1]) @ pose_3)
-    j2 = np.hstack([j2_c1, j2_c2])
-
-    pose_2 = expm(up_hat(np.array([xi[2], xi[3], 0, 0, l2, 0])))
-    pose_2_inv = invert_transformation(pose_2)
-
-    j1 = _segment_body_jacobian(l1, xi[0], xi[1])
-    j1_c1 = up_vee(pose_3_inv @ pose_2_inv @ up_hat(j1[:, 0]) @ pose_2)
-    j1_c2 = up_vee(pose_3_inv @ pose_2_inv @ up_hat(j1[:, 1]) @ pose_2)
-    j1 = np.hstack([j1_c1, j1_c2])
-
-    return np.hstack([j1, j2, j3])
-
-
 def body_jacobian(lengths: np.ndarray[float], xi: np.ndarray[float]):
     """
     determines the body jacobian for an n-segment inexensible Continuum Robot

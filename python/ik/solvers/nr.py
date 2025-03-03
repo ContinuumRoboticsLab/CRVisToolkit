@@ -27,6 +27,7 @@ from common.utils import se3_to_pose, up_vee
 class NewtonRaphsonIkSettings(CcIkSettings):
     position_tolerance: float = 1e-4
     orientation_tolerance: float = 1e-4
+    exponential_coord_tolerance: float = 1e-2
     max_iter: int = 100
     clamp_theta: bool = False
 
@@ -149,19 +150,11 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
         object methods
         """
 
-        # breakpoint()
-        # old_theta = self.theta_i
-
-        # update the CR internal state
-
-        # self.cr.set_config(old_theta)
-
-        # returns according to the current target type - in this case, SE(3) pose matrix
         pose = self.cr.t_matrix()
         vee = up_vee(logm(np.linalg.inv(pose) @ self.ik_target.pose.A))
 
         error = np.linalg.norm(vee)
-        if error < 1e-2:
+        if error < self.settings.exponential_coord_tolerance:
             self.solved = True
             return
         else:

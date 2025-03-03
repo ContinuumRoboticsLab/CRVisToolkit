@@ -49,7 +49,7 @@ class NeppalliIkTarget(IkTarget):
 
     @classmethod
     def from_target_robot(cls, target_robot):
-        return cls(target_robot._endpoints())
+        return cls(target_robot.segment_endpoints())
 
 
 class NeppalliIkSolver(AnalyticIkSolver):

@@ -84,7 +84,7 @@ class MultiSolverTestRunner:
 
                 except Exception as e:
                     print(f"Error in iteration {i}: {e}")
-                    raise e
+                    # raise e
 
         print("Results:")
         for j, (success_count, avg_execution_time) in enumerate(
