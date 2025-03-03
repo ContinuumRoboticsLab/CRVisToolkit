@@ -154,6 +154,7 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
         vee = up_vee(logm(np.linalg.inv(pose) @ self.ik_target.pose.A))
 
         error = np.linalg.norm(vee)
+        # print(f"Error: {error}")
         if error < self.settings.exponential_coord_tolerance:
             self.solved = True
             return
@@ -217,10 +218,6 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
     @property
     def stopping_condition(self) -> tuple[bool, IkResult | None]:
         if self.solved:
-            # possible that other parts of algorithm set solved to True
-            return (True, IkResult.SUCCESS)
-        (error_in_bounds, error) = self._check_error_in_bounds()
-        if error_in_bounds:
             return (True, IkResult.SUCCESS)
         elif self.iter_count > self.settings.max_iter:
             return (True, IkResult.MAX_ITER)

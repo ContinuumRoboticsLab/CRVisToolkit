@@ -36,7 +36,7 @@ class TestRunner:
                     num_success += 1
 
                 avg_execution = (avg_execution * i + execution_time) / (i + 1)
-            except Exception as e:
+            except ValueError as e:
                 print(f"Error in iteration {i}: {e}")
 
         print(f"Success rate: {num_success / n}")
@@ -63,6 +63,7 @@ class MultiSolverTestRunner:
 
         success_counts = [0] * len(self.solver_classes)
         avg_execution_times = [0] * len(self.solver_classes)
+        total_num_iterations = [0] * len(self.solver_classes)
 
         for i in tqdm(range(n)):
             test_case_i = self.generator.generate_case()
@@ -71,27 +72,31 @@ class MultiSolverTestRunner:
                 zip(self.solver_classes, self.settings, self.target_type)
             ):
                 try:
-                    result, execution_time = test_case_i.solve_with_solver(
+                    result, execution_time, iter_count = test_case_i.solve_with_solver(
                         solver_class, settings, target_type, debug_mode
                     )
 
                     if result.is_success:
-                        success_counts[j] += 1 / n
+                        success_counts[j] += 1
 
                     avg_execution_times[j] = (
                         avg_execution_times[j] * i + execution_time
                     ) / (i + 1)
+
+                    if iter_count and result.is_success:
+                        total_num_iterations[j] += iter_count
 
                 except Exception as e:
                     print(f"Error in iteration {i}: {e}")
                     # raise e
 
         print("Results:")
-        for j, (success_count, avg_execution_time) in enumerate(
-            zip(success_counts, avg_execution_times)
+        for j, (success_count, avg_execution_time, iter_count) in enumerate(
+            zip(success_counts, avg_execution_times, total_num_iterations)
         ):
             print(f"Solver {self.solver_classes[j]}:")
-            print("Success rate: {0:.2f}%".format(success_count * 100))
-            print(f"Execution time: {avg_execution_time}\n")
+            print("Success rate: {0:.2f}%".format(success_count / n * 100))
+            print(f"Execution time: {avg_execution_time}")
+            print(f"Average number of iterations: {iter_count/success_count}\n")
 
         return success_counts, avg_execution_times

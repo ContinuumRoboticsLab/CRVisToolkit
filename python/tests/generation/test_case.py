@@ -43,4 +43,9 @@ class IkTestCase:
             )
             plt.show()
 
-        return result, solver.exec_time
+        if hasattr(solver, "iter_count"):
+            iter_count = solver.iter_count
+        else:
+            iter_count = None
+
+        return (result, solver.exec_time, iter_count)

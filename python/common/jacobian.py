@@ -75,7 +75,9 @@ def body_jacobian(lengths: np.ndarray[float], xi: np.ndarray[float]):
 
     assert len(xi) == 2 * n, "xi must be a 2n-vector"
 
+    # updated so that the columns/matrices are stored in increasing "i" order
     jacobian_columns = []
+    pose_matrices = []
     pose_inv_matrices = []
 
     # iterate backwards
@@ -86,14 +88,19 @@ def body_jacobian(lengths: np.ndarray[float], xi: np.ndarray[float]):
 
         ji = _segment_body_jacobian(lengths[i], kappa, phi)
 
-        inv_transformation = np.eye(4)
-        for prev_pose_inv in reversed(pose_inv_matrices):
-            inv_transformation = inv_transformation @ prev_pose_inv
+        forward_transformation = np.eye(4)
+        for prev_pose in pose_matrices:
+            forward_transformation = forward_transformation @ prev_pose
 
+        inv_transformation = np.eye(4)
+        for prev_pose_inv in pose_inv_matrices:
+            inv_transformation = prev_pose_inv @ inv_transformation
+
+        pose_matrices = [pose_i] + pose_matrices
         pose_inv_matrices = [pose_i_inv] + pose_inv_matrices
 
-        j_c1 = up_vee(inv_transformation @ up_hat(ji[:, 0]) @ pose_i)
-        j_c2 = up_vee(inv_transformation @ up_hat(ji[:, 1]) @ pose_i)
+        j_c1 = up_vee(inv_transformation @ up_hat(ji[:, 0]) @ forward_transformation)
+        j_c2 = up_vee(inv_transformation @ up_hat(ji[:, 1]) @ forward_transformation)
 
         j_c1 = np.reshape(j_c1, (6, 1))
         j_c2 = np.reshape(j_c2, (6, 1))

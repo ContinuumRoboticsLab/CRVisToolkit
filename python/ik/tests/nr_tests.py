@@ -50,7 +50,7 @@ def test_nr_1(plot, logger):
     target_robot = ConstantCurvatureCR(
         [
             ConstantCurvatureSegment(1 / 0.4, pi / 3, 0.05),
-            ConstantCurvatureSegment(1 / 0.07, pi / 5, 0.03),
+            ConstantCurvatureSegment(1 / 0.06, -pi / 5, 0.03),
         ]
     )
 
@@ -60,7 +60,6 @@ def test_nr_1(plot, logger):
     )
 
     target_pose = SE3IkTarget.from_target_robot(target_robot)
-    # target_position = P3IkTarget.from_target_robot(target_robot)
 
     logger.info(f"target pose: {target_pose.pose}")
 
@@ -77,14 +76,7 @@ def test_nr_1(plot, logger):
         {target_robot.pose_vector(target_robot.state_vector())}"
     )
 
-    # p3_solver = NewtonRaphsonIkSolver(robot, NewtonRaphsonIkSettings(), target_position)
-    # p3_solver.solve()
-
     if plot:
-        # draw_tdcr(
-        #     p3_solver.cr.as_discrete_curve(pts_per_seg=10),
-        #     TDCRPlotterSettings(plot_title="NR base case 1 Position Solution"),
-        # )
         draw_tdcr(
             starter_plot,
             TDCRPlotterSettings(plot_title="NR base case 1 Starter Robot"),
@@ -157,14 +149,15 @@ def test_nr_3(plot, logger):
     """
     logger.info("**** Test Case 3: three-segment inextensible CR****")
 
-    seg1 = ConstantCurvatureSegment(1 / 0.14, -0.8 * pi, 0.05)
+    seg1 = ConstantCurvatureSegment(1 / 0.14, -0.85 * pi, 0.05)
     seg2 = ConstantCurvatureSegment(1 / 0.06, 0.4 * pi, 0.03)
     seg3 = ConstantCurvatureSegment(1 / 0.065, -pi, 0.035)
     robot = ConstantCurvatureCR([seg1, seg2, seg3])
+    starting_plot = robot.as_discrete_curve(pts_per_seg=10)
 
     target_seg1 = ConstantCurvatureSegment(1 / 0.13, -pi, 0.05)
     target_seg2 = ConstantCurvatureSegment(1 / 0.07, 0.35 * pi, 0.03)
-    target_seg3 = ConstantCurvatureSegment(1 / 0.04, -0.9 * pi, 0.035)
+    target_seg3 = ConstantCurvatureSegment(1 / 0.05, -0.9 * pi, 0.035)
     target_robot = ConstantCurvatureCR([target_seg1, target_seg2, target_seg3])
     logger.info(
         f"starting curvature is: {robot.state_vector()} \
@@ -173,21 +166,18 @@ def test_nr_3(plot, logger):
 
     settings = NewtonRaphsonIkSettings()
 
-    target_pose = R6TwistIkTarget(target_robot.pose_vector())
-    target_position = P3IkTarget(target_robot.pose_vector())
+    target_pose = SE3IkTarget.from_target_robot(target_robot)
 
     logger.info(f"target pose: {target_pose.pose}")
 
     se3_solver = NewtonRaphsonIkSolver(robot, settings, target_pose)
-    p3_solver = NewtonRaphsonIkSolver(robot, settings, target_position)
 
     se3_res = _run_solver_test(target_robot, se3_solver, logger)
-    p3_res = _run_solver_test(target_robot, p3_solver, logger)
 
     if plot:
         draw_tdcr(
-            p3_solver.cr.as_discrete_curve(pts_per_seg=10),
-            TDCRPlotterSettings(plot_title="NR base case 2 Position Solution"),
+            starting_plot,
+            TDCRPlotterSettings(plot_title="NR base case 2 Starter Robot"),
         )
         draw_tdcr(
             se3_solver.cr.as_discrete_curve(pts_per_seg=10),
@@ -199,7 +189,7 @@ def test_nr_3(plot, logger):
         )
         plt.show()
 
-    return (se3_res, p3_res)
+    return se3_res
 
 
 def run(plot=False, loglevel=logging.INFO):
@@ -208,4 +198,4 @@ def run(plot=False, loglevel=logging.INFO):
     logger = logging.getLogger(__name__)
     test_nr_1(plot, logger)
     # test_nr_2(plot, logger)
-    # test_nr_3(plot, logger)
+    test_nr_3(plot, logger)
