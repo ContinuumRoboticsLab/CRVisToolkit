@@ -133,3 +133,12 @@ class P3Direction(IkTarget):
     def as_array(self):
         # semantics here a little odd - target is inherently represented with 2 array entities
         return np.concatenate((self.position, self.pointing_direction))
+
+    @classmethod
+    def from_target_robot(cls, target_robot):
+        ee_pose = target_robot.t_matrix().A
+
+        z_axis = ee_pose[:3, 2]
+        position = ee_pose[:3, 3]
+
+        return cls(position, z_axis)

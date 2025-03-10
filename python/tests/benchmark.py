@@ -6,7 +6,8 @@ from tests.generation.perturbation import PerturbedRobotGenerator
 from ik.solvers.nr import NewtonRaphsonIkSolver, NewtonRaphsonIkSettings
 from ik.solvers.neppalli import NeppalliIkSolver, NeppalliIkSettings, NeppalliIkTarget
 from ik.solvers.mics import MicsSolver, MicsSolverSettings
-from ik.target import SE3IkTarget
+from ik.solvers.fabrikc import FabrikcIkSettings, FabrikcIkSolver
+from ik.target import SE3IkTarget, P3Direction
 
 from common.robot import RobotSegmentLimits
 
@@ -96,10 +97,11 @@ def run_threeseg_inext_tests(iternum: int, seed=None):
     logger.info(f"finished tests in {time.time() - start} seconds")
 
 
-def run_perturbed_nr_tests(iternum: int, perturbation_values: list[float], seed=None):
+def run_perturbed_nr_tests(
+    iternum: int, perturbation_values: list[float], seed=None, num_segs=3
+):
     logger.info("Running perturbed NR tests")
     start = time.time()
-    num_segs = 2
     solver_classes = [NewtonRaphsonIkSolver]
     settings = [NewtonRaphsonIkSettings()]
     target_types = [SE3IkTarget]
@@ -121,6 +123,19 @@ def run_perturbed_nr_tests(iternum: int, perturbation_values: list[float], seed=
     logger.info(f"finished all tests in {time.time() - start} seconds")
 
 
+def run_fabrikc_tests(seed=None):
+    solver_classes = [FabrikcIkSolver]
+    settings = [FabrikcIkSettings()]
+    target_types = [P3Direction]
+
+    generator = UniformDistributionGenerator(
+        3, RobotSegmentLimits(is_extensible=False), seed
+    )
+
+    runner = MultiSolverTestRunner(generator, solver_classes, settings, target_types, 2)
+    runner.run(1000)
+
+
 if __name__ == "__main__":
     SEED = 1006842534
     ITERATIONS = 100
@@ -129,6 +144,7 @@ if __name__ == "__main__":
     # run_twoseg_inext_tests(ITERATIONS, SEED)
     # run_threeseg_ext_tests(ITERATIONS, SEED)
     # run_threeseg_inext_tests(ITERATIONS, SEED)
-    run_perturbed_nr_tests(ITERATIONS * 5, [0.005, 0.01, 0.02], SEED)
+    # run_perturbed_nr_tests(ITERATIONS, [0.02, 0.05, 0.1, 0.2], SEED)
+    run_fabrikc_tests(SEED)
 
     # logger.info(f"BENCHMARKS COMPLETED IN {time.time() - start}s")

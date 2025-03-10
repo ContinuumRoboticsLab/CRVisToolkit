@@ -58,7 +58,7 @@ class MultiSolverTestRunner:
         self.target_type = target_type
         self.num_segs = num_segs
 
-    def run(self, n: int, debug_mode: bool = False) -> tuple[list[float], list[float]]:
+    def run(self, n: int, show_plots: bool = False) -> tuple[list[float], list[float]]:
         assert len(self.solver_classes) == len(self.settings) == len(self.target_type)
 
         success_counts = [0] * len(self.solver_classes)
@@ -73,7 +73,7 @@ class MultiSolverTestRunner:
             ):
                 try:
                     result, execution_time, iter_count = test_case_i.solve_with_solver(
-                        solver_class, settings, target_type, debug_mode
+                        solver_class, settings, target_type, show_plots
                     )
 
                     if result.is_success:
@@ -86,9 +86,19 @@ class MultiSolverTestRunner:
                     if iter_count and result.is_success:
                         total_num_iterations[j] += iter_count
 
+                    from plotter.tdcr import draw_tdcr, TDCRPlotterSettings
+                    from matplotlib import pyplot as plt
+
+                    if show_plots:
+                        draw_tdcr(
+                            test_case_i.target_robot.as_discrete_curve(pts_per_seg=10),
+                            TDCRPlotterSettings(plot_title="result"),
+                        )
+                        plt.show()
+
                 except Exception as e:
                     print(f"Error in iteration {i}: {e}")
-                    # raise e
+                    raise e
 
         print("Results:")
         for j, (success_count, avg_execution_time, iter_count) in enumerate(
@@ -97,6 +107,6 @@ class MultiSolverTestRunner:
             print(f"Solver {self.solver_classes[j]}:")
             print("Success rate: {0:.2f}%".format(success_count / n * 100))
             print(f"Execution time: {avg_execution_time}")
-            print(f"Average number of iterations: {iter_count/success_count}\n")
+            print(f"Average number of iterations: {iter_count / success_count}\n")
 
         return success_counts, avg_execution_times

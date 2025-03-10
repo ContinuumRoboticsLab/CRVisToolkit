@@ -3,7 +3,6 @@ from ik.target import IkTarget
 from ik.solvers.base_solver import IkResult, CcIkSolver, CcIkSettings
 
 from plotter.tdcr import draw_tdcr, TDCRPlotterSettings
-from matplotlib import pyplot as plt
 from copy import deepcopy
 
 
@@ -41,7 +40,6 @@ class IkTestCase:
                 solver.cr.as_discrete_curve(pts_per_seg=10),
                 TDCRPlotterSettings(plot_title="Solved Robot"),
             )
-            plt.show()
 
         if hasattr(solver, "iter_count"):
             iter_count = solver.iter_count
