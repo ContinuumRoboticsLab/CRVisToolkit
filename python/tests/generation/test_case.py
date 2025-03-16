@@ -1,11 +1,22 @@
 from common.robot import ConstantCurvatureCR, ConstantCurvatureSegment
 from ik.target import IkTarget
-from ik.solvers.base_solver import IkResult, CcIkSolver, CcIkSettings
+from ik.solvers.base_solver import CcIkSolver, CcIkSettings
 
 from plotter.tdcr import draw_tdcr, TDCRPlotterSettings
 
 from copy import deepcopy
+from dataclasses import dataclass, asdict
 import json
+
+
+@dataclass
+class IkTestResult:
+    success: bool
+    exec_time: float
+    iter_count: int
+
+    def as_dict(self):
+        return asdict(self)
 
 
 class IkTestCase:
@@ -16,11 +27,11 @@ class IkTestCase:
     @classmethod
     def from_dict(cls, data: dict):
         starting_robot = ConstantCurvatureCR(
-            [ConstantCurvatureSegment.from_dict(seg) for seg in data["start_robot"]]
+            [ConstantCurvatureSegment(**seg) for seg in data["start_robot"]]
         )
 
         target_robot = ConstantCurvatureCR(
-            [ConstantCurvatureSegment.from_dict(seg) for seg in data["target_robot"]]
+            [ConstantCurvatureSegment(**seg) for seg in data["target_robot"]]
         )
 
         return cls(target_robot, starting_robot)
@@ -41,7 +52,7 @@ class IkTestCase:
         settings: CcIkSettings,
         target_class: type[IkTarget],
         debug_mode: bool = False,
-    ) -> tuple[IkResult, float]:
+    ) -> IkTestResult:
         starter_plot = self.starting_robot.as_discrete_curve(pts_per_seg=10)
 
         ik_target = self.as_target_type(target_class)
@@ -61,7 +72,7 @@ class IkTestCase:
         else:
             iter_count = None
 
-        return (result, solver.exec_time, iter_count)
+        return IkTestResult(result.is_success, solver.exec_time, iter_count)
 
 
 """

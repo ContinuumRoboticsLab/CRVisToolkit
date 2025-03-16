@@ -17,7 +17,6 @@ import time
 from ik.target import IkTarget, IkTargetType
 
 from common.robot import ConstantCurvatureCR
-from ik.index import IkSolverType
 
 
 @dataclass
@@ -107,8 +106,8 @@ class CcIkSolver:
     under the constant curvature assumption
     """
 
-    solver_type: IkSolverType
-    accepted_target_types: list[IkTargetType]
+    target_type: IkTargetType
+    settings_class: type[CcIkSettings]
 
     def __init__(
         self,

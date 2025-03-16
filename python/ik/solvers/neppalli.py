@@ -19,37 +19,12 @@ from time import time
 from common.coordinates import CrConfigurationType
 from common.robot import ConstantCurvatureCR
 
-from ik.index import IkSolverType
 from ik.solvers.base_solver import CcIkSettings, AnalyticIkSolver, IkResult
-from ik.target import IkTarget, IkTargetType
+from ik.target import NeppalliIkTarget
 
 
 class NeppalliIkSettings(CcIkSettings):
     pass
-
-
-class NeppalliIkTarget(IkTarget):
-    """
-    The Neppalli solver requires its own IK target class
-    since it does not target a single end-effector pose or
-    position as it's target, but rather a set of segment
-    endpoint coordinates.
-    """
-
-    target_type = IkTargetType.NEPPALLI
-
-    def __init__(self, seg_endpoints: list[np.ndarray[float]]):
-        self.seg_endpoints = seg_endpoints
-
-    def as_array(self):
-        raise Exception("Neppalli solver does not target a single pose")
-
-    def endpoints(self):
-        return self.seg_endpoints
-
-    @classmethod
-    def from_target_robot(cls, target_robot):
-        return cls(target_robot.segment_endpoints())
 
 
 class NeppalliIkSolver(AnalyticIkSolver):
@@ -67,7 +42,8 @@ class NeppalliIkSolver(AnalyticIkSolver):
         defined as a series of n robot segment endpoint coordinates.
     """
 
-    solver_type = IkSolverType.NEPPALLI_CLOSED_FORM
+    target_type = NeppalliIkTarget
+    settings_class = NeppalliIkSettings
 
     def __init__(
         self,

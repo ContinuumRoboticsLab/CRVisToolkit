@@ -65,6 +65,8 @@ class GcrbSolver2(AnalyticIkSolver):
     solution can be obtained by calling .cr2
     """
 
+    target_type = GcrbIkTarget
+    settings_class = GcrbIkSettings
     ZERO_TOLERANCE = 1e-4
 
     def __init__(

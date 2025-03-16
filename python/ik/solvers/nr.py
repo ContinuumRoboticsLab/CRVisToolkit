@@ -14,11 +14,9 @@ from dataclasses import dataclass
 
 from common.coordinates import CrConfigurationType
 from common.robot import ConstantCurvatureCR
-from common.jacobian import jacobian
 
 from ik.solvers.base_solver import IterativeIkSolver, CcIkSettings, IkResult
 from ik.target import IkTarget, IkTargetType
-from ik.index import IkSolverType
 
 from common.utils import se3_to_pose, up_vee
 
@@ -55,7 +53,8 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
         [kappa_i, phi_i, length_i] for each segment i in the CR object
     """
 
-    solver_type = IkSolverType.NR
+    target_type: IkTargetType = IkTargetType.SE3
+    settings_class = NewtonRaphsonIkSettings
 
     def __init__(
         self,
@@ -104,10 +103,7 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
         compute the Jacobian matrix at the current solution
         returns an (m x n) matrix
         """
-        if self.ik_target.target_type == IkTargetType.SE3:
-            return self.cr.get_body_jacobian()
-        else:
-            return jacobian(self.get_pose, self.cr.state_vector())
+        return self.cr.get_body_jacobian()
 
     def __compute_twist(self):
         """

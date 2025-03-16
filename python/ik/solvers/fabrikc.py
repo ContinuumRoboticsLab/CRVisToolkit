@@ -197,6 +197,9 @@ class FabrikcIkSettings(CcIkSettings):
 
 
 class FabrikcIkSolver(CcIkSolver):
+    target_type = P3Direction
+    settings_class = FabrikcIkSettings
+
     def __init__(
         self,
         robot: ConstantCurvatureCR,

@@ -1,5 +1,5 @@
 from ik.solvers.gcrb.gcrb_solver import GcrbIkSettings, GcrbIkTarget, GcrbSolver2
-from tests.runner import MultiSolverTestRunner
+from tests.runner import MultiGenerativeTestRunner
 from tests.generation.uniform import UniformDistributionGenerator
 from tests.generation.perturbation import PerturbedRobotGenerator
 
@@ -30,7 +30,7 @@ def run_twoseg_ext_tests(iternum: int, seed=None):
         num_segs, RobotSegmentLimits(is_extensible=True), seed
     )
 
-    runner = MultiSolverTestRunner(
+    runner = MultiGenerativeTestRunner(
         generator, solver_classes, settings, target_types, num_segs
     )
     runner.run(iternum)
@@ -50,7 +50,7 @@ def run_twoseg_inext_tests(iternum: int, seed=None):
         num_segs, RobotSegmentLimits(is_extensible=False), seed
     )
 
-    runner = MultiSolverTestRunner(
+    runner = MultiGenerativeTestRunner(
         generator, solver_classes, settings, target_types, num_segs
     )
     runner.run(iternum)
@@ -70,7 +70,7 @@ def run_threeseg_ext_tests(iternum: int, seed=None):
         num_segs, RobotSegmentLimits(is_extensible=True), seed
     )
 
-    runner = MultiSolverTestRunner(
+    runner = MultiGenerativeTestRunner(
         generator, solver_classes, settings, target_types, num_segs
     )
     runner.run(iternum)
@@ -90,7 +90,7 @@ def run_threeseg_inext_tests(iternum: int, seed=None):
         num_segs, RobotSegmentLimits(is_extensible=False), seed
     )
 
-    runner = MultiSolverTestRunner(
+    runner = MultiGenerativeTestRunner(
         generator, solver_classes, settings, target_types, num_segs
     )
     runner.run(iternum)
@@ -114,7 +114,7 @@ def run_perturbed_nr_tests(
             seed,
             stdev_percentage=value,
         )
-        runner = MultiSolverTestRunner(
+        runner = MultiGenerativeTestRunner(
             generator, solver_classes, settings, target_types, num_segs
         )
         runner.run(iternum)
@@ -132,12 +132,14 @@ def run_fabrikc_tests(seed=None):
         3, RobotSegmentLimits(is_extensible=False), seed
     )
 
-    runner = MultiSolverTestRunner(generator, solver_classes, settings, target_types, 2)
+    runner = MultiGenerativeTestRunner(
+        generator, solver_classes, settings, target_types, 2
+    )
     runner.run(1000)
 
 
 if __name__ == "__main__":
-    SEED = 1006842534
+    SEED = 0
     ITERATIONS = 100
     start = time.time()
     # run_twoseg_ext_tests(ITERATIONS * 5, SEED)

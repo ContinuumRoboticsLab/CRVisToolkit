@@ -1,11 +1,13 @@
 from ik.target import IkTargetType
+from tests.generation.test_case import IkTestCase, IkTestResult
 from tests.generation.uniform import UniformDistributionGenerator
 from ik.solvers.base_solver import CcIkSettings, CcIkSolver
 
 from tqdm import tqdm
+import json
 
 
-class TestRunner:
+class GenerativeTestRunner:
     def __init__(
         self,
         generator: UniformDistributionGenerator,
@@ -43,7 +45,7 @@ class TestRunner:
         print(f"Execution time: {avg_execution}")
 
 
-class MultiSolverTestRunner:
+class MultiGenerativeTestRunner:
     def __init__(
         self,
         generator: UniformDistributionGenerator,
@@ -110,3 +112,41 @@ class MultiSolverTestRunner:
             print(f"Average number of iterations: {iter_count / success_count}\n")
 
         return success_counts, avg_execution_times
+
+
+class TestRunner:
+    def __init__(self, solver_class, test_cases: list[IkTestCase]):
+        self.solver_class: CcIkSolver = solver_class
+        self.test_cases = test_cases
+        self.results: list[IkTestResult] = []
+
+    def run(self, show_plots: bool = False):
+        self.num_success = 0
+        for i in tqdm(range(len(self.test_cases))):
+            test_case = self.test_cases[i]
+            try:
+                target_type: IkTargetType = self.solver_class.target_type
+                ik_target_class = target_type.ik_target_class()
+                test_result = test_case.solve_with_solver(
+                    self.solver_class,
+                    self.solver_class.settings_class(),
+                    ik_target_class,
+                    show_plots,
+                )
+                self.results.append(test_result)
+
+                if test_result.success:
+                    self.num_success += 1
+
+            except Exception as e:
+                print(f"Error in test case {i}: {e}")
+                raise e
+
+    def save_results(self, path):
+        results = [r.as_dict() for r in self.results]
+        with open(path, "w") as f:
+            json.dump(results, f, indent=4)
+
+
+if __name__ == "__main__":
+    pass

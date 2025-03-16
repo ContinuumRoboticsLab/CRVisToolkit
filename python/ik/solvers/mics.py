@@ -15,7 +15,7 @@ from common.utils import (
 
 from ik.solvers.base_solver import CcIkSettings, CcIkSolver, IkResult
 from ik.solvers.nr import NewtonRaphsonIkSettings, NewtonRaphsonIkSolver
-from ik.target import IkTarget
+from ik.target import IkTarget, IkTargetType
 
 from copy import deepcopy
 
@@ -48,7 +48,8 @@ class MicsSolverSettings(CcIkSettings):
 
 
 class MicsSolver(CcIkSolver):
-    settings: MicsSolverSettings
+    target_type = IkTargetType.SE3
+    settings_class = MicsSolverSettings
     mics_starting_points: list
 
     class NoLocalMinimaFound(Exception):
