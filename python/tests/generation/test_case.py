@@ -3,7 +3,9 @@ from ik.target import IkTarget
 from ik.solvers.base_solver import IkResult, CcIkSolver, CcIkSettings
 
 from plotter.tdcr import draw_tdcr, TDCRPlotterSettings
+
 from copy import deepcopy
+import json
 
 
 class IkTestCase:
@@ -60,3 +62,15 @@ class IkTestCase:
             iter_count = None
 
         return (result, solver.exec_time, iter_count)
+
+
+"""
+utility function for importing serialized JSON test cases
+"""
+
+
+def import_tests(path: str) -> list[IkTestCase]:
+    with open(path, "r") as f:
+        data = json.load(f)
+
+    return [IkTestCase.from_dict(test) for test in data]
