@@ -1,4 +1,4 @@
-import numpy as np
+from common.robot import ConstantCurvatureCR, ConstantCurvatureSegment
 from ik.target import IkTarget
 from ik.solvers.base_solver import IkResult, CcIkSolver, CcIkSettings
 
@@ -11,11 +11,24 @@ class IkTestCase:
         self.target_robot = target_robot
         self.starting_robot = starting_robot
 
-    def _get_pose(self) -> np.ndarray[float]:
-        # 6x1 state vector
-        pose = self.starting_robot.pose_vector()
+    @classmethod
+    def from_dict(cls, data: dict):
+        starting_robot = ConstantCurvatureCR(
+            [ConstantCurvatureSegment.from_dict(seg) for seg in data["start_robot"]]
+        )
 
-        return pose
+        target_robot = ConstantCurvatureCR(
+            [ConstantCurvatureSegment.from_dict(seg) for seg in data["target_robot"]]
+        )
+
+        return cls(target_robot, starting_robot)
+
+    def as_dict(self):
+        return {
+            "start_robot": [seg.as_dict() for seg in self.starting_robot.segments],
+            "target_robot": [seg.as_dict() for seg in self.target_robot.segments],
+            "target_pose": self.target_robot.t_matrix().A.tolist(),
+        }
 
     def as_target_type(self, ik_target_class: type[IkTarget]) -> IkTarget:
         return ik_target_class.from_target_robot(self.target_robot)

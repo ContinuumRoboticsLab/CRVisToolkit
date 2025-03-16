@@ -68,6 +68,20 @@ class ConstantCurvatureSegment:
         self.phi = phi
         self.length = length
 
+    def as_dict(self):
+        """
+        class is serialized + exported though class -> dict -> json.dumps
+
+        deserialization done through: `Class(**json.loads(json_str))`
+        """
+        return {
+            "kappa": self.kappa,
+            "phi": self.phi,
+            "length": self.length,
+            "is_extensible": self.is_extensible,
+            "max_curvature": self.max_curvature,
+        }
+
     def is_valid(self):
         """
         checks if the segment is valid - all three of kappa, phi, and theta must be set
@@ -296,6 +310,9 @@ class ConstantCurvatureCR:
         for seg in segments:
             if seg.repr_type != self.repr_type:
                 raise ValueError("All segments must have the same representation type")
+
+    def as_dict(self):
+        return [seg.as_dict() for seg in self.segments]
 
     def _validate(self):
         """
