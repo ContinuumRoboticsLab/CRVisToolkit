@@ -7,7 +7,7 @@ from spatialmath import SE3
 
 from common.utils import se3_to_pose
 from common.jacobian import body_jacobian
-from common.types import CRDiscreteCurve
+from common.types import CRDiscreteCurve, CrBackbone
 from common.coordinates import CrConfigurationType
 from ik.target import IkTargetType
 
@@ -26,7 +26,7 @@ class RobotSegmentLimits:
     """
 
     min_theta: float = 0.0
-    max_theta: float = np.pi
+    max_theta: float = np.pi / 2
 
     min_phi: float = -np.pi
     max_phi: float = np.pi
@@ -359,6 +359,13 @@ class ConstantCurvatureCR:
         coords = np.vstack(coords)
 
         return CRDiscreteCurve(coords, seg_end)
+
+    def as_cr_backbone(self, pts_per_seg) -> CrBackbone:
+        array_rep = self.as_discrete_curve(pts_per_seg)
+
+        backbone_points = [t[12:15] for t in array_rep.g]
+
+        return CrBackbone(backbone_points)
 
     def state_vector(self) -> np.ndarray[float]:
         """

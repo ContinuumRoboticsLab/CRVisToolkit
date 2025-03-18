@@ -98,3 +98,12 @@ class CRDiscreteCurve:
         g = np.array(data["g"])
         seg_end = np.array(data["seg_end"])
         return cls(g=g, seg_end=seg_end)
+
+
+class CrBackbone:
+    """
+    just a list of points in 3D space that
+    """
+
+    def __init__(self, points: list[np.ndarray[float]]):
+        self.points = points

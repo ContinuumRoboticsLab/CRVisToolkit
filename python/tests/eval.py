@@ -11,7 +11,7 @@ def run_json_tests(filepath: str, solver_type: IkSolverType, outfile: str):
     tests = import_tests(filepath)
     solver_class = solver_type.solver_class()
 
-    runner = TestRunner(solver_class, tests[:1000])
+    runner = TestRunner(solver_class, tests)
 
     runner.run()
     runner.save_results(outfile)
