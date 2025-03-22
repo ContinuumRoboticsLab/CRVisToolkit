@@ -1,5 +1,8 @@
 """
 runs all the tests to perform an evaluation of the solver.
+
+looks through test case files (all of them or just the ones specified) and saves the
+results in the appropriate filepath
 """
 
 from ik.index import IkSolverType

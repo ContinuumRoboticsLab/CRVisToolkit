@@ -20,8 +20,8 @@ NUM_CASES = 10000
 SEED = 0
 
 OUTPUT_DIRECTORY = "tests/export"
-NORMAL_FILENAME_FORMATTER = "normal_{n}seg_{prefix}extensible.json"
-PERTURBED_FILENAME_FORMATTER = "perturbed_{magnitude}_{n}seg_{prefix}extensible.json"
+NORMAL_FILENAME_FORMATTER = "normal_{n}seg_{prefix}ext.json"
+PERTURBED_FILENAME_FORMATTER = "perturbed_{magnitude}_{n}seg_{prefix}ext.json"
 
 PERTURBATION_VALUES = [0.01, 0.05, 0.1, 0.2]
 
