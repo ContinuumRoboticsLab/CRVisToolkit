@@ -76,7 +76,7 @@ class IkTestCase:
 
 
 """
-utility function for importing serialized JSON test cases
+utility function for importing serialized JSON files
 """
 
 
@@ -85,3 +85,10 @@ def import_tests(path: str) -> list[IkTestCase]:
         data = json.load(f)
 
     return [IkTestCase.from_dict(test) for test in data]
+
+
+def import_test_results(path: str) -> list[IkTestResult]:
+    with open(path, "r") as f:
+        data = json.load(f)
+
+    return [IkTestResult(**result) for result in data]

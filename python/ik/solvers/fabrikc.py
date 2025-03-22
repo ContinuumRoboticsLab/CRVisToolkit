@@ -1,7 +1,7 @@
 from common.robot import ConstantCurvatureCR, ConstantCurvatureSegment
 
 from ik.solvers.base_solver import CcIkSettings, CcIkSolver, IkResult
-from ik.target import P3Direction
+from ik.target import IkTargetType, P3Direction
 
 from dataclasses import dataclass
 from typing import Optional
@@ -197,7 +197,7 @@ class FabrikcIkSettings(CcIkSettings):
 
 
 class FabrikcIkSolver(CcIkSolver):
-    target_type = P3Direction
+    target_type = IkTargetType.POSITION_POINTING
     settings_class = FabrikcIkSettings
 
     def __init__(

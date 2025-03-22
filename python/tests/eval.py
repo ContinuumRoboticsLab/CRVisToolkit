@@ -20,7 +20,7 @@ def run_json_tests(filepath: str, solver_type: IkSolverType, outfile: str):
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Parser for running json file tests")
+    parser = argparse.ArgumentParser(description="Tool for running json file tests")
     parser.add_argument("file", type=str, help="Task to run [json]")
     parser.add_argument(
         "-s", "--solver", type=str, required=False, help="Solver to test [solver]"

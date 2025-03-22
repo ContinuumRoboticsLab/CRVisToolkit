@@ -4,10 +4,19 @@ import matplotlib.pyplot as plt
 from common.types import CrBackbone
 
 
-def draw_backbone(backbone: CrBackbone, axes):
-    x_vals = [point[0] for point in backbone.points]
-    y_vals = [point[1] for point in backbone.points]
-    z_vals = [point[2] for point in backbone.points]
+def draw_backbone(
+    backbone: CrBackbone, axes, start_ind: int = None, end_ind: int = None
+):
+    points = backbone.points
+
+    if start_ind is not None:
+        points = points[start_ind:]
+    if end_ind is not None:
+        points = points[:end_ind]
+
+    x_vals = [point[0] for point in points]
+    y_vals = [point[1] for point in points]
+    z_vals = [point[2] for point in points]
 
     axes.plot(x_vals, y_vals, z_vals)
 

@@ -20,7 +20,7 @@ from common.coordinates import CrConfigurationType
 from common.robot import ConstantCurvatureCR
 
 from ik.solvers.base_solver import CcIkSettings, AnalyticIkSolver, IkResult
-from ik.target import NeppalliIkTarget
+from ik.target import IkTargetType, NeppalliIkTarget
 
 
 class NeppalliIkSettings(CcIkSettings):
@@ -42,7 +42,7 @@ class NeppalliIkSolver(AnalyticIkSolver):
         defined as a series of n robot segment endpoint coordinates.
     """
 
-    target_type = NeppalliIkTarget
+    target_type = IkTargetType.NEPPALLI
     settings_class = NeppalliIkSettings
 
     def __init__(

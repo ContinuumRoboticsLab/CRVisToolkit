@@ -5,10 +5,11 @@ script for visualization of a large number of tests in a single plot
 from tests.generation.test_case import import_tests
 from plotter.backbone import draw_backbone
 
-MAX_PLOTTED_CURVES = 100
-PTS_PER_SEG = 15
+MAX_PLOTTED_CURVES = 3000
+PTS_PER_SEG = 20
+KEEP_LAST_N_POINTS = 7
 
-JSON_FILENAME = "./tests/export/tests_2seg_extensible.json"
+JSON_FILENAME = "./tests/export/tests_3seg_extensible.json"
 
 
 def import_json_test_robots(filepath: str):
@@ -40,7 +41,7 @@ if __name__ == "__main__":
         start_plot = start.as_cr_backbone(pts_per_seg=PTS_PER_SEG)
         target_plot = target.as_cr_backbone(pts_per_seg=PTS_PER_SEG)
 
-        draw_backbone(start_plot, ax)
-        draw_backbone(target_plot, ax)
+        draw_backbone(start_plot, ax, start_ind=-KEEP_LAST_N_POINTS)
+        draw_backbone(target_plot, ax, start_ind=-KEEP_LAST_N_POINTS)
 
     plt.show()

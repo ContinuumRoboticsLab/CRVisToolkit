@@ -65,7 +65,7 @@ class GcrbSolver2(AnalyticIkSolver):
     solution can be obtained by calling .cr2
     """
 
-    target_type = GcrbIkTarget
+    target_type = IkTargetType.SE3
     settings_class = GcrbIkSettings
     ZERO_TOLERANCE = 1e-4
 
