@@ -72,7 +72,7 @@ if __name__ == "__main__":
     smic, ssic = eval_success_iteration_counts(results)
 
     print(
-        f"Success rate: {success_rate:.1f}%\n"
+        f"Success rate: {success_rate:.2f}%\n"
         f"Mean execution time: {met:.3E} ± {set:.3E}\n"
         f"Mean iteration count: {mic:.3E} ± {sic:.3E}\n"
         f"Mean execution time (succeeded): {smet:.3E} ± {sset:.3E}\n"

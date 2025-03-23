@@ -25,6 +25,10 @@ PERTURBED_FILENAME_FORMATTER = "perturbed_{magnitude}_{n}seg_{prefix}ext.json"
 
 PERTURBATION_VALUES = [0.01, 0.05, 0.1, 0.2]
 
+TESTCASE_TYPES = ["normal"] + [
+    f"perturbed_{stdev:.2f}".replace(".", "_") for stdev in PERTURBATION_VALUES
+]
+
 
 def generate_normal_tests(
     n: int, extensible: bool, limit_kwargs: dict, seed
@@ -93,7 +97,7 @@ if __name__ == "__main__":
 
             for stdev in PERTURBATION_VALUES:
                 perturbed_filename = PERTURBED_FILENAME_FORMATTER.format(
-                    n=n, prefix=prefix, magnitude=stdev
+                    n=n, prefix=prefix, magnitude=f"{stdev:.2f}".replace(".", "_")
                 )
                 perturbed_filepath = os.path.join(OUTPUT_DIRECTORY, perturbed_filename)
 
