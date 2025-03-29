@@ -51,9 +51,9 @@ def run_json_tests(filepath: str, solver_type: IkSolverType, outfile: str):
 
     start = time.time()
     runner = TestRunner(solver_class, tests)
-    duration = time.time() - start
 
     runner.run()
+    duration = time.time() - start
     runner.save_results(outfile)
 
     print(f"Results saved to {outfile} after {duration:.2f} seconds")

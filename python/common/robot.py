@@ -8,7 +8,6 @@ from spatialmath import SE3
 from common.utils import se3_to_pose
 from common.jacobian import body_jacobian
 from common.types import CRDiscreteCurve, CrBackbone
-from common.coordinates import CrConfigurationType
 from ik.target import IkTargetType
 
 from dataclasses import dataclass
@@ -41,7 +40,7 @@ class ConstantCurvatureSegment:
     """
     a parametric representation of a Continuum robot segment.
 
-    for now, this implementation parametrizes a continuum robot's configuration
+    this implementation parametrizes a continuum robot's configuration
     using the curvature kappa, the angle of the plane of curvature phi, and the segment length
     """
 
@@ -53,11 +52,7 @@ class ConstantCurvatureSegment:
         is_extensible: bool = False,
         len_limits: tuple[float | None, float | None] = (None, None),
         max_curvature: float | None = None,
-        repr_type: CrConfigurationType = CrConfigurationType.KPL,
     ):
-        # representation metadata
-        self.repr_type = repr_type
-
         # robot actuation limits
         self.max_curvature = max_curvature
         self.len_limits = len_limits
@@ -99,7 +94,7 @@ class ConstantCurvatureSegment:
         return  # calculate theta
 
     @property
-    def n(self):
+    def dof(self):
         """
         returns the degrees of freedom in the configuration space
         """
@@ -207,16 +202,7 @@ class ConstantCurvatureSegment:
         #     np.array([num_pts]),
         # )
 
-    def state_vector(
-        self, repr_type: CrConfigurationType | None = None
-    ) -> np.ndarray[float]:
-        if repr_type is None:
-            repr_type = self.repr_type
-
-        if repr_type != CrConfigurationType.KPL:
-            # TODO: implement more representations using coordinates.py
-            raise NotImplementedError("Only KPL representation is supported for now")
-
+    def state_vector(self) -> np.ndarray[float]:
         # in an inextensible segment, the length is not considered a degree of freedom
         if self.is_extensible:
             return np.array([self.kappa, self.phi, self.length])
@@ -303,13 +289,8 @@ class ConstantCurvatureCR:
         self.segments = segments
         self.num_segments = len(segments)
 
-        # n is degrees of freedom in configuration space across all segments
-        self.n = sum([seg.n for seg in segments])
-
-        self.repr_type = segments[0].repr_type
-        for seg in segments:
-            if seg.repr_type != self.repr_type:
-                raise ValueError("All segments must have the same representation type")
+        # degrees of freedom in configuration space across all segments
+        self.dof = sum([seg.dof for seg in segments])
 
     def as_dict(self):
         return [seg.as_dict() for seg in self.segments]
@@ -387,8 +368,8 @@ class ConstantCurvatureCR:
 
         elif isinstance(theta, ArrayLike):
             assert (
-                theta.size == self.n
-            ), f"Invalid number of degrees of freedom, expected {self.n}, got {theta.size}"
+                theta.size == self.dof
+            ), f"Invalid number of degrees of freedom, expected {self.dof}, got {theta.size}"
             theta = theta.reshape(self.num_segments, -1)
         else:
             raise ValueError("Invalid theta type")
@@ -396,8 +377,8 @@ class ConstantCurvatureCR:
         # update each segment's configuration
         for i, seg in enumerate(self.segments):
             assert (
-                theta[i].size == seg.n
-            ), f"Invalid theta shape for segment {i} (got {theta[i].shape}, expected {(seg.n, 1)})"
+                theta[i].size == seg.dof
+            ), f"Invalid theta shape for segment {i} (got {theta[i].shape}, expected {(seg.dof, 1)})"
 
             as_dict = {
                 "kappa": theta[i][0],

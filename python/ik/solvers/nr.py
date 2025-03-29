@@ -63,7 +63,7 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
         ik_target_pose: IkTarget,
         **kwargs,
     ):
-        self.total_dof = sum([seg.n for seg in cr.segments])
+        self.total_dof = sum([seg.dof for seg in cr.segments])
         initial_condition = cr.state_vector()
 
         # check if the initial condition is of valid dimensionality
@@ -124,13 +124,13 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
             # TODO: iterate over all segments, clamp curvature
             theta_index = 0
             for seg in self.cr.segments:
-                theta_values = new_theta_i[theta_index : theta_index + seg.n]
+                theta_values = new_theta_i[theta_index : theta_index + seg.dof]
 
                 kappa = theta_values[0]
                 new_kappa = np.clip(kappa, 0, seg.max_curvature)
                 new_theta_i[theta_index] = new_kappa
 
-                if seg.n == 3:  # segment is extensible
+                if seg.dof == 3:  # segment is extensible
                     length = theta_values[2]
                     new_length = np.clip(length, seg.len_limits[0], seg.len_limits[1])
                     new_theta_i[theta_index + 2] = new_length
