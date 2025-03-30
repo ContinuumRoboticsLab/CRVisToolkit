@@ -59,6 +59,12 @@ class IkSolverType(Enum):
             case _:
                 raise NotImplementedError(f"Solver {self} not implemented")
 
+    def is_analytical(self):
+        return self in [IkSolverType.Gcrb, IkSolverType.Neppalli]
+
+    def is_numerical(self):
+        return not self.is_analytical()
+
     def applicable_robots(self):
         """
         for testing: mapping of robots that can be used with each solver

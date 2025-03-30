@@ -12,7 +12,6 @@ import numpy as np
 from scipy.linalg import logm
 from dataclasses import dataclass
 
-from common.coordinates import CrConfigurationType
 from common.robot import ConstantCurvatureCR
 
 from ik.solvers.base_solver import IterativeIkSolver, CcIkSettings, IkResult
@@ -74,10 +73,6 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
                 raise ValueError(
                     f"Invalid initial condition. Expected shape: {(self.total_dof, 1)}"
                 )
-
-        # make sure we're using the right representation
-        if not cr.repr_type == CrConfigurationType.KPL:
-            raise ValueError("Only KPL representation is supported for the NR solver")
 
         self.theta_i = np.reshape(initial_condition, (initial_condition.size, 1))
 

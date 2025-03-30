@@ -1,5 +1,5 @@
 from ik.target import IkTargetType
-from tests.generation.test_case import IkTestCase, IkTestResult
+from tests.generation.test_case import _IkTestDataclass, IkTestResult
 from tests.generation.uniform import UniformDistributionGenerator
 from ik.solvers.base_solver import CcIkSettings, CcIkSolver
 
@@ -115,7 +115,7 @@ class MultiGenerativeTestRunner:
 
 
 class TestRunner:
-    def __init__(self, solver_class, test_cases: list[IkTestCase]):
+    def __init__(self, solver_class, test_cases: list[_IkTestDataclass]):
         self.solver_class: CcIkSolver = solver_class
         self.test_cases = test_cases
         self.results: list[IkTestResult] = []

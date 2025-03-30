@@ -1,36 +1,46 @@
-from common.robot import (
-    RobotSegmentLimits,
-    ConstantCurvatureCR,
-    ConstantCurvatureSegment,
-)
-from tests.generation.test_case import IkTestCase
+from common.robot import ConstantCurvatureCR, RobotSegmentLimits
 
-from numpy import random
+from tests.generation.uniform import UniformDistributionGenerator
+from tests.generation.perturbation import RobotPerturber, PERTURBATION_VALUES
+from tests.generation.test_case import IkTestCase, STARTING_POSITION_VARS
 
 
 class IkTestGenerator:
+    """
+    the IK Test generator works as follows:
+    - for each test case, generate a "target" robot
+    - generate a "starting" robot for each kind of starting point:
+        - random (sample all arc params from same dist. as starter)
+        - each perturbation value (arc params sampled from normal dist.)
+    """
+
     def __init__(self, num_segs: int, limits: RobotSegmentLimits = None, seed=None):
         self.num_segs = num_segs
-        self.limits = limits
+        self.limits = limits if limits else RobotSegmentLimits()
+        self.seed = seed
 
-        # even different generators that use different distributions
-        # use numpy's "generator" to ensure reproducibility
-        self.rng = random.default_rng(seed)
+        self.robot_factory = UniformDistributionGenerator(num_segs, limits, seed=seed)
+        self.perturber = RobotPerturber(seed, limits)
 
-    def generate_case(self) -> IkTestCase:
-        starter_segments, target_segments = self._generate_cc_robot_segments()
+    def _generate_starters(
+        self, target: ConstantCurvatureCR
+    ) -> dict[str, ConstantCurvatureCR]:
+        uniform_starter = self.robot_factory.generate_cr()
 
-        target_robot = ConstantCurvatureCR(target_segments)
-        starting_robot = ConstantCurvatureCR(starter_segments)
+        perturbed_starters = {
+            field_name: self.perturber.get_perturbed_robot(
+                target, stdev_percentage=stdev
+            )
+            for field_name, stdev in zip(
+                STARTING_POSITION_VARS[1:], PERTURBATION_VALUES
+            )
+        }
+        perturbed_starters["start_uniform"] = uniform_starter
 
-        return IkTestCase(target_robot, starting_robot)
+        return perturbed_starters
 
-    def _generate_cc_robot_segments(
-        self,
-    ) -> tuple[list[ConstantCurvatureSegment], list[ConstantCurvatureSegment]]:
-        """
-        various test case generation strategies will use different
-        distributions and impose different restrictions on the generated
-        test cases. This method should be implemented by the subclass
-        """
-        raise NotImplementedError
+    def generate_test_case(self) -> IkTestCase:
+        target = self.robot_factory.generate_cr()
+        starters = self._generate_starters(target)
+
+        return IkTestCase(target_robot=target, **starters)

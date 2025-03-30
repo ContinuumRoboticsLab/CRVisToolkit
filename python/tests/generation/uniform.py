@@ -1,15 +1,25 @@
-from common.robot import ConstantCurvatureSegment
+from common.robot import (
+    ConstantCurvatureSegment,
+    RobotSegmentLimits,
+    ConstantCurvatureCR,
+)
 
-from tests.generation.base_generator import IkTestGenerator
+from numpy import random
+
+UNIFORM_TEST_NAME = "start_uniform"
 
 
-class UniformDistributionGenerator(IkTestGenerator):
+class UniformDistributionGenerator:
     """
-    The uniform distribution generator generates test cases by generating
-    a starter and target robot for whom all n segments are generated using
-    a uniform distribution for all arc parameters, and independently of one
-    another. The target robot state is independent of the starting robot state.
+    the uniform distrbution generator helps generate test cases by generating constant
+    curvature segments by smapling from a uniform distribution over the segment limits
+    specified.
     """
+
+    def __init__(self, n, limits: RobotSegmentLimits, seed=None):
+        self.rng = random.default_rng(seed)
+        self.num_segs = n
+        self.limits = limits
 
     def __generate_single_segment(self, length=None):
         """
@@ -26,17 +36,9 @@ class UniformDistributionGenerator(IkTestGenerator):
             theta / length, phi, length, is_extensible=self.limits.is_extensible
         )
 
-    def _generate_cc_robot_segments(self):
-        starter = [self.__generate_single_segment() for _ in range(self.num_segs)]
-
-        if self.limits.is_extensible:
-            target = [
-                self.__generate_single_segment(starter_seg.length)
-                for starter_seg in starter
-            ]
-        else:
-            target = [
-                self.__generate_single_segment(length=seg.length) for seg in starter
-            ]
-
-        return starter, target
+    def generate_cr(self):
+        """
+        generates a constant curvature robot with `self.num_segs` segments
+        """
+        segments = [self.__generate_single_segment() for _ in range(self.num_segs)]
+        return ConstantCurvatureCR(segments)

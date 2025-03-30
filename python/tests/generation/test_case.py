@@ -4,8 +4,11 @@ from ik.solvers.base_solver import CcIkSolver, CcIkSettings
 
 from plotter.tdcr import draw_tdcr, TDCRPlotterSettings
 
+from tests.generation import perturbation
+from tests.generation.uniform import UNIFORM_TEST_NAME
+
 from copy import deepcopy
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, make_dataclass
 import json
 
 
@@ -15,33 +18,46 @@ class IkTestResult:
     exec_time: float
     iter_count: int
 
+    solution_state: ConstantCurvatureCR
+
+    pos_error: float
+    orientation_error: float
+
     def as_dict(self):
-        return asdict(self)
+        base = asdict(self)
+        base["solution_state"] = self.solution_state.as_dict()
+        return base
 
 
-class IkTestCase:
-    def __init__(self, target_robot, starting_robot):
-        self.target_robot = target_robot
-        self.starting_robot = starting_robot
+STARTING_POSITION_VARS = [UNIFORM_TEST_NAME] + perturbation.STARTING_POSITION_VARS
 
+_IkTestDataclass = make_dataclass(
+    "IkTestCase",
+    [("target_robot", ConstantCurvatureCR)]
+    + [(name, ConstantCurvatureCR) for name in STARTING_POSITION_VARS],
+)
+
+
+class IkTestCase(_IkTestDataclass):
     @classmethod
     def from_dict(cls, data: dict):
-        starting_robot = ConstantCurvatureCR(
-            [ConstantCurvatureSegment(**seg) for seg in data["start_robot"]]
-        )
-
         target_robot = ConstantCurvatureCR(
             [ConstantCurvatureSegment(**seg) for seg in data["target_robot"]]
         )
 
-        return cls(target_robot, starting_robot)
+        starting_positions = {
+            type: [ConstantCurvatureCR(**seg) for seg in data[type]]
+            for type in STARTING_POSITION_VARS
+        }
+
+        return cls(target_robot=target_robot, **starting_positions)
 
     def as_dict(self):
-        return {
-            "start_robot": [seg.as_dict() for seg in self.starting_robot.segments],
-            "target_robot": [seg.as_dict() for seg in self.target_robot.segments],
-            "target_pose": self.target_robot.t_matrix().A.tolist(),
-        }
+        base = asdict(self)
+        base["target_robot"] = self.target_robot.as_dict()
+        for type in STARTING_POSITION_VARS:
+            base[type] = getattr(self, type).as_dict()
+        return base
 
     def as_target_type(self, ik_target_class: type[IkTarget]) -> IkTarget:
         return ik_target_class.from_target_robot(self.target_robot)
@@ -71,8 +87,16 @@ class IkTestCase:
             iter_count = solver.iter_count
         else:
             iter_count = None
+        pos_error, orientation_error = solver.get_errors()
 
-        return IkTestResult(result.is_success, solver.exec_time, iter_count)
+        return IkTestResult(
+            result.is_success,
+            solver.exec_time,
+            iter_count,
+            pos_error=pos_error,
+            orientation_error=orientation_error,
+            solution_state=solver.cr,
+        )
 
 
 """

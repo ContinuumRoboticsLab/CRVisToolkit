@@ -313,3 +313,18 @@ class FabrikcIkSolver(CcIkSolver):
             else IkResult.MAX_ITER
         )
         return res
+
+    def get_errors(self):
+        """
+        fabrikc does not use the typical SE(3) error class. Orientation is specified
+        using a unit vector that indicated the desired pointing direction of the end
+        effector and is guaranteed by the algorithm. Thus, only positional error is
+        considered.
+        """
+        ee_pose = self.cr.t_matrix()
+        ee_position = ee_pose[:3, 3]
+        target_position = self.p_star
+        pos_error = np.linalg.norm(ee_position - target_position)
+        orientation_error = 0.0
+
+        return pos_error, orientation_error

@@ -13,10 +13,12 @@ from dataclasses import dataclass
 from enum import Enum
 from copy import deepcopy
 import numpy as np
+from scipy.linalg import logm
 import time
 from ik.target import IkTarget, IkTargetType
 
 from common.robot import ConstantCurvatureCR
+from common.utils import up_vee
 
 
 @dataclass
@@ -139,6 +141,28 @@ class CcIkSolver:
         theta = theta if theta is not None else self.cr.state_vector()
         return self.cr.pose_for_target(self.ik_target.target_type, theta)
 
+    def _target_pose(self):
+        """
+        returns the target pose of the robot as an SE(3) matrix. Must be implemented
+        separately for target types that do not inherently use an SE(3) matrix IK target
+        """
+        return self.ik_target.as_array()
+
+    def get_errors(self) -> tuple[float, float]:
+        """
+        uses the matrix logarithm of the target pose and current pose
+        """
+        target_pose = self._target_pose()
+        current_pose = self.cr.t_matrix()
+
+        diff_pose = np.linalg.inv(current_pose) @ target_pose.A
+
+        diff_pose = logm(diff_pose)
+
+        d_position = np.linalg.norm(diff_pose[:3, 3])
+        d_orientation = np.linalg.norm(up_vee(diff_pose[:3, :3]))
+        return d_position, d_orientation
+
     @property
     def ik_target_pose(self):
         return self.ik_target.as_array()
@@ -190,3 +214,6 @@ class AnalyticIkSolver(CcIkSolver):
     """
     Analytic IK solvers should inherit from this class
     """
+
+    def get_errors(self):
+        return 0.0, 0.0
