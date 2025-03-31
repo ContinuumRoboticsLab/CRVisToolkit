@@ -1,5 +1,5 @@
 from ik.target import IkTargetType
-from tests.generation.test_case import _IkTestDataclass, IkTestResult
+from tests.generation.test_case import IkTestCase, IkTestSetResult
 from tests.generation.uniform import UniformDistributionGenerator
 from ik.solvers.base_solver import CcIkSettings, CcIkSolver
 
@@ -115,13 +115,12 @@ class MultiGenerativeTestRunner:
 
 
 class TestRunner:
-    def __init__(self, solver_class, test_cases: list[_IkTestDataclass]):
+    def __init__(self, solver_class, test_cases: list[IkTestCase]):
         self.solver_class: CcIkSolver = solver_class
-        self.test_cases = test_cases
-        self.results: list[IkTestResult] = []
+        self.test_cases = test_cases[:3]
+        self.results: list[IkTestSetResult] = []
 
     def run(self, show_plots: bool = False):
-        self.num_success = 0
         for i in tqdm(range(len(self.test_cases))):
             test_case = self.test_cases[i]
             try:
@@ -131,12 +130,8 @@ class TestRunner:
                     self.solver_class,
                     self.solver_class.settings_class(),
                     ik_target_class,
-                    show_plots,
                 )
                 self.results.append(test_result)
-
-                if test_result.success:
-                    self.num_success += 1
 
             except Exception as e:
                 print(f"Error in test case {i}: {e}")

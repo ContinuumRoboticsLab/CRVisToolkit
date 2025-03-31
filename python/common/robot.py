@@ -267,7 +267,11 @@ class ConstantCurvatureSegment:
         else:
             t_matrix[:, 3] = [0, 0, self.length, 1]
 
-        return SE3(t_matrix)
+        try:
+            return SE3(t_matrix)
+        except ValueError:
+            print(t_matrix)
+            raise ValueError("Invalid transformation matrix")
 
     def exp_coord(self):
         """

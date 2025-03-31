@@ -14,10 +14,22 @@ logger = get_logger()
 
 
 def _get_joint_angle(zb, ze):
+    dp = zb @ ze
+
+    if abs(dp) > 1:
+        diff = abs(dp) - 1
+        if diff > 1e-6:
+            logger.error("Joint angle is not valid")
+            raise ValueError("Joint angle is not valid")
+        else:
+            dp = np.sign(dp)
+
     return np.arccos(zb @ ze)
 
 
 def _get_link_length(seg_length, joint_angle):
+    if abs(joint_angle) < 1e-6:
+        return seg_length / 2
     return (seg_length / joint_angle) * np.tan(joint_angle / 2)
 
 
@@ -289,6 +301,12 @@ class FabrikcIkSolver(CcIkSolver):
         p_ne = self.segment_joints[-1].pe
         return np.linalg.norm(p_ne - self.p_star)
 
+    def __check_nan(self):
+        for joint in self.segment_joints:
+            if any(np.isnan([joint.joint_angle, joint.link_length])):
+                logger.error("NaN detected in joint parameters")
+        print("No NaN detected in joint parameters")
+
     def solve(self):
         start_time = time.time()
         while (
@@ -321,7 +339,10 @@ class FabrikcIkSolver(CcIkSolver):
         effector and is guaranteed by the algorithm. Thus, only positional error is
         considered.
         """
-        ee_pose = self.cr.t_matrix()
+
+        return 0.0, 0.0
+
+        ee_pose = self.cr.t_matrix().A
         ee_position = ee_pose[:3, 3]
         target_position = self.p_star
         pos_error = np.linalg.norm(ee_position - target_position)

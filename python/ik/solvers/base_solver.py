@@ -152,16 +152,20 @@ class CcIkSolver:
         """
         uses the matrix logarithm of the target pose and current pose
         """
-        target_pose = self._target_pose()
-        current_pose = self.cr.t_matrix()
+        try:
+            target_pose = self._target_pose()
+            current_pose = self.cr.t_matrix()
 
-        diff_pose = np.linalg.inv(current_pose) @ target_pose.A
+            diff_pose = np.linalg.inv(current_pose) @ target_pose.A
 
-        diff_pose = logm(diff_pose)
+            diff_pose = logm(diff_pose)
 
-        d_position = np.linalg.norm(diff_pose[:3, 3])
-        d_orientation = np.linalg.norm(up_vee(diff_pose[:3, :3]))
-        return d_position, d_orientation
+            d_position = np.linalg.norm(diff_pose[:3, 3])
+            d_orientation = np.linalg.norm(up_vee(diff_pose[:3, :3]))
+            return d_position, d_orientation
+        except Exception as e:
+            print(f"Error in get_errors: {e}")
+            return None, None
 
     @property
     def ik_target_pose(self):

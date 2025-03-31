@@ -2,18 +2,23 @@ from common.robot import ConstantCurvatureCR, ConstantCurvatureSegment
 from ik.target import IkTarget
 from ik.solvers.base_solver import CcIkSolver, CcIkSettings
 
-from plotter.tdcr import draw_tdcr, TDCRPlotterSettings
 
 from tests.generation import perturbation
 from tests.generation.uniform import UNIFORM_TEST_NAME
 
-from copy import deepcopy
 from dataclasses import dataclass, asdict, make_dataclass
 import json
+
+STARTING_POSITION_VARS = [UNIFORM_TEST_NAME] + perturbation.STARTING_POSITION_VARS
 
 
 @dataclass
 class IkTestResult:
+    """
+    represents the results of executing an IK solver on a single IK target from a single
+    starting robot position
+    """
+
     success: bool
     exec_time: float
     iter_count: int
@@ -29,7 +34,27 @@ class IkTestResult:
         return base
 
 
-STARTING_POSITION_VARS = [UNIFORM_TEST_NAME] + perturbation.STARTING_POSITION_VARS
+_IkTestSetResultFields = make_dataclass(
+    "_IkTestSetResult",
+    [("target_state", ConstantCurvatureCR)]
+    + [(varname, IkTestResult) for varname in STARTING_POSITION_VARS],
+)
+
+
+@dataclass
+class IkTestSetResult(_IkTestSetResultFields):
+    """
+    represents the results of executing an IK solver on a single IK target from multiple
+    starting robot positions (i.e. a full test "set")
+    """
+
+    def as_dict(self):
+        res = dict()
+        res["target_state"] = self.target_state.as_dict()
+        for varname in STARTING_POSITION_VARS:
+            res[varname] = getattr(self, varname).as_dict()
+        return res
+
 
 _IkTestDataclass = make_dataclass(
     "IkTestCase",
@@ -46,7 +71,9 @@ class IkTestCase(_IkTestDataclass):
         )
 
         starting_positions = {
-            type: [ConstantCurvatureCR(**seg) for seg in data[type]]
+            type: ConstantCurvatureCR(
+                [ConstantCurvatureSegment(**seg) for seg in data[type]]
+            )
             for type in STARTING_POSITION_VARS
         }
 
@@ -62,26 +89,9 @@ class IkTestCase(_IkTestDataclass):
     def as_target_type(self, ik_target_class: type[IkTarget]) -> IkTarget:
         return ik_target_class.from_target_robot(self.target_robot)
 
-    def solve_with_solver(
-        self,
-        solver_class: type[CcIkSolver],
-        settings: CcIkSettings,
-        target_class: type[IkTarget],
-        debug_mode: bool = False,
-    ) -> IkTestResult:
-        starter_plot = self.starting_robot.as_discrete_curve(pts_per_seg=10)
-
-        ik_target = self.as_target_type(target_class)
-
-        solver = solver_class(deepcopy(self.starting_robot), settings, ik_target)
+    def _solve_single_starter(self, solver_class, settings, ik_target, starting_robot):
+        solver = solver_class(starting_robot, settings, ik_target)
         result = solver.solve()
-        if debug_mode:
-            # plot solutions
-            draw_tdcr(starter_plot, TDCRPlotterSettings(plot_title="Starting Robot"))
-            draw_tdcr(
-                solver.cr.as_discrete_curve(pts_per_seg=10),
-                TDCRPlotterSettings(plot_title="Solved Robot"),
-            )
 
         if hasattr(solver, "iter_count"):
             iter_count = solver.iter_count
@@ -97,6 +107,24 @@ class IkTestCase(_IkTestDataclass):
             orientation_error=orientation_error,
             solution_state=solver.cr,
         )
+
+    def solve_with_solver(
+        self,
+        solver_class: type[CcIkSolver],
+        settings: CcIkSettings,
+        target_class: type[IkTarget],
+    ) -> IkTestSetResult:
+        ik_target = self.as_target_type(target_class)
+
+        # run for same target using each starting position
+        results = dict()
+        for varname in STARTING_POSITION_VARS:
+            starting_robot = getattr(self, varname)
+            results[varname] = self._solve_single_starter(
+                solver_class, settings, ik_target, starting_robot
+            )
+
+        return IkTestSetResult(**results, target_state=self.target_robot)
 
 
 """

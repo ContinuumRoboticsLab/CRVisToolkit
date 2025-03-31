@@ -16,7 +16,6 @@ from scipy.spatial.transform import Rotation as R
 from math import pi
 from time import time
 
-from common.coordinates import CrConfigurationType
 from common.robot import ConstantCurvatureCR
 
 from ik.solvers.base_solver import CcIkSettings, AnalyticIkSolver, IkResult
@@ -54,11 +53,6 @@ class NeppalliIkSolver(AnalyticIkSolver):
     ):
         endpoints = ik_target.endpoints()
         assert len(endpoints) == len(cr.segments), "Invalid number of segment endpoints"
-
-        if not cr.repr_type == CrConfigurationType.KPL:
-            raise ValueError(
-                "Neppalli solver requires the robot to be in KPL representation"
-            )
 
         self.segment_endpoints = endpoints
 

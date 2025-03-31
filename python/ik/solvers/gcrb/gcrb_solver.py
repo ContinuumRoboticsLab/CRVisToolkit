@@ -5,10 +5,10 @@ from copy import deepcopy
 
 from common.robot import ConstantCurvatureCR
 from common.utils import curvature_to_se3, se3_to_uq, se3_to_pose
-from common.coordinates import CoordParamValue, ParamableCoord
+from common.coordinates import ParamableCoord
 
 from ik.solvers.base_solver import CcIkSettings, AnalyticIkSolver, IkResult
-from ik.target import IkTarget, IkTargetType, SE3IkTarget
+from ik.target import IkTargetType, GcrbIkTarget
 
 
 from ik.solvers.gcrb.coeffs import (
@@ -30,28 +30,6 @@ class GcrbIkSettings(CcIkSettings):
     pass
 
 
-class GcrbIkTarget(IkTarget):
-    target_type = IkTargetType.SE3
-
-    def __init__(self, ee_target: np.ndarray, param: CoordParamValue):
-        self.ee_target = SE3IkTarget(ee_target)
-        self.param = param
-
-    def as_array(self):
-        return self.ee_target.as_array()
-
-    @classmethod
-    def from_target_robot(cls, target_robot, coord: ParamableCoord = ParamableCoord.Z):
-        ee_target = target_robot.t_matrix().A
-
-        if coord == ParamableCoord.Z:
-            param = CoordParamValue(ParamableCoord.Z, target_robot._endpoints()[0][2])
-        else:
-            raise NotImplementedError
-
-        return cls(ee_target, param)
-
-
 class GcrbSolver2(AnalyticIkSolver):
     """
     the analytic Gcrb solver for two-segment extensible continuum robots.
@@ -65,7 +43,7 @@ class GcrbSolver2(AnalyticIkSolver):
     solution can be obtained by calling .cr2
     """
 
-    target_type = IkTargetType.SE3
+    target_type = IkTargetType.GCRB
     settings_class = GcrbIkSettings
     ZERO_TOLERANCE = 1e-4
 
@@ -76,7 +54,9 @@ class GcrbSolver2(AnalyticIkSolver):
         ik_target: GcrbIkTarget,
         **kwargs,
     ):
-        assert isinstance(ik_target, GcrbIkTarget), "Invalid target type"
+        assert isinstance(
+            ik_target, GcrbIkTarget
+        ), f"Invalid target type: {type(ik_target)}"
         assert (
             ik_target.param.coordinate == ParamableCoord.Z
         ), "Invalid parameter specified"
@@ -246,9 +226,9 @@ class GcrbSolver2(AnalyticIkSolver):
         taraget_pose_as_vector = se3_to_pose(self.target_pose)
 
         return np.allclose(
-            self.cr.pose_for_target(self.ik_target.target_type), taraget_pose_as_vector
+            self.cr.pose_for_target(IkTargetType.SE3), taraget_pose_as_vector
         ) or np.allclose(
-            self.cr2.pose_for_target(self.ik_target.target_type), taraget_pose_as_vector
+            self.cr2.pose_for_target(IkTargetType.SE3), taraget_pose_as_vector
         )
 
     def solve(self):

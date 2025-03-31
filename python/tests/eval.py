@@ -11,11 +11,10 @@ from ik.index import IkSolverType
 from tests.generation.test_case import import_tests
 from tests.runner import TestRunner
 
-from tests.generation.main import TESTCASE_TYPES
 
 TEST_RESULT_DIR = "tests/results"
-TEST_RESULT_FILEPATH_FORMATTER = "tests/results/{solver}/{type}_{n}seg_{prefix}ext.json"
-TEST_CASE_FORMATTER = "tests/export/{type}_{n}seg_{prefix}ext.json"
+TEST_RESULT_FILEPATH_FORMATTER = "tests/results/{solver}/res_{n}seg_{prefix}ext.json"
+TEST_CASE_FORMATTER = "tests/export/tests_{n}seg_{prefix}ext.json"
 
 
 def get_solver_test_filepaths(solver_type: IkSolverType):
@@ -25,22 +24,12 @@ def get_solver_test_filepaths(solver_type: IkSolverType):
     """
     for robot_type in solver_type.applicable_robots():
         n, ext = robot_type.as_filepath_params()
-
-        for test_type in TESTCASE_TYPES:
-            yield (
-                TEST_CASE_FORMATTER.format(
-                    solver=solver_type.name,
-                    type=test_type,
-                    n=n,
-                    prefix="" if ext else "in",
-                ),
-                TEST_RESULT_FILEPATH_FORMATTER.format(
-                    solver=solver_type.value,
-                    type=test_type,
-                    n=n,
-                    prefix="" if ext else "in",
-                ),
-            )
+        yield (
+            TEST_CASE_FORMATTER.format(n=n, prefix="" if ext else "in"),
+            TEST_RESULT_FILEPATH_FORMATTER.format(
+                solver=solver_type.value, n=n, prefix="" if ext else "in"
+            ),
+        )
 
 
 def run_json_tests(filepath: str, solver_type: IkSolverType, outfile: str):
@@ -81,7 +70,9 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Tool for running json file tests")
-    parser.add_argument("file", type=str, help="Task to run [json]")
+    parser.add_argument(
+        "-f", "--file", required=False, type=str, help="Task to run [json]"
+    )
     parser.add_argument(
         "-s", "--solver", type=str, required=False, help="Solver to test [solver]"
     )
@@ -100,6 +91,9 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
+
+    if args.file is None and not args.all:
+        print("Please provide a file to run or use the --all flag")
 
     if args.all:
         run_all()

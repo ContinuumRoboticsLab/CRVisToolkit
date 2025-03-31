@@ -1,0 +1,470 @@
+[
+    {
+        "target_state": [
+            {
+                "kappa": 25.013426968840495,
+                "phi": -1.4464727375963786,
+                "length": 0.04,
+                "is_extensible": true,
+                "max_curvature": null
+            },
+            {
+                "kappa": 0.6490387294704582,
+                "phi": 1.968334964119786,
+                "length": 0.04,
+                "is_extensible": true,
+                "max_curvature": null
+            }
+        ],
+        "start_uniform": {
+            "success": true,
+            "exec_time": 7.581710815429688e-05,
+            "iter_count": null,
+            "solution_state": [
+                {
+                    "kappa": 13.651317095105352,
+                    "phi": -1.452158164134075,
+                    "length": 0.19516607936970123,
+                    "is_extensible": true,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 16.745748486721226,
+                    "phi": -1.4498452432800977,
+                    "length": 0.2743660273371154,
+                    "is_extensible": true,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 0.0,
+            "orientation_error": 0.0
+        },
+        "start_perturbed_0_01": {
+            "success": true,
+            "exec_time": 6.914138793945312e-05,
+            "iter_count": null,
+            "solution_state": [
+                {
+                    "kappa": 13.651317095105352,
+                    "phi": -1.452158164134075,
+                    "length": 0.19516607936970123,
+                    "is_extensible": true,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 16.745748486721226,
+                    "phi": -1.4498452432800977,
+                    "length": 0.2743660273371154,
+                    "is_extensible": true,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 0.0,
+            "orientation_error": 0.0
+        },
+        "start_perturbed_0_05": {
+            "success": true,
+            "exec_time": 7.104873657226562e-05,
+            "iter_count": null,
+            "solution_state": [
+                {
+                    "kappa": 13.651317095105352,
+                    "phi": -1.452158164134075,
+                    "length": 0.19516607936970123,
+                    "is_extensible": true,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 16.745748486721226,
+                    "phi": -1.4498452432800977,
+                    "length": 0.2743660273371154,
+                    "is_extensible": true,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 0.0,
+            "orientation_error": 0.0
+        },
+        "start_perturbed_0_10": {
+            "success": true,
+            "exec_time": 6.914138793945312e-05,
+            "iter_count": null,
+            "solution_state": [
+                {
+                    "kappa": 13.651317095105352,
+                    "phi": -1.452158164134075,
+                    "length": 0.19516607936970123,
+                    "is_extensible": true,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 16.745748486721226,
+                    "phi": -1.4498452432800977,
+                    "length": 0.2743660273371154,
+                    "is_extensible": true,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 0.0,
+            "orientation_error": 0.0
+        },
+        "start_perturbed_0_20": {
+            "success": true,
+            "exec_time": 6.794929504394531e-05,
+            "iter_count": null,
+            "solution_state": [
+                {
+                    "kappa": 13.651317095105352,
+                    "phi": -1.452158164134075,
+                    "length": 0.19516607936970123,
+                    "is_extensible": true,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 16.745748486721226,
+                    "phi": -1.4498452432800977,
+                    "length": 0.2743660273371154,
+                    "is_extensible": true,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 0.0,
+            "orientation_error": 0.0
+        },
+        "start_perturbed_0_30": {
+            "success": true,
+            "exec_time": 6.914138793945312e-05,
+            "iter_count": null,
+            "solution_state": [
+                {
+                    "kappa": 13.651317095105352,
+                    "phi": -1.452158164134075,
+                    "length": 0.19516607936970123,
+                    "is_extensible": true,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 16.745748486721226,
+                    "phi": -1.4498452432800977,
+                    "length": 0.2743660273371154,
+                    "is_extensible": true,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 0.0,
+            "orientation_error": 0.0
+        }
+    },
+    {
+        "target_state": [
+            {
+                "kappa": 33.67018720604973,
+                "phi": -2.930568260297326,
+                "length": 0.04,
+                "is_extensible": true,
+                "max_curvature": null
+            },
+            {
+                "kappa": 6.897980090584441,
+                "phi": 2.281920468786123,
+                "length": 0.04,
+                "is_extensible": true,
+                "max_curvature": null
+            }
+        ],
+        "start_uniform": {
+            "success": true,
+            "exec_time": 7.486343383789062e-05,
+            "iter_count": null,
+            "solution_state": [
+                {
+                    "kappa": 33.670187206049725,
+                    "phi": -2.930568260297326,
+                    "length": 0.04,
+                    "is_extensible": true,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 6.897980090584494,
+                    "phi": 2.2819204687861268,
+                    "length": 0.040000000000000015,
+                    "is_extensible": true,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 0.0,
+            "orientation_error": 0.0
+        },
+        "start_perturbed_0_01": {
+            "success": true,
+            "exec_time": 7.081031799316406e-05,
+            "iter_count": null,
+            "solution_state": [
+                {
+                    "kappa": 33.670187206049725,
+                    "phi": -2.930568260297326,
+                    "length": 0.04,
+                    "is_extensible": true,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 6.897980090584494,
+                    "phi": 2.2819204687861268,
+                    "length": 0.040000000000000015,
+                    "is_extensible": true,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 0.0,
+            "orientation_error": 0.0
+        },
+        "start_perturbed_0_05": {
+            "success": true,
+            "exec_time": 7.224082946777344e-05,
+            "iter_count": null,
+            "solution_state": [
+                {
+                    "kappa": 33.670187206049725,
+                    "phi": -2.930568260297326,
+                    "length": 0.04,
+                    "is_extensible": true,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 6.897980090584494,
+                    "phi": 2.2819204687861268,
+                    "length": 0.040000000000000015,
+                    "is_extensible": true,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 0.0,
+            "orientation_error": 0.0
+        },
+        "start_perturbed_0_10": {
+            "success": true,
+            "exec_time": 7.081031799316406e-05,
+            "iter_count": null,
+            "solution_state": [
+                {
+                    "kappa": 33.670187206049725,
+                    "phi": -2.930568260297326,
+                    "length": 0.04,
+                    "is_extensible": true,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 6.897980090584494,
+                    "phi": 2.2819204687861268,
+                    "length": 0.040000000000000015,
+                    "is_extensible": true,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 0.0,
+            "orientation_error": 0.0
+        },
+        "start_perturbed_0_20": {
+            "success": true,
+            "exec_time": 7.295608520507812e-05,
+            "iter_count": null,
+            "solution_state": [
+                {
+                    "kappa": 33.670187206049725,
+                    "phi": -2.930568260297326,
+                    "length": 0.04,
+                    "is_extensible": true,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 6.897980090584494,
+                    "phi": 2.2819204687861268,
+                    "length": 0.040000000000000015,
+                    "is_extensible": true,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 0.0,
+            "orientation_error": 0.0
+        },
+        "start_perturbed_0_30": {
+            "success": true,
+            "exec_time": 7.295608520507812e-05,
+            "iter_count": null,
+            "solution_state": [
+                {
+                    "kappa": 33.670187206049725,
+                    "phi": -2.930568260297326,
+                    "length": 0.04,
+                    "is_extensible": true,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 6.897980090584494,
+                    "phi": 2.2819204687861268,
+                    "length": 0.040000000000000015,
+                    "is_extensible": true,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 0.0,
+            "orientation_error": 0.0
+        }
+    },
+    {
+        "target_state": [
+            {
+                "kappa": 24.166116816975535,
+                "phi": -0.7308754819569286,
+                "length": 0.04,
+                "is_extensible": true,
+                "max_curvature": null
+            },
+            {
+                "kappa": 38.51731368350825,
+                "phi": 1.1657946707540436,
+                "length": 0.04,
+                "is_extensible": true,
+                "max_curvature": null
+            }
+        ],
+        "start_uniform": {
+            "success": true,
+            "exec_time": 7.390975952148438e-05,
+            "iter_count": null,
+            "solution_state": [
+                {
+                    "kappa": 24.166116816975542,
+                    "phi": -0.7308754819569291,
+                    "length": 0.04,
+                    "is_extensible": true,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 38.51731368350828,
+                    "phi": 1.1657946707540439,
+                    "length": 0.04,
+                    "is_extensible": true,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 0.0,
+            "orientation_error": 0.0
+        },
+        "start_perturbed_0_01": {
+            "success": true,
+            "exec_time": 7.200241088867188e-05,
+            "iter_count": null,
+            "solution_state": [
+                {
+                    "kappa": 24.166116816975542,
+                    "phi": -0.7308754819569291,
+                    "length": 0.04,
+                    "is_extensible": true,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 38.51731368350828,
+                    "phi": 1.1657946707540439,
+                    "length": 0.04,
+                    "is_extensible": true,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 0.0,
+            "orientation_error": 0.0
+        },
+        "start_perturbed_0_05": {
+            "success": true,
+            "exec_time": 7.295608520507812e-05,
+            "iter_count": null,
+            "solution_state": [
+                {
+                    "kappa": 24.166116816975542,
+                    "phi": -0.7308754819569291,
+                    "length": 0.04,
+                    "is_extensible": true,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 38.51731368350828,
+                    "phi": 1.1657946707540439,
+                    "length": 0.04,
+                    "is_extensible": true,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 0.0,
+            "orientation_error": 0.0
+        },
+        "start_perturbed_0_10": {
+            "success": true,
+            "exec_time": 7.414817810058594e-05,
+            "iter_count": null,
+            "solution_state": [
+                {
+                    "kappa": 24.166116816975542,
+                    "phi": -0.7308754819569291,
+                    "length": 0.04,
+                    "is_extensible": true,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 38.51731368350828,
+                    "phi": 1.1657946707540439,
+                    "length": 0.04,
+                    "is_extensible": true,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 0.0,
+            "orientation_error": 0.0
+        },
+        "start_perturbed_0_20": {
+            "success": true,
+            "exec_time": 7.200241088867188e-05,
+            "iter_count": null,
+            "solution_state": [
+                {
+                    "kappa": 24.166116816975542,
+                    "phi": -0.7308754819569291,
+                    "length": 0.04,
+                    "is_extensible": true,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 38.51731368350828,
+                    "phi": 1.1657946707540439,
+                    "length": 0.04,
+                    "is_extensible": true,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 0.0,
+            "orientation_error": 0.0
+        },
+        "start_perturbed_0_30": {
+            "success": true,
+            "exec_time": 7.104873657226562e-05,
+            "iter_count": null,
+            "solution_state": [
+                {
+                    "kappa": 24.166116816975542,
+                    "phi": -0.7308754819569291,
+                    "length": 0.04,
+                    "is_extensible": true,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 38.51731368350828,
+                    "phi": 1.1657946707540439,
+                    "length": 0.04,
+                    "is_extensible": true,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 0.0,
+            "orientation_error": 0.0
+        }
+    }
+]

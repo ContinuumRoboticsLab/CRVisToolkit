@@ -1,6 +1,8 @@
 import numpy as np
 from enum import Enum
 
+from common.coordinates import ParamableCoord, CoordParamValue
+
 
 class IkTarget:
     """
@@ -133,6 +135,28 @@ class NeppalliIkTarget(IkTarget):
         return cls(target_robot.segment_endpoints())
 
 
+class GcrbIkTarget(IkTarget):
+    def __init__(self, ee_target: np.ndarray, param: CoordParamValue):
+        self.ee_target = SE3IkTarget(ee_target)
+        self.param = param
+
+    def as_array(self):
+        return self.ee_target.as_array()
+
+    @classmethod
+    def from_target_robot(cls, target_robot, coord: ParamableCoord = ParamableCoord.Z):
+        ee_target = target_robot.t_matrix().A
+
+        if coord == ParamableCoord.Z:
+            param = CoordParamValue(
+                ParamableCoord.Z, target_robot.segment_endpoints()[0][2]
+            )
+        else:
+            raise NotImplementedError
+
+        return cls(ee_target, param)
+
+
 class IkTargetType(Enum):
     SE3 = "SE3"
     R6 = "R6"
@@ -140,6 +164,7 @@ class IkTargetType(Enum):
     SO3 = "SO3"
     POSITION_POINTING = "POSITION_POINTING"
     NEPPALLI = "NEPPALLI"
+    GCRB = "GCRB"
 
     @property
     def constraints(self):
@@ -167,3 +192,5 @@ class IkTargetType(Enum):
                 return P3Direction
             case IkTargetType.NEPPALLI:
                 return NeppalliIkTarget
+            case IkTargetType.GCRB:
+                return GcrbIkTarget
