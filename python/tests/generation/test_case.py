@@ -9,6 +9,7 @@ from tests.generation.uniform import UNIFORM_TEST_NAME
 from dataclasses import dataclass, asdict, make_dataclass
 import json
 
+
 STARTING_POSITION_VARS = [UNIFORM_TEST_NAME] + perturbation.STARTING_POSITION_VARS
 
 
@@ -120,6 +121,12 @@ class IkTestCase(_IkTestDataclass):
         results = dict()
         for varname in STARTING_POSITION_VARS:
             starting_robot = getattr(self, varname)
+
+            # draw_tdcr(
+            #     starting_robot.as_discrete_curve(pts_per_seg=10),
+            # )
+            # plt.show()
+
             results[varname] = self._solve_single_starter(
                 solver_class, settings, ik_target, starting_robot
             )

@@ -1,6 +1,7 @@
 from common.robot import ConstantCurvatureCR, ConstantCurvatureSegment
 
 from ik.solvers.base_solver import CcIkSettings, CcIkSolver, IkResult
+from ik.solvers.neppalli import NeppalliIkSolver, NeppalliIkTarget, NeppalliIkSettings
 from ik.target import IkTargetType, P3Direction
 
 from dataclasses import dataclass
@@ -24,7 +25,7 @@ def _get_joint_angle(zb, ze):
         else:
             dp = np.sign(dp)
 
-    return np.arccos(zb @ ze)
+    return np.arccos(dp)
 
 
 def _get_link_length(seg_length, joint_angle):
@@ -37,7 +38,7 @@ def _get_phi(joint_disp):
     """
     computes the bending plane angle (phi) from the joint displacement (from base frame)
     """
-    return np.arctan2(joint_disp[1], joint_disp[0])
+    return -np.arctan2(-joint_disp[1], joint_disp[0])
 
 
 @dataclass
@@ -94,13 +95,16 @@ class ConstantCurvatureJoint:
         pe = pre_transform @ seg_endpoint
 
         zb = pre_rotation @ np.array([0, 0, 1])
-        ze = seg_rotation @ zb
+        ze = seg_rotation[:, 2]
+        ze = pre_rotation @ ze
         joint_angle = _get_joint_angle(zb, ze)
         link_length = _get_link_length(segment.length, joint_angle)
 
+        pj = pb[:3] + zb * link_length
+
         return cls(
             pb=pb[:3],
-            pj=None,  # lazily evaluated
+            pj=pj,
             pe=pe[:3],
             zb=zb,
             ze=ze,
@@ -113,12 +117,13 @@ class ConstantCurvatureJoint:
         """
         converts the joint representation back into a constant curvature segment.
         """
+        theta = self.joint_angle
+
         joint_displacement = self._get_joint_displacement(
             base_rotation, base_displacement
         )
 
         phi = _get_phi(joint_displacement)
-        theta = self.joint_angle
 
         kappa = theta / self.segment_length
 
@@ -145,7 +150,7 @@ class ConstantCurvatureJoint:
         has been updated, which becomes the immediate distal segment's base position.
         """
 
-        self.pe = self.pj + self.link_length * self.zb
+        self.pe = self.pj + self.link_length * self.ze
 
     def reevaluate_after_change(self, forward_reaching=True):
         """
@@ -221,9 +226,15 @@ class FabrikcIkSolver(CcIkSolver):
     ):
         super().__init__(robot, settings, ik_target_pose, **kwargs)
 
-        self.segment_joints: list[ConstantCurvatureJoint] = [
-            ConstantCurvatureJoint.from_cc_segment(seg) for seg in robot.segments
-        ]
+        self.segment_joints: list[ConstantCurvatureJoint] = []
+        pre_transform = np.eye(4)
+
+        for seg in robot.segments:
+            self.segment_joints.append(
+                ConstantCurvatureJoint.from_cc_segment(seg, pre_transform)
+            )
+            pre_transform = pre_transform @ seg.t_matrix().A
+
         self.p_star = ik_target_pose.position
         self.z_hat_star = ik_target_pose.pointing_direction
         self.exec_time = None
@@ -240,14 +251,20 @@ class FabrikcIkSolver(CcIkSolver):
             # calculate the new joint position
             segment.pe = distal_joint_pb
             segment.ze = distal_joint_zb
-            temp_pj = segment.pe - segment.link_length * segment.ze
+            segment.pj = segment.pe - segment.link_length * segment.ze  # (5)
 
-            link_direction = segment.pe - temp_pj
-            segment.zb = link_direction / np.linalg.norm(link_direction)
-
-            # reevaluate the joint parameters
+            # most proximal segment
             if i == len(self.segment_joints) - 1:
-                segment.zb = np.array([0, 0, 1])
+                zb = np.array([0, 0, 1])
+            else:
+                # next segment in reversed ordering is proximal
+                proximal_joint_pj = self.segment_joints[-(i + 2)].pj  # p_(t-1)j
+                link_direction = segment.pj - proximal_joint_pj
+                zb = link_direction / np.linalg.norm(link_direction)  # (9)
+
+            segment.zb = zb
+
+            # reevaluate the joint parameters after pj, pe, ze, zb have been set
             segment.reevaluate_after_change(forward_reaching=True)
 
             # update for the next joint
@@ -257,6 +274,7 @@ class FabrikcIkSolver(CcIkSolver):
     def __perform_backward_reaching(self):
         proximal_joint_pe = np.array([0, 0, 0])
         # the base segments zb should always be [0, 0, 1] after forward reaching
+        assert all(self.segment_joints[0].zb == np.array([0, 0, 1]))
         proximal_joint_ze = np.array([0, 0, 1])
 
         # iterating over all segments from proximal to distal
@@ -264,20 +282,20 @@ class FabrikcIkSolver(CcIkSolver):
             joint.pb = proximal_joint_pe
             joint.zb = proximal_joint_ze
 
-            temp_joint_pj = joint.pb + joint.link_length * joint.zb
+            joint.pj = joint.pb + joint.link_length * joint.zb
 
             if i == len(self.segment_joints) - 1:
                 # the part of FABRIKc that guarantees ee orientation
                 joint.ze = self.z_hat_star
             else:
                 next_joint = self.segment_joints[i + 1]
-                joint_direction = next_joint.pj - temp_joint_pj
+                joint_direction = next_joint.pj - joint.pj
                 joint.ze = joint_direction / np.linalg.norm(joint_direction)
 
             joint.reevaluate_after_change(forward_reaching=False)
 
-            proximal_joint_pe = joint.pe
             proximal_joint_ze = joint.ze
+            proximal_joint_pe = joint.pe
 
     def _get_cc_solution(self):
         """
@@ -292,20 +310,35 @@ class FabrikcIkSolver(CcIkSolver):
 
         for joint in self.segment_joints:
             cc_segments.append(joint.as_cc_segment(prev_rotation, prev_displacement))
-            prev_rotation = joint._get_joint_rotation(prev_rotation, prev_displacement)
+            prev_rotation = prev_rotation @ joint._get_joint_rotation(
+                prev_rotation, prev_displacement
+            )
             prev_displacement = joint.pe
 
         return ConstantCurvatureCR(cc_segments)
 
+    def _get_cc_neppalli(self):
+        """
+        use neppalli solver to map from endpoints to constant curvature segments
+        """
+        endpoints = [joint.pe for joint in self.segment_joints]
+        neppalli_solver = NeppalliIkSolver(
+            self.cr,
+            NeppalliIkSettings(),
+            NeppalliIkTarget(endpoints),
+        )
+        neppalli_solver.solve()
+        return neppalli_solver.cr
+
     def _get_error(self):
         p_ne = self.segment_joints[-1].pe
-        return np.linalg.norm(p_ne - self.p_star)
+        error = np.linalg.norm(p_ne - self.p_star)
+        return error
 
     def __check_nan(self):
         for joint in self.segment_joints:
             if any(np.isnan([joint.joint_angle, joint.link_length])):
                 logger.error("NaN detected in joint parameters")
-        print("No NaN detected in joint parameters")
 
     def solve(self):
         start_time = time.time()
@@ -321,9 +354,13 @@ class FabrikcIkSolver(CcIkSolver):
 
         # use joint representation to get arc parameters
 
-        robot = self._get_cc_solution()
+        robot = self._get_cc_neppalli()
 
         self.cr = robot
+
+        print(self._get_cc_neppalli().t_matrix())
+        print(self.segment_joints[-1].ze)
+        print(self.z_hat_star)
 
         res = (
             IkResult.SUCCESS
@@ -340,12 +377,50 @@ class FabrikcIkSolver(CcIkSolver):
         considered.
         """
 
-        return 0.0, 0.0
-
         ee_pose = self.cr.t_matrix().A
         ee_position = ee_pose[:3, 3]
+        ee_orientation = ee_pose[:3, :3] @ np.array([0, 0, 1])
+
         target_position = self.p_star
         pos_error = np.linalg.norm(ee_position - target_position)
-        orientation_error = 0.0
+
+        target_orientation = self.z_hat_star
+        orientation_error = np.linalg.norm(ee_orientation - target_orientation)
 
         return pos_error, orientation_error
+
+
+if __name__ == "__main__":
+    from math import pi
+    from plotter.tdcr import draw_tdcr, TDCRPlotterSettings
+    from matplotlib import pyplot as plt
+
+    seg1 = ConstantCurvatureSegment(1 / 0.09, pi / 4, 0.05)
+    seg2 = ConstantCurvatureSegment(1 / 0.07, pi / 10, 0.03)
+    seg3 = ConstantCurvatureSegment(1 / 0.09, pi / 3, 0.05)
+    robot = ConstantCurvatureCR([seg1, seg2, seg3])
+    starter_plot = robot.as_discrete_curve(pts_per_seg=5)
+
+    target_robot = ConstantCurvatureCR(
+        [
+            ConstantCurvatureSegment(1 / 0.08, pi / 3, 0.05),
+            ConstantCurvatureSegment(1 / 0.05, pi / 11, 0.03),
+            ConstantCurvatureSegment(1 / 0.076, pi / 4, 0.05),
+        ]
+    )
+
+    target_pose = P3Direction.from_target_robot(target_robot)
+    solver = FabrikcIkSolver(
+        robot,
+        FabrikcIkSettings(),
+        target_pose,
+    )
+    draw_tdcr(starter_plot, plotter_settings=TDCRPlotterSettings(plot_title="Starter"))
+
+    solver.solve()
+    print(f"errors are {solver.get_errors()} after {solver.iter_count} iterations")
+    draw_tdcr(
+        solver.cr.as_discrete_curve(pts_per_seg=5),
+        plotter_settings=TDCRPlotterSettings(plot_title="Solution"),
+    )
+    plt.show()
