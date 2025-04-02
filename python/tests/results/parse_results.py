@@ -1,4 +1,4 @@
-from tests.generation.test_case import import_test_results, IkTestResult
+from tests.generation.test_case import get_test_results, IkTestSetResult
 import numpy as np
 
 import os
@@ -20,7 +20,7 @@ def _get_test_files(path: str) -> list[str]:
         raise OSError(f"Path {path} is not a file or directory")
 
 
-def eval_success_rate(results: list[IkTestResult]) -> float:
+def eval_success_rate(results: list[IkTestSetResult]) -> float:
     """
     calculates the success rate of the results
     """
@@ -29,7 +29,7 @@ def eval_success_rate(results: list[IkTestResult]) -> float:
     return success_count / len(results)
 
 
-def eval_execution_time(results: list[IkTestResult]) -> float:
+def eval_execution_time(results: list[IkTestSetResult]) -> float:
     """
     calculates the mean execution time of the results and the stdev
     """
@@ -38,7 +38,7 @@ def eval_execution_time(results: list[IkTestResult]) -> float:
     return np.mean(exec_times), np.std(exec_times)
 
 
-def eval_iteration_counts(results: list[IkTestResult]) -> float:
+def eval_iteration_counts(results: list[IkTestSetResult]) -> float:
     """
     calculates the mean iteration count of the results and the stdev
     """
@@ -49,7 +49,7 @@ def eval_iteration_counts(results: list[IkTestResult]) -> float:
     return np.mean(iter_counts), np.std(iter_counts)
 
 
-def eval_success_execution_time(results: list[IkTestResult]) -> float:
+def eval_success_execution_time(results: list[IkTestSetResult]) -> float:
     """
     calculates the mean execution time of the results and the stdev, including only
     tests that were succcessful
@@ -59,7 +59,7 @@ def eval_success_execution_time(results: list[IkTestResult]) -> float:
     return np.mean(exec_times), np.std(exec_times)
 
 
-def eval_success_iteration_counts(results: list[IkTestResult]) -> float:
+def eval_success_iteration_counts(results: list[IkTestSetResult]) -> float:
     """
     calculates the mean iteration count of the results and the stdev, including only
     tests that were succcessful
@@ -75,7 +75,8 @@ def parse_and_print_results(filepath: str):
     """
     parse and print a summary of the test results from a single test file
     """
-    results = import_test_results(filepath)
+    results = get_test_results(filepath)
+    print(f"Ran {len(results)} tests")
 
     success_rate = eval_success_rate(results) * 100
     met, set = eval_execution_time(results)

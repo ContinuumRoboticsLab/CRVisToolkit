@@ -215,6 +215,7 @@ class FabrikcIkSettings(CcIkSettings):
 
 class FabrikcIkSolver(CcIkSolver):
     target_type = IkTargetType.POSITION_POINTING
+    requires_init_guess = True
     settings_class = FabrikcIkSettings
 
     def __init__(

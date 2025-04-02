@@ -53,6 +53,7 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
     """
 
     target_type: IkTargetType = IkTargetType.SE3
+    requires_init_guess: bool = True
     settings_class = NewtonRaphsonIkSettings
 
     def __init__(

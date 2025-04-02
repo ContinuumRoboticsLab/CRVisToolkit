@@ -38,10 +38,10 @@ class CcIkSettings:
     """
 
     # tolerance for position convergence in meters
-    position_tolerance: float = 1e-6
+    position_tolerance: float = 1e-4
 
     # tolerance for orientation convergence in radians
-    orientation_tolerance: float = 1e-6
+    orientation_tolerance: float = 1e-4
 
     max_iter: int = 100
 
@@ -109,6 +109,7 @@ class CcIkSolver:
     """
 
     target_type: IkTargetType
+    requires_init_guess: bool = False
     settings_class: type[CcIkSettings]
 
     def __init__(

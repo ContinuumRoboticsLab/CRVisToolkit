@@ -1,6 +1,6 @@
 from ik.target import IkTargetType
 from tests.generation.test_case import IkTestCase, IkTestSetResult
-from tests.generation.uniform import UniformDistributionGenerator
+from tests.generation.uniform import UniformRobotFactory
 from ik.solvers.base_solver import CcIkSettings, CcIkSolver
 
 from tqdm import tqdm
@@ -10,7 +10,7 @@ import json
 class GenerativeTestRunner:
     def __init__(
         self,
-        generator: UniformDistributionGenerator,
+        generator: UniformRobotFactory,
         solver_class: type[CcIkSolver],
         settings: CcIkSettings,
         target_type: type[IkTargetType],
@@ -48,7 +48,7 @@ class GenerativeTestRunner:
 class MultiGenerativeTestRunner:
     def __init__(
         self,
-        generator: UniformDistributionGenerator,
+        generator: UniformRobotFactory,
         solver_classes: list[type[CcIkSolver]],
         settings: list[CcIkSettings],
         target_type: list[type[IkTargetType]],

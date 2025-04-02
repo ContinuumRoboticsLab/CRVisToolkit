@@ -1,6 +1,6 @@
 from common.robot import ConstantCurvatureCR, RobotSegmentLimits
 
-from tests.generation.uniform import UniformDistributionGenerator
+from tests.generation.uniform import UniformRobotFactory
 from tests.generation.perturbation import RobotPerturber, PERTURBATION_VALUES
 from tests.generation.test_case import IkTestCase, STARTING_POSITION_VARS
 
@@ -19,7 +19,7 @@ class IkTestGenerator:
         self.limits = limits if limits else RobotSegmentLimits()
         self.seed = seed
 
-        self.robot_factory = UniformDistributionGenerator(num_segs, limits, seed=seed)
+        self.robot_factory = UniformRobotFactory(num_segs, limits, seed=seed)
         self.perturber = RobotPerturber(seed, limits)
 
     def _generate_starters(

@@ -7,7 +7,9 @@ from tests.generation import perturbation
 from tests.generation.uniform import UNIFORM_TEST_NAME
 
 from dataclasses import dataclass, asdict, make_dataclass
+from typing import Optional
 import json
+from copy import copy
 
 
 STARTING_POSITION_VARS = [UNIFORM_TEST_NAME] + perturbation.STARTING_POSITION_VARS
@@ -38,7 +40,7 @@ class IkTestResult:
 _IkTestSetResultFields = make_dataclass(
     "_IkTestSetResult",
     [("target_state", ConstantCurvatureCR)]
-    + [(varname, IkTestResult) for varname in STARTING_POSITION_VARS],
+    + [(varname, Optional[IkTestResult], None) for varname in STARTING_POSITION_VARS],
 )
 
 
@@ -53,7 +55,8 @@ class IkTestSetResult(_IkTestSetResultFields):
         res = dict()
         res["target_state"] = self.target_state.as_dict()
         for varname in STARTING_POSITION_VARS:
-            res[varname] = getattr(self, varname).as_dict()
+            if getattr(self, varname) is not None:
+                res[varname] = getattr(self, varname).as_dict()
         return res
 
 
@@ -119,13 +122,15 @@ class IkTestCase(_IkTestDataclass):
 
         # run for same target using each starting position
         results = dict()
-        for varname in STARTING_POSITION_VARS:
-            starting_robot = getattr(self, varname)
 
-            # draw_tdcr(
-            #     starting_robot.as_discrete_curve(pts_per_seg=10),
-            # )
-            # plt.show()
+        starting_positions = copy(STARTING_POSITION_VARS)
+
+        # if solver does not need initial guess, keep just one starting position
+        if not solver_class.requires_init_guess:
+            starting_positions = starting_positions[:1]
+
+        for varname in starting_positions:
+            starting_robot = getattr(self, varname)
 
             results[varname] = self._solve_single_starter(
                 solver_class, settings, ik_target, starting_robot
@@ -146,8 +151,27 @@ def import_tests(path: str) -> list[IkTestCase]:
     return [IkTestCase.from_dict(test) for test in data]
 
 
-def import_test_results(path: str) -> list[IkTestResult]:
+def import_test_results(path: str) -> list[IkTestSetResult]:
     with open(path, "r") as f:
         data = json.load(f)
 
-    return [IkTestResult(**result) for result in data]
+    return [IkTestSetResult(**result) for result in data]
+
+
+def get_test_results(path: str) -> list[IkTestResult]:
+    """
+    returns each individual starting position/target position pair as a single test, and
+    outputs the results of the test. Used for determining performance metrics
+    """
+    test_set_results = import_test_results(path)
+    test_results = []
+    for test_set in test_set_results:
+        for varname in STARTING_POSITION_VARS:
+            test_result = getattr(test_set, varname)
+            if test_result is None:
+                continue
+            elif not isinstance(test_result, IkTestResult):
+                test_results.append(IkTestResult(**test_result))
+            else:
+                test_results.append(test_result)
+    return test_results

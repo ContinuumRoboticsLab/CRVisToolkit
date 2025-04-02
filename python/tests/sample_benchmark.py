@@ -1,6 +1,6 @@
 from ik.solvers.gcrb.gcrb_solver import GcrbIkSettings, GcrbIkTarget, GcrbSolver2
 from tests.runner import MultiGenerativeTestRunner
-from tests.generation.uniform import UniformDistributionGenerator
+from tests.generation.uniform import UniformRobotFactory
 from tests.generation.perturbation import PerturbedRobotGenerator
 
 from ik.solvers.nr import NewtonRaphsonIkSolver, NewtonRaphsonIkSettings
@@ -26,7 +26,7 @@ def run_twoseg_ext_tests(iternum: int, seed=None):
     settings = [NewtonRaphsonIkSettings(), NeppalliIkSettings(), GcrbIkSettings()]
     target_types = [SE3IkTarget, NeppalliIkTarget, GcrbIkTarget]
 
-    generator = UniformDistributionGenerator(
+    generator = UniformRobotFactory(
         num_segs, RobotSegmentLimits(is_extensible=True), seed
     )
 
@@ -46,7 +46,7 @@ def run_twoseg_inext_tests(iternum: int, seed=None):
     settings = [NewtonRaphsonIkSettings(), NeppalliIkSettings()]
     target_types = [SE3IkTarget, NeppalliIkTarget]
 
-    generator = UniformDistributionGenerator(
+    generator = UniformRobotFactory(
         num_segs, RobotSegmentLimits(is_extensible=False), seed
     )
 
@@ -66,7 +66,7 @@ def run_threeseg_ext_tests(iternum: int, seed=None):
     settings = [NewtonRaphsonIkSettings(), NeppalliIkSettings()]
     target_types = [SE3IkTarget, NeppalliIkTarget]
 
-    generator = UniformDistributionGenerator(
+    generator = UniformRobotFactory(
         num_segs, RobotSegmentLimits(is_extensible=True), seed
     )
 
@@ -86,7 +86,7 @@ def run_threeseg_inext_tests(iternum: int, seed=None):
     settings = [NewtonRaphsonIkSettings(), NeppalliIkSettings(), MicsSolverSettings()]
     target_types = [SE3IkTarget, NeppalliIkTarget, SE3IkTarget]
 
-    generator = UniformDistributionGenerator(
+    generator = UniformRobotFactory(
         num_segs, RobotSegmentLimits(is_extensible=False), seed
     )
 
@@ -128,9 +128,7 @@ def run_fabrikc_tests(seed=None):
     settings = [FabrikcIkSettings()]
     target_types = [P3Direction]
 
-    generator = UniformDistributionGenerator(
-        3, RobotSegmentLimits(is_extensible=False), seed
-    )
+    generator = UniformRobotFactory(3, RobotSegmentLimits(is_extensible=False), seed)
 
     runner = MultiGenerativeTestRunner(
         generator, solver_classes, settings, target_types, 2

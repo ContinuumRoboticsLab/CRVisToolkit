@@ -9,7 +9,7 @@ from numpy import random
 UNIFORM_TEST_NAME = "start_uniform"
 
 
-class UniformDistributionGenerator:
+class UniformRobotFactory:
     """
     the uniform distrbution generator helps generate test cases by generating constant
     curvature segments by smapling from a uniform distribution over the segment limits
