@@ -115,12 +115,14 @@ class MultiGenerativeTestRunner:
 
 
 class TestRunner:
-    def __init__(self, solver_class, test_cases: list[IkTestCase]):
+    def __init__(
+        self, solver_class, test_cases: list[IkTestCase]
+    ):
         self.solver_class: CcIkSolver = solver_class
         self.test_cases = test_cases
         self.results: list[IkTestSetResult] = []
 
-    def run(self, show_plots: bool = False):
+    def run(self, show_plots: bool = False, fail_on_error: bool = False):
         for i in tqdm(range(len(self.test_cases))):
             test_case = self.test_cases[i]
             try:
@@ -135,7 +137,8 @@ class TestRunner:
 
             except Exception as e:
                 print(f"Error in test case {i}: {e}")
-                raise e
+                if fail_on_error:
+                    raise e
 
     def save_results(self, path):
         results = [r.as_dict() for r in self.results]
