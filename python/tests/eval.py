@@ -54,7 +54,9 @@ def run_all_for_solver(solver_type: IkSolverType):
     for test_filepath, results_filepath in get_solver_test_filepaths(solver_type):
         run_json_tests(test_filepath, solver_type, results_filepath)
     duration = time.time() - start
-    print(f"Finished running all tests for {solver_type} after {duration:.2f} seconds")
+    print(
+        f"Finished running all tests for {solver_type} after {duration:.2f} seconds\n"
+    )
 
 
 def run_all():

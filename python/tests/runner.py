@@ -117,7 +117,7 @@ class MultiGenerativeTestRunner:
 class TestRunner:
     def __init__(self, solver_class, test_cases: list[IkTestCase]):
         self.solver_class: CcIkSolver = solver_class
-        self.test_cases = test_cases[:100]
+        self.test_cases = test_cases
         self.results: list[IkTestSetResult] = []
 
     def run(self, show_plots: bool = False):
