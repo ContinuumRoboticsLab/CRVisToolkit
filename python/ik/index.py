@@ -76,7 +76,10 @@ class IkSolverType(Enum):
                     IkRobotType.ThreeSegInExtensible,
                 ]
             case IkSolverType.Neppalli:
-                return [IkRobotType.TwoSegExtensible, IkRobotType.ThreeSegExtensible]
+                return [
+                    IkRobotType.TwoSegExtensible,
+                    IkRobotType.ThreeSegExtensible,
+                ]
             case IkSolverType.Gcrb:
                 return [IkRobotType.TwoSegExtensible]
             case IkSolverType.Fabrikc:
@@ -85,9 +88,6 @@ class IkSolverType(Enum):
                     IkRobotType.ThreeSegInExtensible,
                 ]
             case IkSolverType.Mics:
-                return [
-                    IkRobotType.TwoSegInExtensible,
-                    IkRobotType.ThreeSegInExtensible,
-                ]
+                return [IkRobotType.ThreeSegInExtensible]
             case _:
                 raise NotImplementedError(f"Solver {self} not implemented")

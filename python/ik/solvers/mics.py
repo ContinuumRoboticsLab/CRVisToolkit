@@ -41,10 +41,17 @@ def _rho(a, length) -> int:
 class MicsSolverSettings(CcIkSettings):
     num_t_steps = 100
     max_numerical_solver_iterations = 100
-    zero_tolerance = 1e-6
+    zero_tolerance = 1e-4
     numerical_solver_settings = NewtonRaphsonIkSettings(max_iter=30)
     num_r1_corrections = 2
     num_r3_corrrections = 1
+
+    @property
+    def pose_tolerance(self):
+        res = np.linalg.norm(
+            np.array([self.position_tolerance, self.orientation_tolerance])
+        )
+        return res
 
 
 class MicsSolver(CcIkSolver):
@@ -135,7 +142,7 @@ class MicsSolver(CcIkSolver):
 
         if a < self.settings.zero_tolerance:
             out = np.array(
-                -rn[0] * rn[2], -rn[1] * rn[2], rn[0] ** 2 + rn[1] ** 2
+                [-rn[0] * rn[2], -rn[1] * rn[2], rn[0] ** 2 + rn[1] ** 2]
             ) / np.sqrt(rn[0] ** 2 + rn[1] ** 2 + rn[2] ** 2)
         else:
             b = 2 * d * (n22 * det1 + n21 * det2)
@@ -332,13 +339,13 @@ class MicsSolver(CcIkSolver):
             self.ik_target,
         )
 
-        numerical_solver.solve()
+        numerical_result = numerical_solver.solve()
 
-        _, (pos_error, ori_error) = numerical_solver._check_error_in_bounds()
-        error = np.linalg.norm(np.vstack([pos_error, ori_error]))
+        pos_error, ori_error = numerical_solver.get_errors()
+        error = np.linalg.norm(np.array([pos_error, ori_error]))
 
         return (
-            error < self.settings.zero_tolerance,
+            numerical_result.is_success,
             numerical_solver.cr.state_vector(),
             error,
         )
@@ -445,6 +452,7 @@ class MicsSolver(CcIkSolver):
             except Exception as e:
                 self.exec_time = time.time() - start
                 print(f"Unable to perform numerical convergence for local min {i}: {e}")
+                raise e
 
         self.exec_time = time.time() - start
         if len(post_correction_errors) == 0:

@@ -26,7 +26,7 @@ def test_mics_nominations(logger):
 
     settings = MicsSolverSettings()
 
-    target_pose = SE3IkTarget(target_robot.t_matrix().A)
+    target_pose = SE3IkTarget(target_robot.t_matrix())
 
     logger.info(f"target pose: {target_pose.pose}")
     logger.info(f"robot configuration: {robot.state_vector()}")

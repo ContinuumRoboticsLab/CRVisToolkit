@@ -359,10 +359,6 @@ class FabrikcIkSolver(CcIkSolver):
 
         self.cr = robot
 
-        print(self._get_cc_neppalli().t_matrix())
-        print(self.segment_joints[-1].ze)
-        print(self.z_hat_star)
-
         res = (
             IkResult.SUCCESS
             if self.iter_count < self.settings.max_iter

@@ -201,9 +201,6 @@ class IterativeIkSolver(CcIkSolver):
     def _perform_iteration(self, *args, **kwargs):
         raise NotImplementedError
 
-    def _check_error_in_bounds(self, *args, **kwargs):
-        raise NotImplementedError
-
     @property
     def stopping_condition(self) -> tuple[bool, IkResult | None]:
         """

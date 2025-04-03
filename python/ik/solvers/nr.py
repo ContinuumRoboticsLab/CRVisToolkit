@@ -17,7 +17,7 @@ from common.robot import ConstantCurvatureCR
 from ik.solvers.base_solver import IterativeIkSolver, CcIkSettings, IkResult
 from ik.target import IkTarget, IkTargetType
 
-from common.utils import se3_to_pose, up_vee
+from common.utils import up_vee
 
 
 @dataclass
@@ -187,25 +187,6 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
 
         # theta_i_per_segment = np.split(theta_i, self.cr.num_segments)
         self.cr.set_config(theta_i)
-
-    def _check_error_in_bounds(self, *args, **kwargs):
-        """
-        compute the error for the current solution, return True if the error
-        is within the acceptable bounds set by the settings object
-
-        the error is computed as the norm of the difference between the current
-        pose and the target pose, and tolerances are set in the settings object
-        for position and orientation separately
-        """
-
-        if self.ik_target.target_type == IkTargetType.SE3:
-            error = self.cr.pose_vector() - se3_to_pose(self.ik_target_pose.A)
-        else:
-            error = self.get_pose() - self.ik_target_pose
-
-        # of form (check result, (position error, orientation error))
-        error_res = self.settings.check_error_bounds(error[:3], error[3:])
-        return error_res
 
     @property
     def stopping_condition(self) -> tuple[bool, IkResult | None]:
