@@ -95,7 +95,11 @@ class NeppalliIkSolver(AnalyticIkSolver):
         self.cr.segments[i].set_config(kappa=kappa_i, phi=phi_i)
 
         theta = self._get_segment_i_theta(i)
-        length_i = theta * (1 / kappa_i)
+
+        if kappa_i > 1e-6:
+            length_i = theta * (1 / kappa_i)
+        else:
+            length_i = np.linalg.norm(cur_p[:2])
 
         self.cr.segments[i].set_config(length=length_i)
 

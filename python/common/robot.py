@@ -134,13 +134,13 @@ class ConstantCurvatureSegment:
         returns a series of poses in a 4x4 matrix format
         """
 
-        assert pts_per_seg is None or pts_per_seg > 0, (
-            "num_pts must be a positive integer"
-        )
+        assert (
+            pts_per_seg is None or pts_per_seg > 0
+        ), "num_pts must be a positive integer"
         assert max_len is None or max_len > 0, "max_len must be a positive value"
-        assert pts_per_seg is None or max_len is None, (
-            "only one of num_pts or max_len can be specified"
-        )
+        assert (
+            pts_per_seg is None or max_len is None
+        ), "only one of num_pts or max_len can be specified"
         assert pts_per_seg or max_len, "either num_pts or max_len must be specified"
 
         if max_len:
@@ -316,13 +316,13 @@ class ConstantCurvatureCR:
         so that it can be plotted
         """
 
-        assert pts_per_seg is None or pts_per_seg > 0, (
-            "pts_per_seg must be a positive integer"
-        )
+        assert (
+            pts_per_seg is None or pts_per_seg > 0
+        ), "pts_per_seg must be a positive integer"
         assert max_len is None or max_len > 0, "max_len must be a positive value"
-        assert pts_per_seg is None or max_len is None, (
-            "only one of pts_per_seg or max_len can be specified"
-        )
+        assert (
+            pts_per_seg is None or max_len is None
+        ), "only one of pts_per_seg or max_len can be specified"
         assert pts_per_seg or max_len, "either pts_per_seg or max_len must be specified"
 
         self._validate()
@@ -371,18 +371,18 @@ class ConstantCurvatureCR:
             assert len(theta) == self.num_segments, "Invalid number of segments"
 
         elif isinstance(theta, ArrayLike):
-            assert theta.size == self.dof, (
-                f"Invalid number of degrees of freedom, expected {self.dof}, got {theta.size}"
-            )
+            assert (
+                theta.size == self.dof
+            ), f"Invalid number of degrees of freedom, expected {self.dof}, got {theta.size}"
             theta = theta.reshape(self.num_segments, -1)
         else:
             raise ValueError("Invalid theta type")
 
         # update each segment's configuration
         for i, seg in enumerate(self.segments):
-            assert theta[i].size == seg.dof, (
-                f"Invalid theta shape for segment {i} (got {theta[i].shape}, expected {(seg.dof, 1)})"
-            )
+            assert (
+                theta[i].size == seg.dof
+            ), f"Invalid theta shape for segment {i} (got {theta[i].shape}, expected {(seg.dof, 1)})"
 
             as_dict = {
                 "kappa": theta[i][0],

@@ -162,7 +162,7 @@ class MicsSolver(CcIkSolver):
                 r2 = -(det2 * r3 + n21 * d) / det0
                 out = np.array([r1, r2, r3])
 
-        return out
+        return out / np.linalg.norm(out)
 
     def _get_r1_approx(self):
         """

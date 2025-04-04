@@ -17,142 +17,142 @@
             }
         ],
         "start_uniform": {
-            "success": false,
-            "exec_time": 0.06445789337158203,
-            "iter_count": 101,
+            "success": true,
+            "exec_time": 7.081031799316406e-05,
+            "iter_count": 2,
             "solution_state": [
                 {
-                    "kappa": 145.66140510795444,
-                    "phi": 1.7041240470515269,
-                    "length": 0.04,
+                    "kappa": 25.01340985201872,
+                    "phi": -1.4464727377331885,
+                    "length": 0.04000000000000001,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 12.973607341450824,
-                    "phi": -1.4666774850801194,
-                    "length": 0.04,
+                    "kappa": 0.6490222467792112,
+                    "phi": 1.9683420744435125,
+                    "length": 0.040000000000002055,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0391992623635235,
-            "orientation_error": 3.5010017630686955e-05
+            "pos_error": 2.6656741605347384e-08,
+            "orientation_error": 1.6815046093766442e-15
         },
         "start_perturbed_0_01": {
             "success": true,
-            "exec_time": 0.0010890960693359375,
-            "iter_count": 1,
+            "exec_time": 5.1021575927734375e-05,
+            "iter_count": 2,
             "solution_state": [
                 {
-                    "kappa": 25.09662470667131,
-                    "phi": -1.4464573159365572,
+                    "kappa": 25.01342931312348,
+                    "phi": -1.4464727375776376,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 0.7293850957596324,
-                    "phi": 1.9385144404062324,
-                    "length": 0.04,
+                    "kappa": 0.649040986906864,
+                    "phi": 1.9683339903334334,
+                    "length": 0.04000000000000147,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.00012977747275532057,
-            "orientation_error": 2.5174103548545267e-05
+            "pos_error": 3.6508499876881946e-09,
+            "orientation_error": 5.689893001203927e-16
         },
         "start_perturbed_0_05": {
             "success": true,
-            "exec_time": 0.0012018680572509766,
-            "iter_count": 1,
+            "exec_time": 4.9114227294921875e-05,
+            "iter_count": 2,
             "solution_state": [
                 {
-                    "kappa": 26.845713048293582,
-                    "phi": -1.4559704216090856,
-                    "length": 0.04,
+                    "kappa": 25.013379226671447,
+                    "phi": -1.4464727379778606,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 2.4704090195320556,
-                    "phi": 1.6633264376419115,
-                    "length": 0.04,
+                    "kappa": 0.6489927560981472,
+                    "phi": 1.9683547971102662,
+                    "length": 0.039999999999999425,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0028575477704196276,
-            "orientation_error": 0.004597767015500929
+            "pos_error": 7.43508763477501e-08,
+            "orientation_error": 4.081579843510303e-16
         },
         "start_perturbed_0_10": {
             "success": true,
-            "exec_time": 0.001722097396850586,
-            "iter_count": 2,
-            "solution_state": [
-                {
-                    "kappa": 24.549671461285566,
-                    "phi": -1.448714463028087,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                },
-                {
-                    "kappa": 0.24083295028351565,
-                    "phi": 2.3246488258010483,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                }
-            ],
-            "pos_error": 0.0007540926660193696,
-            "orientation_error": 0.0017852381395280128
-        },
-        "start_perturbed_0_20": {
-            "success": true,
-            "exec_time": 0.0025501251220703125,
+            "exec_time": 6.890296936035156e-05,
             "iter_count": 3,
             "solution_state": [
                 {
-                    "kappa": 25.23896624876207,
-                    "phi": -1.4465615103803589,
+                    "kappa": 25.013426151392476,
+                    "phi": -1.4464727376029127,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 0.8679656709866196,
-                    "phi": 1.8960434111211906,
-                    "length": 0.04,
+                    "kappa": 0.6490379423058525,
+                    "phi": 1.96833530367928,
+                    "length": 0.03999999999999755,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0003512124102505658,
-            "orientation_error": 8.654715608017595e-06
+            "pos_error": 1.2730463421351975e-09,
+            "orientation_error": 1.8444410139024814e-15
+        },
+        "start_perturbed_0_20": {
+            "success": true,
+            "exec_time": 6.914138793945312e-05,
+            "iter_count": 3,
+            "solution_state": [
+                {
+                    "kappa": 25.01342372521104,
+                    "phi": -1.446472737622307,
+                    "length": 0.039999999999999994,
+                    "is_extensible": false,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 0.6490356060058855,
+                    "phi": 1.9683363114948695,
+                    "length": 0.03999999999999706,
+                    "is_extensible": false,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 5.051440130091644e-09,
+            "orientation_error": 1.950458771455605e-15
         },
         "start_perturbed_0_30": {
             "success": true,
-            "exec_time": 0.0018160343170166016,
-            "iter_count": 2,
+            "exec_time": 6.985664367675781e-05,
+            "iter_count": 3,
             "solution_state": [
                 {
-                    "kappa": 24.595692707163632,
-                    "phi": -1.450298714702322,
+                    "kappa": 25.013425286874355,
+                    "phi": -1.4464727376098236,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 0.30167125441666237,
-                    "phi": 1.9539430988796809,
-                    "length": 0.04,
+                    "kappa": 0.6490371098150133,
+                    "phi": 1.968335662792069,
+                    "length": 0.04000000000000002,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0007274402706582934,
-            "orientation_error": 0.0038716273544863026
+            "pos_error": 2.6193961736946597e-09,
+            "orientation_error": 6.938893903907228e-17
         }
     },
     {
@@ -174,141 +174,141 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 0.0020139217376708984,
-            "iter_count": 2,
+            "exec_time": 9.083747863769531e-05,
+            "iter_count": 4,
             "solution_state": [
                 {
-                    "kappa": 33.0903307540508,
-                    "phi": -2.9348697015502974,
+                    "kappa": 33.67018420740823,
+                    "phi": -2.9305682582411925,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 7.069525933751068,
-                    "phi": 2.3358848606930174,
-                    "length": 0.04,
+                    "kappa": 6.897981572454103,
+                    "phi": 2.2819208387357834,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0010111845814788072,
-            "orientation_error": 0.009121338075710994
+            "pos_error": 4.550052313964076e-09,
+            "orientation_error": 7.850462293418876e-17
         },
         "start_perturbed_0_01": {
             "success": true,
-            "exec_time": 0.0010921955108642578,
-            "iter_count": 1,
+            "exec_time": 4.8160552978515625e-05,
+            "iter_count": 2,
             "solution_state": [
                 {
-                    "kappa": 33.452193493727414,
-                    "phi": -2.9297033107701136,
-                    "length": 0.04,
+                    "kappa": 33.67016402032426,
+                    "phi": -2.930568244403751,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 7.038879228675175,
-                    "phi": 2.314000886607271,
-                    "length": 0.04,
+                    "kappa": 6.89799154844039,
+                    "phi": 2.2819233292650383,
+                    "length": 0.03999999999999998,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0002983267170605436,
-            "orientation_error": 0.0018516908393379924
+            "pos_error": 3.5181351627437715e-08,
+            "orientation_error": 4.002966042486721e-16
         },
         "start_perturbed_0_05": {
             "success": true,
-            "exec_time": 0.0011661052703857422,
-            "iter_count": 1,
-            "solution_state": [
-                {
-                    "kappa": 33.24508687773199,
-                    "phi": -2.9317639380068594,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                },
-                {
-                    "kappa": 7.068914236352974,
-                    "phi": 2.3402261777808206,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                }
-            ],
-            "pos_error": 0.0006246739920529037,
-            "orientation_error": 0.0033668213525062784
-        },
-        "start_perturbed_0_10": {
-            "success": true,
-            "exec_time": 0.0018248558044433594,
-            "iter_count": 2,
-            "solution_state": [
-                {
-                    "kappa": 33.76641020176164,
-                    "phi": -2.930984022987822,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                },
-                {
-                    "kappa": 6.842529905644502,
-                    "phi": 2.2702472143094163,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                }
-            ],
-            "pos_error": 0.00014643224356750554,
-            "orientation_error": 0.0001220963190166376
-        },
-        "start_perturbed_0_20": {
-            "success": true,
-            "exec_time": 0.001953125,
-            "iter_count": 2,
-            "solution_state": [
-                {
-                    "kappa": 33.87757933556389,
-                    "phi": -2.926673708542113,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                },
-                {
-                    "kappa": 6.807584412438043,
-                    "phi": 2.254074339874897,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                }
-            ],
-            "pos_error": 0.00037358554488432793,
-            "orientation_error": 0.0053740058751817095
-        },
-        "start_perturbed_0_30": {
-            "success": true,
-            "exec_time": 0.002534151077270508,
+            "exec_time": 6.914138793945312e-05,
             "iter_count": 3,
             "solution_state": [
                 {
-                    "kappa": 33.68437082333929,
-                    "phi": -2.9305544914927353,
+                    "kappa": 33.67020932160337,
+                    "phi": -2.9305682754611597,
+                    "length": 0.040000000000000015,
+                    "is_extensible": false,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 6.897969161553957,
+                    "phi": 2.281917740331312,
+                    "length": 0.04000000000000003,
+                    "is_extensible": false,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 3.355750383907248e-08,
+            "orientation_error": 5.587425560892699e-16
+        },
+        "start_perturbed_0_10": {
+            "success": true,
+            "exec_time": 6.985664367675781e-05,
+            "iter_count": 3,
+            "solution_state": [
+                {
+                    "kappa": 33.67016828114795,
+                    "phi": -2.93056824732045,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 6.893045427332815,
-                    "phi": 2.280045189155329,
-                    "length": 0.04,
+                    "kappa": 6.897989442921019,
+                    "phi": 2.2819228035941173,
+                    "length": 0.040000000000000015,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 2.1583776903393387e-05,
-            "orientation_error": 0.00010290861801592786
+            "pos_error": 2.8716101635438025e-08,
+            "orientation_error": 5.396300654998293e-16
+        },
+        "start_perturbed_0_20": {
+            "success": true,
+            "exec_time": 6.914138793945312e-05,
+            "iter_count": 3,
+            "solution_state": [
+                {
+                    "kappa": 33.67017289318955,
+                    "phi": -2.9305682504830073,
+                    "length": 0.039999999999999994,
+                    "is_extensible": false,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 6.897987163730458,
+                    "phi": 2.281922234596744,
+                    "length": 0.03999999999999997,
+                    "is_extensible": false,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 2.171792229594405e-08,
+            "orientation_error": 3.7853558335037716e-16
+        },
+        "start_perturbed_0_30": {
+            "success": true,
+            "exec_time": 9.107589721679688e-05,
+            "iter_count": 4,
+            "solution_state": [
+                {
+                    "kappa": 33.670185528547044,
+                    "phi": -2.9305682591470843,
+                    "length": 0.03999999999999999,
+                    "is_extensible": false,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 6.897980919573117,
+                    "phi": 2.281920675743714,
+                    "length": 0.039999999999999994,
+                    "is_extensible": false,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 2.545394303359216e-09,
+            "orientation_error": 8.777083671441753e-17
         }
     },
     {
@@ -330,141 +330,141 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 0.0025229454040527344,
-            "iter_count": 3,
+            "exec_time": 9.083747863769531e-05,
+            "iter_count": 4,
             "solution_state": [
                 {
-                    "kappa": 24.14552147914888,
-                    "phi": -0.7375115066943768,
+                    "kappa": 24.166109613697174,
+                    "phi": -0.7308748042823762,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 38.63806909114915,
-                    "phi": 1.1630263874738427,
-                    "length": 0.04,
+                    "kappa": 38.51729816838331,
+                    "phi": 1.1657949606225781,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.00022728324536798968,
-            "orientation_error": 0.000296272313647401
+            "pos_error": 2.4734759413300034e-08,
+            "orientation_error": 7.447602459741819e-16
         },
         "start_perturbed_0_01": {
             "success": true,
-            "exec_time": 0.001188039779663086,
-            "iter_count": 1,
+            "exec_time": 6.914138793945312e-05,
+            "iter_count": 3,
             "solution_state": [
                 {
-                    "kappa": 24.219875669814055,
-                    "phi": -0.7617735451548088,
-                    "length": 0.04,
+                    "kappa": 24.16612891352573,
+                    "phi": -0.7308766230854644,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 39.18613417810764,
-                    "phi": 1.1552614140495845,
-                    "length": 0.04,
+                    "kappa": 38.51733979870554,
+                    "phi": 1.165794182609554,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0010157002387615303,
-            "orientation_error": 0.005528233562959268
+            "pos_error": 4.162533158355498e-08,
+            "orientation_error": 2.5438405243138006e-16
         },
         "start_perturbed_0_05": {
             "success": true,
-            "exec_time": 0.0020940303802490234,
-            "iter_count": 2,
+            "exec_time": 9.083747863769531e-05,
+            "iter_count": 4,
             "solution_state": [
                 {
-                    "kappa": 23.788907468914463,
-                    "phi": -0.7924275168329677,
+                    "kappa": 24.16612028010255,
+                    "phi": -0.7308758077251089,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 39.57197739182563,
-                    "phi": 1.136976529903862,
-                    "length": 0.04,
+                    "kappa": 38.51732114198906,
+                    "phi": 1.165794531410333,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0021418722179275037,
-            "orientation_error": 0.00330285701836736
+            "pos_error": 1.1890676060073704e-08,
+            "orientation_error": 2.482534153247273e-16
         },
         "start_perturbed_0_10": {
             "success": true,
-            "exec_time": 0.0025501251220703125,
-            "iter_count": 3,
+            "exec_time": 9.107589721679688e-05,
+            "iter_count": 4,
             "solution_state": [
                 {
-                    "kappa": 24.198822943300243,
-                    "phi": -0.7364447653153201,
-                    "length": 0.04,
+                    "kappa": 24.166120032296746,
+                    "phi": -0.7308757842726695,
+                    "length": 0.04000000000000001,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 38.63279773610644,
-                    "phi": 1.1643407306272604,
-                    "length": 0.04,
+                    "kappa": 38.51732060552715,
+                    "phi": 1.1657945414435762,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.00019313378975501064,
-            "orientation_error": 0.001576944404881153
+            "pos_error": 1.1035809882291876e-08,
+            "orientation_error": 3.3306690738754696e-16
         },
         "start_perturbed_0_20": {
             "success": true,
-            "exec_time": 0.0025908946990966797,
-            "iter_count": 3,
+            "exec_time": 9.107589721679688e-05,
+            "iter_count": 4,
             "solution_state": [
                 {
-                    "kappa": 24.172919505994734,
-                    "phi": -0.7302740763287869,
+                    "kappa": 24.16610917499476,
+                    "phi": -0.7308747630642837,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 38.50913223131145,
-                    "phi": 1.166172336832422,
-                    "length": 0.04,
+                    "kappa": 38.51729722452421,
+                    "phi": 1.1657949782525379,
+                    "length": 0.03999999999999999,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 2.235906270435469e-05,
-            "orientation_error": 0.00012571180608917753
+            "pos_error": 2.623964148670995e-08,
+            "orientation_error": 4.335559509131367e-16
         },
         "start_perturbed_0_30": {
             "success": true,
-            "exec_time": 0.0027320384979248047,
-            "iter_count": 3,
+            "exec_time": 9.012222290039062e-05,
+            "iter_count": 4,
             "solution_state": [
                 {
-                    "kappa": 24.104491307987395,
-                    "phi": -0.7298348918052487,
-                    "length": 0.04,
+                    "kappa": 24.166108239261895,
+                    "phi": -0.7308746749396242,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 38.45912054315769,
-                    "phi": 1.1650646413492733,
-                    "length": 0.04,
+                    "kappa": 38.51729520725456,
+                    "phi": 1.1657950159480823,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 8.182016384016583e-05,
-            "orientation_error": 0.0019092399616883464
+            "pos_error": 2.9455392572811858e-08,
+            "orientation_error": 1.5700924586837752e-16
         }
     },
     {
@@ -486,141 +486,141 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 0.0034198760986328125,
-            "iter_count": 4,
+            "exec_time": 6.890296936035156e-05,
+            "iter_count": 3,
             "solution_state": [
                 {
-                    "kappa": 19.922805423084295,
-                    "phi": 2.426246322934094,
-                    "length": 0.04,
+                    "kappa": 19.078710453791576,
+                    "phi": 2.4472242469720795,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 14.06833972800132,
-                    "phi": 0.38260676922774345,
-                    "length": 0.04,
+                    "kappa": 14.0505848759863,
+                    "phi": 0.4494351574994586,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0014556522075942979,
-            "orientation_error": 0.004441242838853114
+            "pos_error": 8.764398730624593e-10,
+            "orientation_error": 5.785972455716595e-16
         },
         "start_perturbed_0_01": {
             "success": true,
-            "exec_time": 0.0011849403381347656,
-            "iter_count": 1,
-            "solution_state": [
-                {
-                    "kappa": 18.87249382062221,
-                    "phi": 2.465680371744967,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                },
-                {
-                    "kappa": 14.260033376394304,
-                    "phi": 0.47469019905034626,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                }
-            ],
-            "pos_error": 0.000612883356261668,
-            "orientation_error": 0.001397431268427389
-        },
-        "start_perturbed_0_05": {
-            "success": true,
-            "exec_time": 0.0012307167053222656,
-            "iter_count": 1,
-            "solution_state": [
-                {
-                    "kappa": 16.165875967945958,
-                    "phi": 2.6420881545963546,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                },
-                {
-                    "kappa": 15.846834898734102,
-                    "phi": 0.7268609442235328,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                }
-            ],
-            "pos_error": 0.006925779580864519,
-            "orientation_error": 0.0027025713126385626
-        },
-        "start_perturbed_0_10": {
-            "success": true,
-            "exec_time": 0.002176046371459961,
+            "exec_time": 4.8160552978515625e-05,
             "iter_count": 2,
             "solution_state": [
                 {
-                    "kappa": 18.882489085314592,
-                    "phi": 2.4688932647103976,
-                    "length": 0.04,
+                    "kappa": 19.078710512677606,
+                    "phi": 2.447224253852578,
+                    "length": 0.04000000000000001,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 14.355768170005225,
-                    "phi": 0.47406511796485773,
+                    "kappa": 14.050585008593181,
+                    "phi": 0.4494351591307269,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0006856713641171751,
-            "orientation_error": 0.002792631834718347
+            "pos_error": 1.033245290609042e-09,
+            "orientation_error": 2.0502053808399642e-16
+        },
+        "start_perturbed_0_05": {
+            "success": true,
+            "exec_time": 4.8160552978515625e-05,
+            "iter_count": 2,
+            "solution_state": [
+                {
+                    "kappa": 19.078724042283785,
+                    "phi": 2.4472244953288773,
+                    "length": 0.04000000000000001,
+                    "is_extensible": false,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 14.050594409753673,
+                    "phi": 0.44943455368111956,
+                    "length": 0.04,
+                    "is_extensible": false,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 2.3645268183594974e-08,
+            "orientation_error": 2.5438405243138006e-16
+        },
+        "start_perturbed_0_10": {
+            "success": true,
+            "exec_time": 4.673004150390625e-05,
+            "iter_count": 2,
+            "solution_state": [
+                {
+                    "kappa": 19.07873036057483,
+                    "phi": 2.4472245655619047,
+                    "length": 0.04000000000000001,
+                    "is_extensible": false,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 14.050598131049947,
+                    "phi": 0.44943423980753483,
+                    "length": 0.040000000000000015,
+                    "is_extensible": false,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 3.3869561994034616e-08,
+            "orientation_error": 1.2738115944464653e-16
         },
         "start_perturbed_0_20": {
             "success": true,
-            "exec_time": 0.002469778060913086,
+            "exec_time": 6.890296936035156e-05,
             "iter_count": 3,
             "solution_state": [
                 {
-                    "kappa": 18.98000569281978,
-                    "phi": 2.4555529748193377,
-                    "length": 0.04,
+                    "kappa": 19.078710383872025,
+                    "phi": 2.4472242457422158,
+                    "length": 0.040000000000000015,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 14.132438151739326,
-                    "phi": 0.4565533315907834,
-                    "length": 0.04,
+                    "kappa": 14.050584827686206,
+                    "phi": 0.44943516064157724,
+                    "length": 0.040000000000000015,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.000330520759050031,
-            "orientation_error": 0.0025001694930972575
+            "pos_error": 7.596941269458674e-10,
+            "orientation_error": 2.5172027167143304e-16
         },
         "start_perturbed_0_30": {
             "success": true,
-            "exec_time": 0.0029571056365966797,
-            "iter_count": 3,
+            "exec_time": 4.696846008300781e-05,
+            "iter_count": 2,
             "solution_state": [
                 {
-                    "kappa": 20.811417125248937,
-                    "phi": 2.384340473532698,
+                    "kappa": 19.078668930511334,
+                    "phi": 2.4472235913086715,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 13.78545984891179,
-                    "phi": 0.295404244693777,
-                    "length": 0.04,
+                    "kappa": 14.050557367159128,
+                    "phi": 0.44943707820624884,
+                    "length": 0.04000000000000001,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0032975128236589764,
-            "orientation_error": 0.00477672321608135
+            "pos_error": 6.787741321953283e-08,
+            "orientation_error": 8.1773032027145e-16
         }
     },
     {
@@ -642,141 +642,141 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 0.0033388137817382812,
-            "iter_count": 4,
+            "exec_time": 4.696846008300781e-05,
+            "iter_count": 2,
             "solution_state": [
                 {
-                    "kappa": 3.3882746466334477,
-                    "phi": 2.0846730745314326,
-                    "length": 0.04,
+                    "kappa": 3.299273339051208,
+                    "phi": 2.090064707259714,
+                    "length": 0.03999999999999996,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 9.313250758080848,
-                    "phi": 2.3698391490745943,
-                    "length": 0.04,
+                    "kappa": 9.400017579008264,
+                    "phi": 2.3655201819110374,
+                    "length": 0.04000000000000002,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.00014015931909786776,
-            "orientation_error": 0.00043773838607454247
+            "pos_error": 2.441561921613171e-09,
+            "orientation_error": 3.188872858294072e-16
         },
         "start_perturbed_0_01": {
             "success": true,
-            "exec_time": 0.0010249614715576172,
+            "exec_time": 2.47955322265625e-05,
             "iter_count": 1,
             "solution_state": [
                 {
-                    "kappa": 3.1294253005255954,
-                    "phi": 2.084583927989997,
-                    "length": 0.04,
+                    "kappa": 3.2992981202632605,
+                    "phi": 2.0900666026604218,
+                    "length": 0.04000000000000001,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 9.569206380129238,
-                    "phi": 2.3623785937120947,
-                    "length": 0.04,
+                    "kappa": 9.399992036093685,
+                    "phi": 2.3655202733537792,
+                    "length": 0.04000000000000002,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0002707713813550308,
-            "orientation_error": 0.0001832963187099039
+            "pos_error": 3.82132005914231e-08,
+            "orientation_error": 2.0014830212433605e-16
         },
         "start_perturbed_0_05": {
             "success": true,
-            "exec_time": 0.0018911361694335938,
+            "exec_time": 4.7206878662109375e-05,
             "iter_count": 2,
             "solution_state": [
                 {
-                    "kappa": 3.302987472586556,
-                    "phi": 2.0915135271987837,
-                    "length": 0.04,
+                    "kappa": 3.299274791373444,
+                    "phi": 2.090064818305058,
+                    "length": 0.039999999999999876,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 9.391332873058134,
-                    "phi": 2.3653274424150017,
-                    "length": 0.04,
+                    "kappa": 9.400016082078546,
+                    "phi": 2.3655201872816134,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 8.448303244584795e-06,
-            "orientation_error": 0.0001710284056040834
+            "pos_error": 5.900455099768771e-11,
+            "orientation_error": 2.7194799110210365e-16
         },
         "start_perturbed_0_10": {
             "success": true,
-            "exec_time": 0.0013451576232910156,
-            "iter_count": 1,
+            "exec_time": 4.601478576660156e-05,
+            "iter_count": 2,
             "solution_state": [
                 {
-                    "kappa": 1.7897912584726643,
-                    "phi": 1.7841973084807956,
-                    "length": 0.04,
+                    "kappa": 3.2992748494471735,
+                    "phi": 2.0900648227453815,
+                    "length": 0.03999999999999988,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 11.190687570871916,
-                    "phi": 2.3819667296716376,
-                    "length": 0.04,
+                    "kappa": 9.400016022221132,
+                    "phi": 2.3655201874963736,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0025844563332334753,
-            "orientation_error": 0.006460257141287103
+            "pos_error": 3.626628589377945e-11,
+            "orientation_error": 3.8459253727671276e-16
         },
         "start_perturbed_0_20": {
             "success": true,
-            "exec_time": 0.0017728805541992188,
+            "exec_time": 5.793571472167969e-05,
             "iter_count": 2,
             "solution_state": [
                 {
-                    "kappa": 3.071291097580046,
-                    "phi": 2.0757000416096663,
-                    "length": 0.04,
+                    "kappa": 3.299274766170347,
+                    "phi": 2.090064816378026,
+                    "length": 0.039999999999999966,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 9.602706713134323,
-                    "phi": 2.3666768456035037,
-                    "length": 0.04,
+                    "kappa": 9.400016108055725,
+                    "phi": 2.3655201871884124,
+                    "length": 0.04000000000000001,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0003951602368806676,
-            "orientation_error": 0.0016974304167933873
+            "pos_error": 1.0035061072207863e-10,
+            "orientation_error": 1.1102230246251565e-16
         },
         "start_perturbed_0_30": {
             "success": true,
-            "exec_time": 0.0018298625946044922,
+            "exec_time": 4.792213439941406e-05,
             "iter_count": 2,
             "solution_state": [
                 {
-                    "kappa": 3.321710579062219,
-                    "phi": 2.092133524696941,
-                    "length": 0.04,
+                    "kappa": 3.299274898793309,
+                    "phi": 2.0900648265183905,
+                    "length": 0.039999999999999945,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 9.356570588821265,
-                    "phi": 2.367462053034498,
-                    "length": 0.04,
+                    "kappa": 9.400015971359348,
+                    "phi": 2.3655201876788583,
+                    "length": 0.04000000000000001,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 2.6820970820682214e-05,
-            "orientation_error": 0.001089451221993524
+            "pos_error": 1.172193584968239e-10,
+            "orientation_error": 1.6653345369377348e-16
         }
     },
     {
@@ -798,141 +798,141 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 0.0026230812072753906,
+            "exec_time": 6.985664367675781e-05,
             "iter_count": 3,
             "solution_state": [
                 {
-                    "kappa": 16.52577345302987,
-                    "phi": -1.8789338147043138,
-                    "length": 0.04,
+                    "kappa": 15.886716451141988,
+                    "phi": -1.8942983184208644,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 22.14761598230863,
-                    "phi": -1.2550017866728904,
-                    "length": 0.04,
+                    "kappa": 22.789596409119554,
+                    "phi": -1.2648294645232017,
+                    "length": 0.04000000000000001,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0010482961378078177,
-            "orientation_error": 0.000783629035537334
+            "pos_error": 4.840941399198674e-09,
+            "orientation_error": 2.830524433501838e-16
         },
         "start_perturbed_0_01": {
             "success": true,
-            "exec_time": 0.0011179447174072266,
-            "iter_count": 1,
+            "exec_time": 4.696846008300781e-05,
+            "iter_count": 2,
             "solution_state": [
                 {
-                    "kappa": 15.546329107551603,
-                    "phi": -1.9011785348344754,
-                    "length": 0.04,
+                    "kappa": 15.886720662508022,
+                    "phi": -1.8942981846557292,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 23.116205865805416,
-                    "phi": -1.2702367260409366,
+                    "kappa": 22.789591836347345,
+                    "phi": -1.264829411297968,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0005484950760216661,
-            "orientation_error": 0.0009828368530999292
+            "pos_error": 1.198994613261881e-08,
+            "orientation_error": 1.7772239894833365e-16
         },
         "start_perturbed_0_05": {
             "success": true,
-            "exec_time": 0.0019490718841552734,
-            "iter_count": 2,
+            "exec_time": 6.914138793945312e-05,
+            "iter_count": 3,
             "solution_state": [
                 {
-                    "kappa": 16.22294291356608,
-                    "phi": -1.8854179124367194,
-                    "length": 0.04,
+                    "kappa": 15.886714438839833,
+                    "phi": -1.8942983823772137,
+                    "length": 0.03999999999999998,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 22.439936523005212,
-                    "phi": -1.2597411228728208,
-                    "length": 0.04,
+                    "kappa": 22.789598594458976,
+                    "phi": -1.2648294899485952,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0005536102592456177,
-            "orientation_error": 0.0004451989416536801
+            "pos_error": 1.424567650759733e-09,
+            "orientation_error": 2.0770370905276122e-16
         },
         "start_perturbed_0_10": {
             "success": true,
-            "exec_time": 0.001873016357421875,
+            "exec_time": 4.673004150390625e-05,
             "iter_count": 2,
             "solution_state": [
                 {
-                    "kappa": 16.35516169172633,
-                    "phi": -1.8820074274518135,
-                    "length": 0.04,
+                    "kappa": 15.88668691751197,
+                    "phi": -1.8942992524768443,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 22.30569239899497,
-                    "phi": -1.2572590893188837,
-                    "length": 0.04,
+                    "kappa": 22.789628442128592,
+                    "phi": -1.2648298384924388,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0007711529824981747,
-            "orientation_error": 0.001023086148421901
+            "pos_error": 4.5254620043040975e-08,
+            "orientation_error": 4.079219866531555e-16
         },
         "start_perturbed_0_20": {
             "success": true,
-            "exec_time": 0.0017752647399902344,
-            "iter_count": 2,
+            "exec_time": 6.914138793945312e-05,
+            "iter_count": 3,
             "solution_state": [
                 {
-                    "kappa": 15.344561482754793,
-                    "phi": -1.908265627792433,
-                    "length": 0.04,
+                    "kappa": 15.88671093803216,
+                    "phi": -1.8942984936423017,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 23.32777858777635,
-                    "phi": -1.2735414815692299,
-                    "length": 0.04,
+                    "kappa": 22.789602396300257,
+                    "phi": -1.2648295341812137,
+                    "length": 0.04000000000000001,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0008964092103490567,
-            "orientation_error": 0.0013465284580469973
+            "pos_error": 4.518907584905157e-09,
+            "orientation_error": 5.551115123125783e-17
         },
         "start_perturbed_0_30": {
             "success": true,
-            "exec_time": 0.004045963287353516,
-            "iter_count": 5,
+            "exec_time": 4.601478576660156e-05,
+            "iter_count": 2,
             "solution_state": [
                 {
-                    "kappa": 15.965216727555001,
-                    "phi": -1.892342174584423,
-                    "length": 0.04,
+                    "kappa": 15.886693245727406,
+                    "phi": -1.8942990836919877,
+                    "length": 0.04000000000000001,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 22.705532746433352,
-                    "phi": -1.2637321239653239,
-                    "length": 0.04,
+                    "kappa": 22.78962185229702,
+                    "phi": -1.264829752825198,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.00012636475020624848,
-            "orientation_error": 0.0001501510772328302
+            "pos_error": 3.4833328825912317e-08,
+            "orientation_error": 2.7755575615628914e-16
         }
     },
     {
@@ -954,141 +954,141 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 0.002629995346069336,
+            "exec_time": 6.818771362304688e-05,
             "iter_count": 3,
             "solution_state": [
                 {
-                    "kappa": 18.15847080836898,
-                    "phi": 2.814559599329695,
+                    "kappa": 17.293571289464673,
+                    "phi": 2.856276339513965,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 16.602396293301865,
-                    "phi": 0.6867032259592731,
+                    "kappa": 16.698689881607358,
+                    "phi": 0.7553233760274797,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0017548678434029345,
-            "orientation_error": 0.005009140398401478
+            "pos_error": 1.5647903473509663e-09,
+            "orientation_error": 1.249000902703301e-16
         },
         "start_perturbed_0_01": {
             "success": true,
-            "exec_time": 0.0011289119720458984,
-            "iter_count": 1,
+            "exec_time": 4.7206878662109375e-05,
+            "iter_count": 2,
             "solution_state": [
                 {
-                    "kappa": 17.69622656827544,
-                    "phi": 2.808602649677896,
-                    "length": 0.04,
+                    "kappa": 17.293572323229306,
+                    "phi": 2.8562763718456035,
+                    "length": 0.04000000000000001,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 16.2336135345705,
-                    "phi": 0.7069426435471083,
-                    "length": 0.04,
+                    "kappa": 16.698690849165974,
+                    "phi": 0.7553233514592134,
+                    "length": 0.040000000000000015,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.001422655049318312,
-            "orientation_error": 0.0011312462278339603
+            "pos_error": 3.4128421633285674e-09,
+            "orientation_error": 1.8875832159447664e-16
         },
         "start_perturbed_0_05": {
             "success": true,
-            "exec_time": 0.0011692047119140625,
-            "iter_count": 1,
+            "exec_time": 4.696846008300781e-05,
+            "iter_count": 2,
             "solution_state": [
                 {
-                    "kappa": 16.364213154487476,
-                    "phi": 2.903319103687969,
+                    "kappa": 17.29355666106116,
+                    "phi": 2.856275830865559,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 16.85364039585302,
-                    "phi": 0.8267301519337719,
-                    "length": 0.04,
+                    "kappa": 16.698675486541738,
+                    "phi": 0.7553236910226241,
+                    "length": 0.039999999999999994,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0019010498254493843,
-            "orientation_error": 0.005819157785848205
+            "pos_error": 2.5199120708024813e-08,
+            "orientation_error": 3.188872858294072e-16
         },
         "start_perturbed_0_10": {
             "success": true,
-            "exec_time": 0.0012288093566894531,
-            "iter_count": 1,
+            "exec_time": 4.7206878662109375e-05,
+            "iter_count": 2,
             "solution_state": [
                 {
-                    "kappa": 15.645409525323602,
-                    "phi": 3.000207855256262,
+                    "kappa": 17.293542056810185,
+                    "phi": 2.856275348880327,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 17.75435085700941,
-                    "phi": 0.9071525246535685,
-                    "length": 0.04,
+                    "kappa": 16.698661470531132,
+                    "phi": 0.755324021993064,
+                    "length": 0.04000000000000001,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.004505331864004067,
-            "orientation_error": 0.006556147456340596
+            "pos_error": 5.1601210375733546e-08,
+            "orientation_error": 2.7755575615628914e-17
         },
         "start_perturbed_0_20": {
             "success": true,
-            "exec_time": 0.0024068355560302734,
-            "iter_count": 3,
+            "exec_time": 4.673004150390625e-05,
+            "iter_count": 2,
             "solution_state": [
                 {
-                    "kappa": 17.274251252180814,
-                    "phi": 2.8614197487678035,
-                    "length": 0.04,
+                    "kappa": 17.293587428288355,
+                    "phi": 2.85627685234603,
+                    "length": 0.04000000000000001,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 16.769130112897102,
-                    "phi": 0.7570222442557728,
-                    "length": 0.04,
+                    "kappa": 16.698705098016426,
+                    "phi": 0.7553229976368758,
+                    "length": 0.03999999999999999,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.00015664883256886417,
-            "orientation_error": 0.001560745171909407
+            "pos_error": 3.051284667850035e-08,
+            "orientation_error": 1.249000902703301e-16
         },
         "start_perturbed_0_30": {
             "success": true,
-            "exec_time": 0.003326892852783203,
-            "iter_count": 4,
+            "exec_time": 6.818771362304688e-05,
+            "iter_count": 3,
             "solution_state": [
                 {
-                    "kappa": 17.473915269798347,
-                    "phi": 2.8384496971787625,
-                    "length": 0.04,
+                    "kappa": 17.29357090630938,
+                    "phi": 2.8562763267108284,
+                    "length": 0.04000000000000001,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 16.543371442677117,
-                    "phi": 0.7358712641311973,
-                    "length": 0.04,
+                    "kappa": 16.698689511713148,
+                    "phi": 0.7553233846099109,
+                    "length": 0.04000000000000001,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0005514845351225492,
-            "orientation_error": 1.7707360698544314e-05
+            "pos_error": 8.701295021604386e-10,
+            "orientation_error": 5.48304353729612e-16
         }
     },
     {
@@ -1110,141 +1110,141 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 0.0028629302978515625,
-            "iter_count": 3,
-            "solution_state": [
-                {
-                    "kappa": 17.013513755789923,
-                    "phi": 1.4441877921112514,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                },
-                {
-                    "kappa": 37.35170440346033,
-                    "phi": -2.4208047060437536,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                }
-            ],
-            "pos_error": 0.0013635345918609043,
-            "orientation_error": 0.009867833288473953
-        },
-        "start_perturbed_0_01": {
-            "success": true,
-            "exec_time": 0.0011637210845947266,
-            "iter_count": 1,
-            "solution_state": [
-                {
-                    "kappa": 16.29709840356624,
-                    "phi": 1.4729352077723679,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                },
-                {
-                    "kappa": 36.61622772928699,
-                    "phi": -2.419379222717236,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                }
-            ],
-            "pos_error": 2.1707937591179023e-05,
-            "orientation_error": 0.00019668963490374625
-        },
-        "start_perturbed_0_05": {
-            "success": true,
-            "exec_time": 0.0012960433959960938,
-            "iter_count": 1,
-            "solution_state": [
-                {
-                    "kappa": 16.31116310854639,
-                    "phi": 1.5207456962165276,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                },
-                {
-                    "kappa": 36.12083779132211,
-                    "phi": -2.4029908430306155,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                }
-            ],
-            "pos_error": 0.0011383538075778017,
-            "orientation_error": 0.007054363184315622
-        },
-        "start_perturbed_0_10": {
-            "success": true,
-            "exec_time": 0.0017979145050048828,
-            "iter_count": 2,
-            "solution_state": [
-                {
-                    "kappa": 16.305951956034082,
-                    "phi": 1.4711217387817193,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                },
-                {
-                    "kappa": 36.640370820835656,
-                    "phi": -2.419738172711663,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                }
-            ],
-            "pos_error": 6.41246274053201e-05,
-            "orientation_error": 0.0002024962383608101
-        },
-        "start_perturbed_0_20": {
-            "success": true,
-            "exec_time": 0.0035247802734375,
+            "exec_time": 8.916854858398438e-05,
             "iter_count": 4,
             "solution_state": [
                 {
-                    "kappa": 16.312467446662563,
-                    "phi": 1.4699000617270614,
+                    "kappa": 16.28350183835221,
+                    "phi": 1.4733034905912532,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 36.658241754688596,
-                    "phi": -2.420106841568867,
+                    "kappa": 36.601904254042616,
+                    "phi": -2.419449668207535,
+                    "length": 0.03999999999999999,
+                    "is_extensible": false,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 9.208215315640172e-09,
+            "orientation_error": 2.482534153247273e-16
+        },
+        "start_perturbed_0_01": {
+            "success": true,
+            "exec_time": 6.699562072753906e-05,
+            "iter_count": 3,
+            "solution_state": [
+                {
+                    "kappa": 16.2835030852157,
+                    "phi": 1.4733034264371292,
+                    "length": 0.04000000000000002,
+                    "is_extensible": false,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 36.60190582898181,
+                    "phi": -2.419449680740531,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 9.420446756767722e-05,
-            "orientation_error": 0.00012939239985192727
+            "pos_error": 1.1644813928945592e-08,
+            "orientation_error": 4.002966042486721e-16
+        },
+        "start_perturbed_0_05": {
+            "success": true,
+            "exec_time": 9.012222290039062e-05,
+            "iter_count": 4,
+            "solution_state": [
+                {
+                    "kappa": 16.283492886542138,
+                    "phi": 1.473303951183859,
+                    "length": 0.03999999999999999,
+                    "is_extensible": false,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 36.60189294682189,
+                    "phi": -2.419449578227325,
+                    "length": 0.039999999999999994,
+                    "is_extensible": false,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 8.285258614957325e-09,
+            "orientation_error": 2.9893669801409083e-16
+        },
+        "start_perturbed_0_10": {
+            "success": true,
+            "exec_time": 8.988380432128906e-05,
+            "iter_count": 4,
+            "solution_state": [
+                {
+                    "kappa": 16.283495162365295,
+                    "phi": 1.473303834087098,
+                    "length": 0.04,
+                    "is_extensible": false,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 36.601895821462755,
+                    "phi": -2.419449601103043,
+                    "length": 0.04000000000000001,
+                    "is_extensible": false,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 3.837883203109344e-09,
+            "orientation_error": 2.7755575615628914e-16
+        },
+        "start_perturbed_0_20": {
+            "success": true,
+            "exec_time": 6.818771362304688e-05,
+            "iter_count": 3,
+            "solution_state": [
+                {
+                    "kappa": 16.283467602098902,
+                    "phi": 1.4733052521310785,
+                    "length": 0.03999999999999999,
+                    "is_extensible": false,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 36.60186100951516,
+                    "phi": -2.4194493240783186,
+                    "length": 0.03999999999999997,
+                    "is_extensible": false,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 5.7695678378647324e-08,
+            "orientation_error": 2.7194799110210365e-16
         },
         "start_perturbed_0_30": {
             "success": true,
-            "exec_time": 0.002215862274169922,
-            "iter_count": 2,
+            "exec_time": 8.988380432128906e-05,
+            "iter_count": 4,
             "solution_state": [
                 {
-                    "kappa": 16.933802407322386,
-                    "phi": 1.4377497307116673,
-                    "length": 0.04,
+                    "kappa": 16.283485809691122,
+                    "phi": 1.4733043153057468,
+                    "length": 0.040000000000000015,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 37.464290065804526,
-                    "phi": -2.422679103541286,
+                    "kappa": 36.601884007898,
+                    "phi": -2.4194495070934647,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0013033261672065965,
-            "orientation_error": 0.006394629524995902
+            "pos_error": 2.2114725295098333e-08,
+            "orientation_error": 2.5438405243138006e-16
         }
     },
     {
@@ -1266,141 +1266,141 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 0.002705812454223633,
+            "exec_time": 6.794929504394531e-05,
             "iter_count": 3,
             "solution_state": [
                 {
-                    "kappa": 5.519326838999819,
-                    "phi": 2.976012462392356,
-                    "length": 0.04,
+                    "kappa": 5.841906338881256,
+                    "phi": 2.969614087099797,
+                    "length": 0.03999999999999999,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 31.984116649244587,
-                    "phi": -0.12379102091084875,
+                    "kappa": 32.294501885410426,
+                    "phi": -0.125739591439577,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0005036583959268602,
-            "orientation_error": 0.001310000374213145
+            "pos_error": 6.585479515905875e-08,
+            "orientation_error": 3.554447978966673e-16
         },
         "start_perturbed_0_01": {
             "success": true,
-            "exec_time": 0.001110076904296875,
-            "iter_count": 1,
-            "solution_state": [
-                {
-                    "kappa": 5.800267684324819,
-                    "phi": 2.969962546077846,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                },
-                {
-                    "kappa": 32.25334342633485,
-                    "phi": -0.1256350682244303,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                }
-            ],
-            "pos_error": 6.438740484212722e-05,
-            "orientation_error": 8.824903820580424e-05
-        },
-        "start_perturbed_0_05": {
-            "success": true,
-            "exec_time": 0.0018091201782226562,
-            "iter_count": 2,
-            "solution_state": [
-                {
-                    "kappa": 6.613516480729142,
-                    "phi": 2.9827045276737,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                },
-                {
-                    "kappa": 33.06815330964404,
-                    "phi": -0.12370442255514698,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                }
-            ],
-            "pos_error": 0.0011922423542482258,
-            "orientation_error": 0.0011025180576689992
-        },
-        "start_perturbed_0_10": {
-            "success": true,
-            "exec_time": 0.0018808841705322266,
-            "iter_count": 2,
-            "solution_state": [
-                {
-                    "kappa": 6.110101431934454,
-                    "phi": 2.970250545472615,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                },
-                {
-                    "kappa": 32.56138036043476,
-                    "phi": -0.1258764649190186,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                }
-            ],
-            "pos_error": 0.0004132742948842959,
-            "orientation_error": 0.00024514018006534407
-        },
-        "start_perturbed_0_20": {
-            "success": true,
-            "exec_time": 0.0019497871398925781,
-            "iter_count": 2,
-            "solution_state": [
-                {
-                    "kappa": 6.563415254476247,
-                    "phi": 2.976767544278706,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                },
-                {
-                    "kappa": 33.01017104005881,
-                    "phi": -0.12469776747197,
-                    "length": 0.04,
-                    "is_extensible": false,
-                    "max_curvature": null
-                }
-            ],
-            "pos_error": 0.0011155970304432905,
-            "orientation_error": 0.0007934221560986206
-        },
-        "start_perturbed_0_30": {
-            "success": true,
-            "exec_time": 0.002638101577758789,
+            "exec_time": 7.200241088867188e-05,
             "iter_count": 3,
             "solution_state": [
                 {
-                    "kappa": 5.731488644420425,
-                    "phi": 2.9690445753226586,
-                    "length": 0.04,
+                    "kappa": 5.841947528967917,
+                    "phi": 2.9696144065818544,
+                    "length": 0.03999999999999999,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 32.207855181967375,
-                    "phi": -0.12641260764562418,
+                    "kappa": 32.29454311695811,
+                    "phi": -0.12573958340317687,
                     "length": 0.04,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.00018606864034669956,
-            "orientation_error": 0.001283475479503574
+            "pos_error": 2.418526130940758e-09,
+            "orientation_error": 3.4021815010030383e-16
+        },
+        "start_perturbed_0_05": {
+            "success": true,
+            "exec_time": 6.818771362304688e-05,
+            "iter_count": 3,
+            "solution_state": [
+                {
+                    "kappa": 5.841951573867562,
+                    "phi": 2.969614437954993,
+                    "length": 0.03999999999999999,
+                    "is_extensible": false,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 32.29454716592924,
+                    "phi": -0.12573958261399715,
+                    "length": 0.04,
+                    "is_extensible": false,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 3.81096622045005e-09,
+            "orientation_error": 2.665835984225005e-16
+        },
+        "start_perturbed_0_10": {
+            "success": true,
+            "exec_time": 6.794929504394531e-05,
+            "iter_count": 3,
+            "solution_state": [
+                {
+                    "kappa": 5.841990216237315,
+                    "phi": 2.9696147376714697,
+                    "length": 0.040000000000000015,
+                    "is_extensible": false,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 32.29458584719489,
+                    "phi": -0.12573957507469474,
+                    "length": 0.04,
+                    "is_extensible": false,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 6.332352716335107e-08,
+            "orientation_error": 2.2929868617541516e-16
+        },
+        "start_perturbed_0_20": {
+            "success": true,
+            "exec_time": 6.699562072753906e-05,
+            "iter_count": 3,
+            "solution_state": [
+                {
+                    "kappa": 5.8419975579005055,
+                    "phi": 2.9696147946141247,
+                    "length": 0.040000000000000015,
+                    "is_extensible": false,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 32.294593196247845,
+                    "phi": -0.12573957364230529,
+                    "length": 0.04000000000000001,
+                    "is_extensible": false,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 7.463031709209155e-08,
+            "orientation_error": 1.716587549445839e-16
+        },
+        "start_perturbed_0_30": {
+            "success": true,
+            "exec_time": 9.012222290039062e-05,
+            "iter_count": 4,
+            "solution_state": [
+                {
+                    "kappa": 5.841947320963364,
+                    "phi": 2.9696144049685236,
+                    "length": 0.04,
+                    "is_extensible": false,
+                    "max_curvature": null
+                },
+                {
+                    "kappa": 32.29454290874421,
+                    "phi": -0.1257395834437596,
+                    "length": 0.039999999999999994,
+                    "is_extensible": false,
+                    "max_curvature": null
+                }
+            ],
+            "pos_error": 2.7388709904342824e-09,
+            "orientation_error": 4.0436549343196473e-16
         }
     },
     {
@@ -1422,141 +1422,141 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 0.0018470287322998047,
-            "iter_count": 2,
+            "exec_time": 2.5033950805664062e-05,
+            "iter_count": 1,
             "solution_state": [
                 {
-                    "kappa": 1.609896308255316,
-                    "phi": 1.386551319697632,
-                    "length": 0.04,
+                    "kappa": 1.5909109380617215,
+                    "phi": 1.4577369990091626,
+                    "length": 0.04000000000000012,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 1.0783686655064482,
-                    "phi": 1.4730928984154028,
-                    "length": 0.04,
+                    "kappa": 1.11384632634869,
+                    "phi": 1.377395512566651,
+                    "length": 0.03999999999999954,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.00019000440420478088,
-            "orientation_error": 0.0008001554970329423
+            "pos_error": 9.445350098397835e-08,
+            "orientation_error": 7.175299452868276e-16
         },
         "start_perturbed_0_01": {
             "success": true,
-            "exec_time": 0.00048613548278808594,
-            "iter_count": 0,
+            "exec_time": 2.574920654296875e-05,
+            "iter_count": 1,
             "solution_state": [
                 {
-                    "kappa": 1.5105361148847662,
-                    "phi": 1.3922130845711644,
-                    "length": 0.04,
+                    "kappa": 1.5908518728931051,
+                    "phi": 1.4577379203123195,
+                    "length": 0.03999999999999962,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 1.3546781758204909,
-                    "phi": 1.3648113693033388,
-                    "length": 0.04,
+                    "kappa": 1.1139053185468244,
+                    "phi": 1.3773984573797406,
+                    "length": 0.04000000000000077,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.00026631443515222136,
-            "orientation_error": 0.00822546729750961
+            "pos_error": 5.660253594755775e-11,
+            "orientation_error": 1.482668063584092e-15
         },
         "start_perturbed_0_05": {
             "success": true,
-            "exec_time": 0.0010840892791748047,
+            "exec_time": 2.5987625122070312e-05,
             "iter_count": 1,
             "solution_state": [
                 {
-                    "kappa": 2.468914050151802,
-                    "phi": 1.5048841191739448,
-                    "length": 0.04,
+                    "kappa": 1.590851847230478,
+                    "phi": 1.457737920733213,
+                    "length": 0.040000000000000265,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 0.3122825821126349,
-                    "phi": 0.7389108210434756,
-                    "length": 0.04,
+                    "kappa": 1.1139053441803257,
+                    "phi": 1.3773984586298997,
+                    "length": 0.04000000000000035,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0014123952809241781,
-            "orientation_error": 0.0003138457816095462
+            "pos_error": 9.766662242815736e-11,
+            "orientation_error": 4.443059973708341e-17
         },
         "start_perturbed_0_10": {
             "success": true,
-            "exec_time": 0.0012888908386230469,
+            "exec_time": 2.5272369384765625e-05,
             "iter_count": 1,
             "solution_state": [
                 {
-                    "kappa": 2.3261749087024977,
-                    "phi": 1.3925285185732892,
-                    "length": 0.04,
+                    "kappa": 1.590850693411746,
+                    "phi": 1.457737940013175,
+                    "length": 0.04000000000000004,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 0.38313218506820346,
-                    "phi": 1.6168141741836681,
-                    "length": 0.04,
+                    "kappa": 1.1139064967372816,
+                    "phi": 1.3773985143328813,
+                    "length": 0.039999999999999786,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0011920784192002928,
-            "orientation_error": 0.0002869047818822987
+            "pos_error": 1.9439742845965913e-09,
+            "orientation_error": 3.9576034759345456e-16
         },
         "start_perturbed_0_20": {
             "success": true,
-            "exec_time": 0.001188039779663086,
+            "exec_time": 2.47955322265625e-05,
             "iter_count": 1,
             "solution_state": [
                 {
-                    "kappa": 2.4572309650498636,
-                    "phi": -2.2512077903838943,
-                    "length": 0.04,
+                    "kappa": 1.590857357702212,
+                    "phi": 1.4577378298335444,
+                    "length": 0.04000000000000043,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 4.974590768393476,
-                    "phi": 1.1751064499238384,
-                    "length": 0.04,
+                    "kappa": 1.1138998398851,
+                    "phi": 1.377398190926192,
+                    "length": 0.04000000000000006,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.006226951511828442,
-            "orientation_error": 0.002741920986155829
+            "pos_error": 8.719953097239403e-09,
+            "orientation_error": 5.855045090355223e-16
         },
         "start_perturbed_0_30": {
             "success": true,
-            "exec_time": 0.0017848014831542969,
-            "iter_count": 2,
+            "exec_time": 2.47955322265625e-05,
+            "iter_count": 1,
             "solution_state": [
                 {
-                    "kappa": 1.5245956910554914,
-                    "phi": 1.3293188452801767,
-                    "length": 0.04,
+                    "kappa": 1.5908612281241443,
+                    "phi": 1.457737766652825,
+                    "length": 0.04000000000000003,
                     "is_extensible": false,
                     "max_curvature": null
                 },
                 {
-                    "kappa": 1.1923163986467944,
-                    "phi": 1.5537911370535435,
-                    "length": 0.04,
+                    "kappa": 1.1138959738862906,
+                    "phi": 1.3773980019524596,
+                    "length": 0.03999999999999918,
                     "is_extensible": false,
                     "max_curvature": null
                 }
             ],
-            "pos_error": 0.0003307651527780214,
-            "orientation_error": 0.000560803186662694
+            "pos_error": 1.491319144938422e-08,
+            "orientation_error": 9.421640772340184e-16
         }
     }
 ]
