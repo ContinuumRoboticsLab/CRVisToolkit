@@ -31,7 +31,7 @@ class RobotSegmentLimits:
     max_phi: float = np.pi
 
     min_length: float = 0.04
-    max_length: float = 0.04 * 1.3
+    max_length: float = 0.04 * 1.5
 
     is_extensible: bool = False
 
