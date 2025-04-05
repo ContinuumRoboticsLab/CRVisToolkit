@@ -27,8 +27,8 @@ def arc_params_from_quaternion(q, length):
     a, b, c = q
     if abs(a) > 1 and abs(a) < 1 + 1e-5:
         a = np.clip(a, -1, 1)
-    elif abs(a) > 1 + 1e-5:
-        print("Warning: a is out of bounds (got value of {a})")
+    elif abs(a) > 1 + 1e-4:
+        raise ValueError(f"a is out of bounds (got value of {a})")
     kappa = 2 / length * np.arccos(a)
     phi = np.arctan2(-b, c)
     return kappa, phi
