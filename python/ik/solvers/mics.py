@@ -25,6 +25,10 @@ GAMMA_VAL = 0.5 + 1 / np.pi
 
 def arc_params_from_quaternion(q, length):
     a, b, c = q
+    if abs(a) > 1 and abs(a) < 1 + 1e-5:
+        a = np.clip(a, -1, 1)
+    elif abs(a) > 1 + 1e-5:
+        print("Warning: a is out of bounds (got value of {a})")
     kappa = 2 / length * np.arccos(a)
     phi = np.arctan2(-b, c)
     return kappa, phi
@@ -140,10 +144,10 @@ class MicsSolver(CcIkSolver):
         if a < self.settings.zero_tolerance:
             out = np.array(
                 [-rn[0] * rn[2], -rn[1] * rn[2], rn[0] ** 2 + rn[1] ** 2]
-            ) / np.sqrt(rn[0] ** 2 + rn[1] ** 2 + rn[2] ** 2)
+            ) / np.sqrt(rn[0] ** 2 + rn[1] ** 2)
         else:
             b = 2 * d * (n22 * det1 + n21 * det2)
-            c = d**2 * (n22**2 + n21 * 2) - det0**2
+            c = d**2 * (n22**2 + n21**2) - det0**2
             delta = b**2 - 4 * a * c
 
             if delta < 0:
@@ -219,7 +223,7 @@ class MicsSolver(CcIkSolver):
         and provides the two candidate values for r2
         """
 
-        a, b, c, d = self.q
+        a, b, c, _ = self.q
         B = self.B
         m = np.array([c, -b, a])
         qe = np.concat([np.array([m @ self.r3]), B @ self.r3])
@@ -374,6 +378,7 @@ class MicsSolver(CcIkSolver):
         errors = np.array([np.nan for _ in range(num_t_steps)])
 
         local_min = []
+        local_min_indices = []
 
         # find all errors
         while t <= 1:
@@ -392,18 +397,19 @@ class MicsSolver(CcIkSolver):
                 self.r2 = r2_cand_1
                 err = e1
 
-            # TODO: fill out the error checking to mirror the MATLAB logic line for line
             if i == 0:
                 pass  # noqa
             elif i == 1:
                 # always add first point
                 num_points += 1
                 local_min.append((self.r1, self.r2, self.r3))
+                local_min_indices.append(i)
             else:
                 # local minimum case:
                 if err > errors[i - 1] and errors[i - 1] <= errors[i - 2]:
                     num_points += 1
                     local_min.append((self.r1, self.r2, self.r3))
+                    local_min_indices.append(i)
 
             errors[i] = err
             t += t_resolution
@@ -413,17 +419,27 @@ class MicsSolver(CcIkSolver):
         if t == 1:  # first, last point will coincide
             if not (errors[1] > errors[0] and errors[0] <= errors[-1]):
                 local_min = local_min[1:]
+                local_min_indices = local_min_indices[1:]
 
         else:  # step size not divisor of 1, check both ends
             if errors[0] > errors[-1] and errors[-1] <= errors[-2]:
                 num_points += 1
                 local_min.append((self.r1, self.r2, self.r3))
+                local_min_indices.append(i)
             if not (errors[1] > errors[0] and errors[0] <= errors[-1]):
                 local_min = local_min[1:]
+                local_min_indices = local_min_indices[1:]
 
         # try numerical correction (NR) for all candidate local minima
         if len(local_min) == 0:
             raise self.NoLocalMinimaFound("No local minima found")
+
+        # sort local minima by how close the t value was to 0.5
+        # in our code, we achieve the same by sorting by the index of the local minima
+        mid_index = num_t_steps / 2
+        distances = [abs(index - mid_index) for index in local_min_indices]
+        sorting_indices = np.argsort(distances)
+        local_min = [local_min[i] for i in sorting_indices]
 
         # cache all local minima found - we will later start from these points for numerical convergence
         self.mics_starting_points = local_min
