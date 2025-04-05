@@ -39,8 +39,7 @@ def _rho(a, length) -> int:
 
 
 class MicsSolverSettings(CcIkSettings):
-    num_t_steps = 100
-    max_numerical_solver_iterations = 100
+    t_search_resolutions = [0.03, 0.01, 0.005]
     zero_tolerance = 1e-4
     numerical_solver_settings = NewtonRaphsonIkSettings(max_iter=30)
     num_r1_corrections = 2
@@ -108,12 +107,10 @@ class MicsSolver(CcIkSolver):
         self.v = np.linalg.cross(n, self.u)
         self.P = np.column_stack([self.u, self.v, n])
 
-        # search settings
-        self.t_step = 1 / settings.num_t_steps
-
         self.mics_starting_points = []
         self.mics_starting_point_configurations = []
         self.converged_starting_point = None
+        self.iter_count = 0
 
     def _get_r3_approx(self, t):
         """
@@ -351,6 +348,16 @@ class MicsSolver(CcIkSolver):
         )
 
     def solve(self, *args, **kwargs):
+        for t_resolution in self.settings.t_search_resolutions:
+            try:
+                result = self._solve_with_resolution(t_resolution)
+                if result == IkResult.SUCCESS:
+                    return result
+            except self.NoLocalMinimaFound:
+                continue
+        return IkResult.DIVERGED
+
+    def _solve_with_resolution(self, t_resolution: float):
         """
         uses internally developed methods for determining r1, r2, r3 and the error
         (these functions in the source code are not publicly available) but uses the same
@@ -362,18 +369,14 @@ class MicsSolver(CcIkSolver):
         t = 0
         i = 0
         num_points = 0
+        num_t_steps = int(1 / t_resolution) + 1
 
-        errors = np.array(
-            [np.nan for _ in range(self.settings.max_numerical_solver_iterations)]
-        )
-        min_iter_nums = np.array(
-            [np.nan for _ in range(self.settings.max_numerical_solver_iterations)]
-        )
+        errors = np.array([np.nan for _ in range(num_t_steps)])
 
         local_min = []
 
         # find all errors
-        while i < self.settings.max_numerical_solver_iterations:
+        while t <= 1:
             self.r3 = self._get_r3_approx(t)
             self.r1 = self._get_r1_approx()
 
@@ -396,37 +399,27 @@ class MicsSolver(CcIkSolver):
                 # always add first point
                 num_points += 1
                 local_min.append((self.r1, self.r2, self.r3))
-                min_iter_nums[num_points] = 1
             else:
+                # local minimum case:
                 if err > errors[i - 1] and errors[i - 1] <= errors[i - 2]:
                     num_points += 1
                     local_min.append((self.r1, self.r2, self.r3))
-                    min_iter_nums[num_points] = i - 1
 
             errors[i] = err
-            t += self.t_step
+            t += t_resolution
             i += 1
 
         # check limits of search space
         if t == 1:  # first, last point will coincide
-            if errors[1] > errors[0] and errors[0] <= errors[2]:
-                # first/last point is a local min
-                num_points += 1
-                local_min.append((self.r1, self.r2, self.r3))
-                min_iter_nums[num_points] = 1
-            else:
+            if not (errors[1] > errors[0] and errors[0] <= errors[-1]):
                 local_min = local_min[1:]
-                min_iter_nums = min_iter_nums[1:]
 
         else:  # step size not divisor of 1, check both ends
             if errors[0] > errors[-1] and errors[-1] <= errors[-2]:
                 num_points += 1
                 local_min.append((self.r1, self.r2, self.r3))
-                min_iter_nums[num_points] = i - 1
-            if errors[1] > errors[0] and errors[0] <= errors[2]:
-                num_points += 1
-                local_min.append((self.r1, self.r2, self.r3))
-                min_iter_nums[num_points] = 1
+            if not (errors[1] > errors[0] and errors[0] <= errors[-1]):
+                local_min = local_min[1:]
 
         # try numerical correction (NR) for all candidate local minima
         if len(local_min) == 0:
@@ -448,6 +441,10 @@ class MicsSolver(CcIkSolver):
                     self.converged_starting_point = i
                     self.cr.set_config(robot_state)
                     self.exec_time = time.time() - start
+                    # NOTE iter_count is interpreted as the number of times the MICS
+                    # solver attempted numerical convergence. The number of iterations
+                    # performed in the previous iteration is set as a hyperparameter
+                    self.iter_count = i
                     return IkResult.SUCCESS
             except Exception as e:
                 self.exec_time = time.time() - start

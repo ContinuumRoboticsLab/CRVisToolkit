@@ -158,15 +158,19 @@ def import_test_results(path: str) -> list[IkTestSetResult]:
     return [IkTestSetResult(**result) for result in data]
 
 
-def get_test_results(path: str) -> list[IkTestResult]:
+def get_test_results(
+    path: str, use_starters: list[str] | None = None
+) -> list[IkTestResult]:
     """
     returns each individual starting position/target position pair as a single test, and
     outputs the results of the test. Used for determining performance metrics
     """
     test_set_results = import_test_results(path)
     test_results = []
+    if use_starters is None:
+        use_starters = STARTING_POSITION_VARS
     for test_set in test_set_results:
-        for varname in STARTING_POSITION_VARS:
+        for varname in use_starters:
             test_result = getattr(test_set, varname)
             if test_result is None:
                 continue
