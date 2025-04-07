@@ -22,11 +22,17 @@ from common.utils import up_vee
 
 @dataclass
 class NewtonRaphsonIkSettings(CcIkSettings):
-    position_tolerance: float = 1e-4
-    orientation_tolerance: float = 1e-4
-    exponential_coord_tolerance: float = 1e-2
+    position_tolerance: float = 1e-5
+    orientation_tolerance: float = 1e-2
     max_iter: int = 100
     clamp_theta: bool = False
+
+    @property
+    def exponential_coord_tolerance(self):
+        """
+        the tolerance for the exponential coordinates
+        """
+        return np.sqrt(self.position_tolerance**2 + self.orientation_tolerance**2)
 
 
 class NewtonRaphsonIkSolver(IterativeIkSolver):
@@ -146,7 +152,6 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
         vee = up_vee(logm(np.linalg.inv(pose) @ self.ik_target.pose.A))
 
         error = np.linalg.norm(vee)
-        # print(f"Error: {error}")
         if error < self.settings.exponential_coord_tolerance:
             self.solved = True
             return
