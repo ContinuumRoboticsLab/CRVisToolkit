@@ -81,32 +81,9 @@ class ParamableCoord(Enum):
     parameterized, but does not specify the parameter value.
     """
 
-    # in euclidian coordinates
     X = "x"
     Y = "y"
     Z = "z"
-
-    # in curvature parameters
-    KAPPA = "kappa"
-    PHI = "phi"
-    LENGTH = "length"
-
-    # the parameter's value can be set here
-    value: float
-
-    def is_euclidian(self) -> bool:
-        return self in {
-            ParamableCoord.X,
-            ParamableCoord.Y,
-            ParamableCoord.Z,
-        }
-
-    def is_curvatute_param(self) -> bool:
-        return self in {
-            ParamableCoord.KAPPA,
-            ParamableCoord.PHI,
-            ParamableCoord.LENGTH,
-        }
 
 
 @dataclass

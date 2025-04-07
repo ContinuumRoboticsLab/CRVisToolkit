@@ -5,7 +5,12 @@ from common.types import CrBackbone
 
 
 def draw_backbone(
-    backbone: CrBackbone, axes, start_ind: int = None, end_ind: int = None
+    backbone: CrBackbone,
+    axes,
+    start_ind: int = None,
+    end_ind: int = None,
+    color=None,
+    label=None,
 ):
     points = backbone.points
 
@@ -18,7 +23,7 @@ def draw_backbone(
     y_vals = [point[1] for point in points]
     z_vals = [point[2] for point in points]
 
-    axes.plot(x_vals, y_vals, z_vals)
+    axes.plot(x_vals, y_vals, z_vals, color=color, label=label)
 
 
 if __name__ == "__main__":
