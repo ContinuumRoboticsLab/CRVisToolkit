@@ -49,13 +49,6 @@ class MicsSolverSettings(CcIkSettings):
     num_r1_corrections = 2
     num_r3_corrrections = 1
 
-    @property
-    def pose_tolerance(self):
-        res = np.linalg.norm(
-            np.array([self.position_tolerance, self.orientation_tolerance])
-        )
-        return res
-
 
 class MicsSolver(CcIkSolver):
     target_type = IkTargetType.SE3

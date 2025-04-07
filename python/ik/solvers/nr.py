@@ -22,7 +22,7 @@ from common.utils import up_vee
 
 @dataclass
 class NewtonRaphsonIkSettings(CcIkSettings):
-    position_tolerance: float = 1e-5
+    position_tolerance: float = 1e-3
     orientation_tolerance: float = 1e-2
     max_iter: int = 100
     clamp_theta: bool = False
@@ -151,8 +151,12 @@ class NewtonRaphsonIkSolver(IterativeIkSolver):
         pose = self.cr.t_matrix()
         vee = up_vee(logm(np.linalg.inv(pose) @ self.ik_target.pose.A))
 
-        error = np.linalg.norm(vee)
-        if error < self.settings.exponential_coord_tolerance:
+        lin_error = np.linalg.norm(vee[:3])
+        ang_error = np.linalg.norm(vee[3:])
+        if (
+            lin_error < self.settings.position_tolerance
+            and ang_error < self.settings.orientation_tolerance
+        ):
             self.solved = True
             return
         else:
