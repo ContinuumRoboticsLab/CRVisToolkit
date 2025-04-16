@@ -141,11 +141,13 @@ class TestRunner:
 
     def save_results(self, path, compress=False):
         results = [r.as_dict() for r in self.results]
-        with open(path, "w") as f:
-            output = json.dumps(results, indent=4)
-            if compress:
-                output = str(gzip.compress(bytes(output, "utf-8")))
-            f.write(output)
+        if compress:
+            with gzip.open(path, "wt", encoding="utf-8") as f:
+                json.dump(results, f)
+        else:
+            with open(path, "w") as f:
+                output = json.dumps(results, indent=4)
+                f.write(output)
 
 
 if __name__ == "__main__":

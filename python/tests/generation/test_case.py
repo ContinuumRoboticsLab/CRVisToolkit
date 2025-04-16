@@ -158,8 +158,13 @@ def import_tests(path: str, decompress: bool) -> list[IkTestCase]:
 
 
 def import_test_results(path: str) -> list[IkTestSetResult]:
-    with open(path, "r") as f:
-        data = json.load(f)
+    compressed = path[-3:] == ".gz"
+    if not compressed:
+        with open(path, "r") as f:
+            data = json.load(f)
+    else:
+        with gzip.open(path, "rt", encoding="utf-8") as f:
+            data = json.load(f)
 
     return [IkTestSetResult(**result) for result in data]
 
@@ -171,6 +176,7 @@ def get_test_results(
     returns each individual starting position/target position pair as a single test, and
     outputs the results of the test. Used for determining performance metrics
     """
+
     test_set_results = import_test_results(path)
     test_results = []
     if use_starters is None:
