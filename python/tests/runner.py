@@ -5,6 +5,7 @@ from ik.solvers.base_solver import CcIkSettings, CcIkSolver
 
 from tqdm import tqdm
 import json
+import gzip
 
 
 class GenerativeTestRunner:
@@ -138,10 +139,13 @@ class TestRunner:
                 if fail_on_error:
                     raise e
 
-    def save_results(self, path):
+    def save_results(self, path, compress=False):
         results = [r.as_dict() for r in self.results]
         with open(path, "w") as f:
-            json.dump(results, f, indent=4)
+            output = json.dumps(results, indent=4)
+            if compress:
+                output = str(gzip.compress(bytes(output, "utf-8")))
+            f.write(output)
 
 
 if __name__ == "__main__":

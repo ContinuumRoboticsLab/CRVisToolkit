@@ -13,27 +13,37 @@ from tests.runner import TestRunner
 
 
 TEST_RESULT_DIR = "tests/results"
-TEST_RESULT_FILEPATH_FORMATTER = "tests/results/{solver}/res_{n}seg_{prefix}ext.json"
-TEST_CASE_FORMATTER = "tests/export/tests_{n}seg_{prefix}ext.json"
+TEST_RESULT_FILEPATH_FORMATTER = (
+    "tests/results/{solver}/res_{n}seg_{prefix}ext.json{gzip_extension}"
+)
+TEST_CASE_FORMATTER = "tests/export/tests_{n}seg_{prefix}ext.json{gzip_extension}"
 
 
-def get_solver_test_filepaths(solver_type: IkSolverType):
+def get_solver_test_filepaths(solver_type: IkSolverType, compress_out=True):
     """
     returns the filepaths for the test cases that are applicable to the given solver,
     and the destination file paths
     """
     for robot_type in solver_type.applicable_robots():
         n, ext = robot_type.as_filepath_params()
+        gzip_ext = ".gz" if compress_out else ""
         yield (
-            TEST_CASE_FORMATTER.format(n=n, prefix="" if ext else "in"),
+            TEST_CASE_FORMATTER.format(
+                n=n, prefix="" if ext else "in", gzip_extension=gzip_ext
+            ),
             TEST_RESULT_FILEPATH_FORMATTER.format(
-                solver=solver_type.value, n=n, prefix="" if ext else "in"
+                solver=solver_type.value,
+                n=n,
+                prefix="" if ext else "in",
+                gzip_extension=gzip_ext,
             ),
         )
 
 
-def run_json_tests(filepath: str, solver_type: IkSolverType, outfile: str):
-    tests = import_tests(filepath)
+def run_json_tests(
+    filepath: str, solver_type: IkSolverType, outfile: str, compress_out=True
+):
+    tests = import_tests(filepath, decompress=compress_out)
     solver_class = solver_type.solver_class()
 
     print(f"Running {filepath} tests for {solver_type} solver")
@@ -43,27 +53,31 @@ def run_json_tests(filepath: str, solver_type: IkSolverType, outfile: str):
 
     runner.run()
     duration = time.time() - start
-    runner.save_results(outfile)
+    runner.save_results(outfile, compress=compress_out)
 
     print(f"Results saved to {outfile} after {duration:.2f} seconds")
 
 
-def run_all_for_solver(solver_type: IkSolverType):
+def run_all_for_solver(solver_type: IkSolverType, compress_out=True):
     print(f"Running all test files for {solver_type} solver")
     start = time.time()
-    for test_filepath, results_filepath in get_solver_test_filepaths(solver_type):
-        run_json_tests(test_filepath, solver_type, results_filepath)
+    for test_filepath, results_filepath in get_solver_test_filepaths(
+        solver_type, compress_out=compress_out
+    ):
+        run_json_tests(
+            test_filepath, solver_type, results_filepath, compress_out=compress_out
+        )
     duration = time.time() - start
     print(
         f"Finished running all tests for {solver_type} after {duration:.2f} seconds\n"
     )
 
 
-def run_all():
+def run_all(compressed_run=True):
     print("Running all tests for all solvers")
     start = time.time()
     for solver_type in IkSolverType:
-        run_all_for_solver(solver_type)
+        run_all_for_solver(solver_type, compress_out=compressed_run)
     duration = time.time() - start
     print(f"Finished running all tests for all solvers after {duration:.2f} seconds")
 
@@ -78,12 +92,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "-s", "--solver", type=str, required=False, help="Solver to test [solver]"
     )
-    parser.add_argument(
-        "-a",
-        "--all",
-        required=False,
-        action="store_true",
-    )
+    parser.add_argument("-a", "--all", required=False, action="store_true")
+    parser.add_argument("-c", "--compressed", required=False, action="store_true")
     parser.add_argument(
         "-o",
         "--output",
@@ -98,7 +108,7 @@ if __name__ == "__main__":
         print("Please provide a file to run or use the --all flag")
 
     if args.all:
-        run_all()
+        run_all(args.compressed)
         exit()
 
     if args.solver:
@@ -111,4 +121,4 @@ if __name__ == "__main__":
     else:
         output = "results.json"
 
-    run_json_tests(args.file, solver, output)
+    run_json_tests(args.file, solver, output, args.compressed)

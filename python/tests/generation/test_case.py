@@ -9,6 +9,7 @@ from tests.generation.uniform import UNIFORM_TEST_NAME
 from dataclasses import dataclass, asdict, make_dataclass
 from typing import Optional
 import json
+import gzip
 from copy import copy
 
 
@@ -144,9 +145,14 @@ utility function for importing serialized JSON files
 """
 
 
-def import_tests(path: str) -> list[IkTestCase]:
-    with open(path, "r") as f:
-        data = json.load(f)
+def import_tests(path: str, decompress: bool) -> list[IkTestCase]:
+    if decompress:
+        with gzip.open(path, "rt", encoding="utf-8") as f:
+            data = json.load(f)
+
+    else:
+        with open(path, "r") as f:
+            data = json.load(f)
 
     return [IkTestCase.from_dict(test) for test in data]
 

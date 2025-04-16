@@ -15,12 +15,14 @@ from tests.generation.perturbation import PERTURBATION_VALUES
 
 import os
 import json
+import gzip
 
 NUM_CASES = 10000
+NUM_UNCOMPRESSED = 100
 SEED = 0
 
 OUTPUT_DIRECTORY = "tests/export"
-TESTCASE_FILENAME_FORMATTER = "tests_{n}seg_{prefix}ext.json"
+TESTCASE_FILENAME_FORMATTER = "tests_{n}seg_{prefix}ext.json{zip_extension}"
 
 
 TESTCASE_TYPES = ["normal"] + [
@@ -41,14 +43,25 @@ def tests_to_str(tests: list[IkTestCase]) -> str:
 
 
 def generate_tests_to_json(
-    filepath: str, n: int, extensible: bool, limit_kwargs: dict, seed
+    filepath: str,
+    compressed_filepath: str,
+    n: int,
+    extensible: bool,
+    limit_kwargs: dict,
+    seed,
 ) -> list[IkTestCase]:
     cases = generate_tests(n, extensible, limit_kwargs, seed)
-    serialized = tests_to_str(cases)
+    uncompressed_serialized = tests_to_str(cases[:NUM_UNCOMPRESSED])
 
     with open(filepath, "w") as f:
-        f.write(serialized)
-    print(f"wrote {NUM_CASES} tests to {filepath}")
+        f.write(uncompressed_serialized)
+    print(f"wrote {NUM_UNCOMPRESSED} tests to {filepath}")
+
+    # compress full set and export
+    full_serialized = tests_to_str(cases)
+    with gzip.open(compressed_filepath, "wt", encoding="utf-8") as f:
+        f.write(full_serialized)
+    print(f"wrote {NUM_CASES} tests to {compressed_filepath}")
 
 
 if __name__ == "__main__":
@@ -58,9 +71,20 @@ if __name__ == "__main__":
         for extensible in [True, False]:
             prefix = "" if extensible else "in"
 
-            normal_filename = TESTCASE_FILENAME_FORMATTER.format(n=n, prefix=prefix)
+            normal_filename = TESTCASE_FILENAME_FORMATTER.format(
+                n=n, prefix=prefix, zip_extension=""
+            )
+            compressed_filename = TESTCASE_FILENAME_FORMATTER.format(
+                n=n, prefix=prefix, zip_extension=".gz"
+            )
             normal_filepath = os.path.join(OUTPUT_DIRECTORY, normal_filename)
+            compressed_filepath = os.path.join(OUTPUT_DIRECTORY, compressed_filename)
 
             generate_tests_to_json(
-                normal_filepath, n, extensible, limit_kwargs, seed=SEED
+                normal_filepath,
+                compressed_filepath,
+                n,
+                extensible,
+                limit_kwargs,
+                seed=SEED,
             )
