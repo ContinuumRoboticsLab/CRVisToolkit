@@ -5,34 +5,34 @@
                 "kappa": 24.511270406487125,
                 "phi": -1.4464727375963786,
                 "length": 0.0408194704787239,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 0.4456527245427532,
                 "phi": 1.968334964119786,
                 "length": 0.05825511154555443,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 0.0009090900421142578,
+            "exec_time": 9.489059448242188e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 24.51127040648712,
                     "phi": -1.4464727375963786,
                     "length": 0.04081947047872389,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 0.4456527245426916,
                     "phi": 1.9683349641197951,
                     "length": 0.05825511154555915,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -46,34 +46,34 @@
                 "kappa": 24.669917406672134,
                 "phi": -2.930568260297326,
                 "length": 0.05459310892859888,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 5.428357541421279,
                 "phi": 2.281920468786123,
                 "length": 0.05082922440498183,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 2.5272369384765625e-05,
+            "exec_time": 2.47955322265625e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 24.669917406672127,
                     "phi": -2.930568260297326,
                     "length": 0.05459310892859888,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 5.428357541421289,
                     "phi": 2.281920468786127,
                     "length": 0.0508292244049818,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -87,34 +87,34 @@
                 "kappa": 16.125741829700846,
                 "phi": -0.7308754819569286,
                 "length": 0.05994419871578422,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 29.06463346061708,
                 "phi": 1.1657946707540436,
                 "length": 0.05300918552535633,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 2.193450927734375e-05,
+            "exec_time": 2.09808349609375e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 16.125741829700846,
                     "phi": -0.7308754819569286,
                     "length": 0.05994419871578423,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 29.06463346061709,
                     "phi": 1.1657946707540436,
                     "length": 0.05300918552535632,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -128,34 +128,34 @@
                 "kappa": 13.005062687888135,
                 "phi": 2.447224238106835,
                 "length": 0.05868087031912499,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 12.102820746412146,
                 "phi": 0.44943518146627676,
                 "length": 0.04643738782151884,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 2.002716064453125e-05,
+            "exec_time": 1.8835067749023438e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 13.005062687888138,
                     "phi": 2.447224238106835,
                     "length": 0.05868087031912499,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 12.102820746412148,
                     "phi": 0.44943518146627615,
                     "length": 0.046437387821518857,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -169,34 +169,34 @@
                 "kappa": 2.3675338745502277,
                 "phi": 2.0900648210551056,
                 "length": 0.05574196614977366,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 9.132577486948378,
                 "phi": 2.365520187414622,
                 "length": 0.04117136069610389,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 2.002716064453125e-05,
+            "exec_time": 1.8835067749023438e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 2.3675338745502272,
                     "phi": 2.0900648210551056,
                     "length": 0.05574196614977367,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 9.132577486948385,
                     "phi": 2.365520187414622,
                     "length": 0.04117136069610388,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -210,34 +210,34 @@
                 "kappa": 15.197121088052663,
                 "phi": -1.8942984090457529,
                 "length": 0.04181506091238244,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 17.058116161612485,
                 "phi": -1.2648295005505765,
                 "length": 0.05343989755912719,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 2.0265579223632812e-05,
+            "exec_time": 1.9073486328125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 15.19712108805266,
                     "phi": -1.8942984090457529,
                     "length": 0.04181506091238245,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 17.05811616161249,
                     "phi": -1.2648295005505765,
                     "length": 0.05343989755912719,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -251,34 +251,34 @@
                 "kappa": 13.835432925733361,
                 "phi": 2.8562763107411544,
                 "length": 0.04999791627375294,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 11.150685141420718,
                 "phi": 0.75532339542836,
                 "length": 0.05990193010470648,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8835067749023438e-05,
+            "exec_time": 1.7881393432617188e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 13.835432925733357,
                     "phi": 2.8562763107411544,
                     "length": 0.04999791627375294,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 11.150685141420709,
                     "phi": 0.7553233954283607,
                     "length": 0.059901930104706486,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -292,34 +292,34 @@
                 "kappa": 12.012275161515266,
                 "phi": 1.4733037330379342,
                 "length": 0.054222857559794994,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 26.82425470868064,
                 "phi": -2.41944962084375,
                 "length": 0.054580302341526186,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9073486328125e-05,
+            "exec_time": 2.09808349609375e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 12.012275161515266,
                     "phi": 1.4733037330379342,
                     "length": 0.054222857559794994,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 26.824254708680638,
                     "phi": -2.41944962084375,
                     "length": 0.05458030234152619,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -333,34 +333,34 @@
                 "kappa": 4.04296150326816,
                 "phi": 2.9696144187621067,
                 "length": 0.05779871111441041,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 28.932929982093558,
                 "phi": -0.1257395830967873,
                 "length": 0.044647458392786075,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 2.002716064453125e-05,
+            "exec_time": 2.193450927734375e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 4.042961503268161,
                     "phi": 2.9696144187621067,
                     "length": 0.057798711114410393,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 28.932929982093558,
                     "phi": -0.12573958309678726,
                     "length": 0.044647458392786075,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -374,34 +374,34 @@
                 "kappa": 1.2170044274455403,
                 "phi": 1.457737919723935,
                 "length": 0.052287464938979934,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 1.1050692985492727,
                 "phi": 1.3773984556682215,
                 "length": 0.04031983459047144,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9788742065429688e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 1.2170044274455247,
                     "phi": 1.457737919723935,
                     "length": 0.052287464938980274,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 1.1050692985492885,
                     "phi": 1.3773984556682233,
                     "length": 0.04031983459047077,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -415,34 +415,34 @@
                 "kappa": 9.117153236411337,
                 "phi": -0.43794598331715967,
                 "length": 0.0593212416156814,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 19.698471706385696,
                 "phi": -1.5150984452291705,
                 "length": 0.0448335142818869,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9073486328125e-05,
+            "exec_time": 1.6689300537109375e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 9.117153236411335,
                     "phi": -0.4379459833171597,
                     "length": 0.059321241615681426,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 19.698471706385693,
                     "phi": -1.515098445229171,
                     "length": 0.044833514281886894,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -456,34 +456,34 @@
                 "kappa": 27.789698516804012,
                 "phi": 0.37998161308296463,
                 "length": 0.04576842428862421,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 12.346744005965087,
                 "phi": 1.998813010710128,
                 "length": 0.05253012924839507,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 2.0265579223632812e-05,
+            "exec_time": 1.7881393432617188e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 27.78969851680401,
                     "phi": 0.3799816130829647,
                     "length": 0.0457684242886242,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 12.346744005965084,
                     "phi": 1.998813010710127,
                     "length": 0.05253012924839507,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -497,34 +497,34 @@
                 "kappa": 15.62711792112716,
                 "phi": 2.5758481244631435,
                 "length": 0.04086133777136408,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 22.833807741867204,
                 "phi": -0.5316577731419783,
                 "length": 0.056596079705562054,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 2.002716064453125e-05,
+            "exec_time": 1.811981201171875e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 15.627117921127168,
                     "phi": 2.5758481244631435,
                     "length": 0.04086133777136408,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 22.83380774186722,
                     "phi": -0.5316577731419783,
                     "length": 0.05659607970556204,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -538,34 +538,34 @@
                 "kappa": 25.87494845664868,
                 "phi": -2.3447772999628302,
                 "length": 0.05729556590801548,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 1.922114331578619,
                 "phi": -0.7491409903635101,
                 "length": 0.04859548122357153,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 2.002716064453125e-05,
+            "exec_time": 1.8835067749023438e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 25.87494845664868,
                     "phi": -2.3447772999628302,
                     "length": 0.05729556590801549,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 1.9221143315785991,
                     "phi": -0.7491409903635067,
                     "length": 0.04859548122357129,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -579,34 +579,34 @@
                 "kappa": 29.526011830130454,
                 "phi": 0.06727095832306877,
                 "length": 0.0468859146192465,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 35.799781296064886,
                 "phi": -1.1564608114372321,
                 "length": 0.04365424757853125,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8835067749023438e-05,
+            "exec_time": 1.7881393432617188e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 29.52601183013046,
                     "phi": 0.06727095832306877,
                     "length": 0.0468859146192465,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 35.799781296064886,
                     "phi": -1.1564608114372326,
                     "length": 0.04365424757853126,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -620,34 +620,34 @@
                 "kappa": 31.570082581740976,
                 "phi": -1.5887238860805988,
                 "length": 0.04282493113802063,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 24.284840431210498,
                 "phi": 1.3484880361575258,
                 "length": 0.04334105857564544,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8358230590820312e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 31.570082581740976,
                     "phi": -1.5887238860805988,
                     "length": 0.04282493113802063,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 24.284840431210505,
                     "phi": 1.3484880361575255,
                     "length": 0.04334105857564544,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -661,34 +661,34 @@
                 "kappa": 13.786471299465239,
                 "phi": -2.5827935455098077,
                 "length": 0.05963885386253412,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 16.185713467574967,
                 "phi": -3.1013244561979616,
                 "length": 0.05545298402450777,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.811981201171875e-05,
+            "exec_time": 1.621246337890625e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 13.78647129946524,
                     "phi": -2.5827935455098077,
                     "length": 0.059638853862534126,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 16.18571346757496,
                     "phi": -3.1013244561979616,
                     "length": 0.055452984024507754,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -702,34 +702,34 @@
                 "kappa": 15.315672189212824,
                 "phi": 0.6423876908466067,
                 "length": 0.05924846186248762,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 2.068330562346909,
                 "phi": -0.00017075398887111395,
                 "length": 0.05488194958565296,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8835067749023438e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 15.315672189212822,
                     "phi": 0.6423876908466067,
                     "length": 0.05924846186248762,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 2.0683305623469233,
                     "phi": -0.00017075398887342794,
                     "length": 0.0548819495856532,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -743,34 +743,34 @@
                 "kappa": 23.55482743037389,
                 "phi": -0.1740421171461502,
                 "length": 0.05825243867281771,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 28.276254899898408,
                 "phi": 2.609557403893888,
                 "length": 0.04254806018097813,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8835067749023438e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 23.55482743037389,
                     "phi": -0.1740421171461502,
                     "length": 0.05825243867281771,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 28.27625489989841,
                     "phi": 2.609557403893888,
                     "length": 0.04254806018097813,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -784,34 +784,34 @@
                 "kappa": 19.51945609175595,
                 "phi": -1.143430474849443,
                 "length": 0.0542175972653189,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 12.960772525380918,
                 "phi": 0.04693451802005343,
                 "length": 0.05579331464919741,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9073486328125e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 19.519456091755945,
                     "phi": -1.143430474849443,
                     "length": 0.054217597265318905,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 12.960772525380914,
                     "phi": 0.04693451802005323,
                     "length": 0.05579331464919741,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -825,34 +825,34 @@
                 "kappa": 5.129868158469502,
                 "phi": 2.909235058171722,
                 "length": 0.05601834073217218,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 14.521822967320702,
                 "phi": 1.969992625353787,
                 "length": 0.05205697810482233,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9073486328125e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 5.129868158469499,
                     "phi": 2.909235058171722,
                     "length": 0.056018340732172184,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 14.521822967320702,
                     "phi": 1.9699926253537872,
                     "length": 0.05205697810482234,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -866,34 +866,34 @@
                 "kappa": 31.410008585094833,
                 "phi": 1.7667720311647503,
                 "length": 0.04971070277559175,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 15.906133829654369,
                 "phi": 2.3720840744092544,
                 "length": 0.04173629744429788,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9073486328125e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 31.410008585094836,
                     "phi": 1.7667720311647503,
                     "length": 0.04971070277559176,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 15.906133829654364,
                     "phi": 2.372084074409255,
                     "length": 0.041736297444297875,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -907,34 +907,34 @@
                 "kappa": 11.196776621157866,
                 "phi": -0.5186888084773784,
                 "length": 0.05082819967260329,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 4.4216635292107185,
                 "phi": -0.5846642118238574,
                 "length": 0.04000601380213846,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.811981201171875e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 11.196776621157866,
                     "phi": -0.5186888084773783,
                     "length": 0.050828199672603304,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 4.421663529210707,
                     "phi": -0.5846642118238593,
                     "length": 0.04000601380213853,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -948,34 +948,34 @@
                 "kappa": 22.240966181597035,
                 "phi": -0.4768530155683985,
                 "length": 0.059593774170193126,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 27.78211060317944,
                 "phi": 0.023103141687882706,
                 "length": 0.055068930771678105,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8358230590820312e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 22.240966181597038,
                     "phi": -0.4768530155683985,
                     "length": 0.05959377417019311,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 27.782110603179426,
                     "phi": 0.02310314168788295,
                     "length": 0.05506893077167812,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -989,34 +989,34 @@
                 "kappa": 18.74293097671335,
                 "phi": -2.5519461643876293,
                 "length": 0.04782760852609328,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 2.384810043678519,
                 "phi": -0.14974738654044395,
                 "length": 0.04857079216285848,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.811981201171875e-05,
+            "exec_time": 1.7881393432617188e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 18.74293097671335,
                     "phi": -2.5519461643876293,
                     "length": 0.04782760852609329,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 2.3848100436785042,
                     "phi": -0.14974738654044742,
                     "length": 0.048570792162858666,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1030,34 +1030,34 @@
                 "kappa": 34.523073734741445,
                 "phi": 0.5235152946230978,
                 "length": 0.040804364418092015,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 19.77384655930492,
                 "phi": 0.4337022333230514,
                 "length": 0.056519144443407984,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 34.523073734741445,
                     "phi": 0.5235152946230978,
                     "length": 0.04080436441809201,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 19.773846559304918,
                     "phi": 0.4337022333230516,
                     "length": 0.056519144443408005,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1071,34 +1071,34 @@
                 "kappa": 22.849970019179043,
                 "phi": -0.38183588244949823,
                 "length": 0.0517676021885843,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 4.386995393609577,
                 "phi": 1.4207759215082476,
                 "length": 0.04560164803732999,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9073486328125e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 22.849970019179043,
                     "phi": -0.38183588244949823,
                     "length": 0.0517676021885843,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 4.386995393609582,
                     "phi": 1.4207759215082476,
                     "length": 0.045601648037329974,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1112,34 +1112,34 @@
                 "kappa": 25.133583534892537,
                 "phi": -1.0808191495257249,
                 "length": 0.04350819499970162,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 22.74718092353847,
                 "phi": -0.8619151028055592,
                 "length": 0.046597916649878716,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8835067749023438e-05,
+            "exec_time": 1.7881393432617188e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 25.133583534892537,
                     "phi": -1.0808191495257249,
                     "length": 0.04350819499970163,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 22.747180923538465,
                     "phi": -0.861915102805559,
                     "length": 0.046597916649878716,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1153,34 +1153,34 @@
                 "kappa": 27.891409375857194,
                 "phi": 0.357107916033583,
                 "length": 0.0444490679198272,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 16.146515127597226,
                 "phi": -3.0652737791794697,
                 "length": 0.05425987261875841,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9311904907226562e-05,
+            "exec_time": 1.811981201171875e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 27.89140937585719,
                     "phi": 0.357107916033583,
                     "length": 0.0444490679198272,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 16.14651512759722,
                     "phi": -3.06527377917947,
                     "length": 0.05425987261875842,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1194,34 +1194,34 @@
                 "kappa": 10.588937278471345,
                 "phi": 3.091473120613998,
                 "length": 0.05847490714750362,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 4.427937785558789,
                 "phi": 0.5652390739606993,
                 "length": 0.05392430212206913,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8835067749023438e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 10.588937278471345,
                     "phi": 3.091473120613998,
                     "length": 0.05847490714750363,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 4.427937785558783,
                     "phi": 0.5652390739606996,
                     "length": 0.05392430212206918,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1235,34 +1235,34 @@
                 "kappa": 26.061412707181823,
                 "phi": 0.5339619277587233,
                 "length": 0.04953176843411541,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 9.969800867395382,
                 "phi": -2.685066784918731,
                 "length": 0.04035782841793951,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 26.06141270718182,
                     "phi": 0.5339619277587234,
                     "length": 0.0495317684341154,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 9.969800867395378,
                     "phi": -2.6850667849187304,
                     "length": 0.04035782841793952,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1276,34 +1276,34 @@
                 "kappa": 6.901565130965448,
                 "phi": 1.5629783164215303,
                 "length": 0.0528740952416062,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 24.22740827191313,
                 "phi": -2.621291026208472,
                 "length": 0.0470548683139281,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.811981201171875e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 6.9015651309654515,
                     "phi": 1.5629783164215303,
                     "length": 0.05287409524160619,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 24.227408271913134,
                     "phi": -2.621291026208472,
                     "length": 0.0470548683139281,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1317,34 +1317,34 @@
                 "kappa": 27.984865307910276,
                 "phi": 2.024047464730263,
                 "length": 0.04782587514156216,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 13.676009598470966,
                 "phi": 2.0357633973255993,
                 "length": 0.053613726511404246,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.5974044799804688e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 27.98486530791028,
                     "phi": 2.024047464730263,
                     "length": 0.04782587514156216,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 13.676009598470959,
                     "phi": 2.0357633973255993,
                     "length": 0.053613726511404246,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1358,34 +1358,34 @@
                 "kappa": 24.224600027698727,
                 "phi": -2.5969578377896116,
                 "length": 0.048517124805880434,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 10.606476110436574,
                 "phi": -1.8713330559425263,
                 "length": 0.05875810217271978,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.5735626220703125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 24.22460002769873,
                     "phi": -2.5969578377896116,
                     "length": 0.048517124805880434,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 10.606476110436569,
                     "phi": -1.8713330559425265,
                     "length": 0.05875810217271977,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1399,34 +1399,34 @@
                 "kappa": 4.5958188056718505,
                 "phi": 0.5427312097275123,
                 "length": 0.05916818670358784,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 21.85806160750311,
                 "phi": 3.0191206496240786,
                 "length": 0.05149113298178079,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.6689300537109375e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 4.595818805671852,
                     "phi": 0.5427312097275123,
                     "length": 0.059168186703587825,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 21.858061607503107,
                     "phi": 3.0191206496240786,
                     "length": 0.0514911329817808,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1440,34 +1440,34 @@
                 "kappa": 14.938090617838041,
                 "phi": -1.7184486953680036,
                 "length": 0.05555088247763411,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 5.267534176682521,
                 "phi": 0.485049018816946,
                 "length": 0.05071797859158229,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9311904907226562e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 14.938090617838041,
                     "phi": -1.7184486953680036,
                     "length": 0.0555508824776341,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 5.267534176682531,
                     "phi": 0.4850490188169477,
                     "length": 0.0507179785915823,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1481,34 +1481,34 @@
                 "kappa": 19.94427028001039,
                 "phi": 0.5370840773149367,
                 "length": 0.054657721537174304,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 17.86043566098255,
                 "phi": -0.2333084361023479,
                 "length": 0.045735377308970704,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8835067749023438e-05,
+            "exec_time": 1.5735626220703125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 19.944270280010386,
                     "phi": 0.5370840773149368,
                     "length": 0.0546577215371743,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 17.86043566098255,
                     "phi": -0.23330843610234786,
                     "length": 0.04573537730897071,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1522,14 +1522,14 @@
                 "kappa": 16.7791167910038,
                 "phi": 2.1436679559991707,
                 "length": 0.0497304086660631,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 17.336861717712257,
                 "phi": -1.5188067378019912,
                 "length": 0.043122709627813845,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
@@ -1542,14 +1542,14 @@
                     "kappa": 16.7791167910038,
                     "phi": 2.1436679559991707,
                     "length": 0.0497304086660631,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 17.33686171771226,
                     "phi": -1.5188067378019912,
                     "length": 0.04312270962781383,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1563,34 +1563,34 @@
                 "kappa": 33.979267209991676,
                 "phi": -0.7057637410573815,
                 "length": 0.04329565304132007,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 33.625594528563965,
                 "phi": 2.4801522919646546,
                 "length": 0.04096531190003791,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 33.979267209991676,
                     "phi": -0.7057637410573815,
                     "length": 0.043295653041320055,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 33.625594528563965,
                     "phi": 2.4801522919646546,
                     "length": 0.04096531190003791,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1604,34 +1604,34 @@
                 "kappa": 17.924128818324533,
                 "phi": 1.982410351382157,
                 "length": 0.04434134362144252,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 2.692244679917239,
                 "phi": 0.32072516757353575,
                 "length": 0.04383634296270509,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 17.92412881832453,
                     "phi": 1.982410351382157,
                     "length": 0.04434134362144253,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 2.692244679917228,
                     "phi": 0.3207251675735397,
                     "length": 0.04383634296270519,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1645,34 +1645,34 @@
                 "kappa": 11.215445962286962,
                 "phi": 0.48322497323790914,
                 "length": 0.050556401562249546,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 10.430300850611175,
                 "phi": 0.8634414776475725,
                 "length": 0.0535153488389492,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 11.215445962286955,
                     "phi": 0.48322497323790914,
                     "length": 0.05055640156224957,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 10.43030085061119,
                     "phi": 0.8634414776475723,
                     "length": 0.0535153488389492,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1686,34 +1686,34 @@
                 "kappa": 16.417589380625525,
                 "phi": 0.7058639638794324,
                 "length": 0.05221596877843617,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 10.07044433444146,
                 "phi": 0.41326964741696803,
                 "length": 0.05971539270392838,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8835067749023438e-05,
+            "exec_time": 2.288818359375e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 16.417589380625525,
                     "phi": 0.7058639638794324,
                     "length": 0.052215968778436164,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 10.070444334441454,
                     "phi": 0.41326964741696837,
                     "length": 0.059715392703928366,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1727,34 +1727,34 @@
                 "kappa": 0.4354412548005135,
                 "phi": -0.10676128705842228,
                 "length": 0.043654245153245556,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 25.77520361192209,
                 "phi": 2.4988129642188937,
                 "length": 0.05921329771860543,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 0.4354412548005985,
                     "phi": -0.10676128705842228,
                     "length": 0.0436542451532413,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 25.775203611922127,
                     "phi": 2.4988129642188945,
                     "length": 0.059213297718605465,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1768,34 +1768,34 @@
                 "kappa": 13.808384949526612,
                 "phi": 1.718804474400452,
                 "length": 0.05001875913976973,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 5.593810371186078,
                 "phi": -1.2822294364602662,
                 "length": 0.05148821537605634,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9073486328125e-05,
+            "exec_time": 1.5974044799804688e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 13.808384949526614,
                     "phi": 1.718804474400452,
                     "length": 0.050018759139769726,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 5.593810371186092,
                     "phi": -1.2822294364602664,
                     "length": 0.05148821537605631,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1809,34 +1809,34 @@
                 "kappa": 18.780445490123263,
                 "phi": -0.09729742972032929,
                 "length": 0.05999002704514053,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 26.974137754333846,
                 "phi": 2.077418613890327,
                 "length": 0.04519097812277556,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9073486328125e-05,
+            "exec_time": 1.621246337890625e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 18.780445490123263,
                     "phi": -0.09729742972032929,
                     "length": 0.05999002704514054,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 26.974137754333846,
                     "phi": 2.0774186138903272,
                     "length": 0.04519097812277555,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1850,34 +1850,34 @@
                 "kappa": 27.19484750823125,
                 "phi": -1.1560747700655536,
                 "length": 0.0501612839351258,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 21.738147104654285,
                 "phi": 1.397243275081463,
                 "length": 0.042949449089307125,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 27.19484750823125,
                     "phi": -1.1560747700655536,
                     "length": 0.050161283935125804,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 21.738147104654292,
                     "phi": 1.397243275081463,
                     "length": 0.04294944908930713,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1891,34 +1891,34 @@
                 "kappa": 9.081532482121354,
                 "phi": -1.6878359046011546,
                 "length": 0.05301532669526796,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 9.155265963088771,
                 "phi": 2.27624422845523,
                 "length": 0.04541296791304217,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.811981201171875e-05,
+            "exec_time": 1.621246337890625e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 9.081532482121348,
                     "phi": -1.6878359046011546,
                     "length": 0.053015326695267956,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 9.155265963088759,
                     "phi": 2.276244228455231,
                     "length": 0.04541296791304217,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1932,34 +1932,34 @@
                 "kappa": 3.7779420999539157,
                 "phi": -2.6613121204612593,
                 "length": 0.05068462047207481,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 6.435492171884597,
                 "phi": 1.9299930252001818,
                 "length": 0.0404522106109376,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9311904907226562e-05,
+            "exec_time": 1.5735626220703125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 3.7779420999539104,
                     "phi": -2.6613121204612593,
                     "length": 0.05068462047207484,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 6.435492171884601,
                     "phi": 1.9299930252001827,
                     "length": 0.04045221061093761,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -1973,34 +1973,34 @@
                 "kappa": 30.51148521499361,
                 "phi": -0.520402521474632,
                 "length": 0.0477172988252144,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 18.043811774850273,
                 "phi": 1.0313337026153866,
                 "length": 0.05320553089855369,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.811981201171875e-05,
+            "exec_time": 1.5974044799804688e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 30.51148521499361,
                     "phi": -0.520402521474632,
                     "length": 0.0477172988252144,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 18.043811774850276,
                     "phi": 1.031333702615387,
                     "length": 0.053205530898553684,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2014,34 +2014,34 @@
                 "kappa": 2.2465644884119396,
                 "phi": -1.111786435637215,
                 "length": 0.05855117618931925,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 15.091137901807606,
                 "phi": 2.4848358427630064,
                 "length": 0.0491934990655405,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.811981201171875e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 2.24656448841193,
                     "phi": -1.111786435637215,
                     "length": 0.05855117618931937,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 15.091137901807588,
                     "phi": 2.4848358427630064,
                     "length": 0.0491934990655405,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2055,34 +2055,34 @@
                 "kappa": 0.18124717527041165,
                 "phi": 1.3896256177801647,
                 "length": 0.05353208926489159,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 19.948820004804237,
                 "phi": 1.1775631888801215,
                 "length": 0.05172528422036966,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8358230590820312e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 0.18124717527051723,
                     "phi": 1.3896256177801647,
                     "length": 0.05353208926487601,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 19.94882000480414,
                     "phi": 1.1775631888801203,
                     "length": 0.05172528422036964,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2096,34 +2096,34 @@
                 "kappa": 3.5613053045650434,
                 "phi": -0.4589389090977733,
                 "length": 0.052472344872466846,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 13.288634618368613,
                 "phi": 1.3100408899415863,
                 "length": 0.04461844190756554,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.5735626220703125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 3.561305304565042,
                     "phi": -0.45893890909777335,
                     "length": 0.05247234487246686,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 13.288634618368622,
                     "phi": 1.3100408899415863,
                     "length": 0.044618441907565524,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2137,34 +2137,34 @@
                 "kappa": 21.902111634887024,
                 "phi": -2.1115105837343426,
                 "length": 0.05378603473860368,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 10.151287867595814,
                 "phi": 2.6082671818115974,
                 "length": 0.05503079375216782,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8835067749023438e-05,
+            "exec_time": 1.621246337890625e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 21.902111634887017,
                     "phi": -2.1115105837343426,
                     "length": 0.05378603473860369,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 10.151287867595814,
                     "phi": 2.608267181811599,
                     "length": 0.05503079375216782,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2178,34 +2178,34 @@
                 "kappa": 18.593710050834275,
                 "phi": -0.2238359136942686,
                 "length": 0.04445066677544367,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 26.43692349664561,
                 "phi": -2.4057913911434476,
                 "length": 0.044946824408097115,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.811981201171875e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 18.59371005083427,
                     "phi": -0.22383591369426856,
                     "length": 0.04445066677544368,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 26.43692349664562,
                     "phi": -2.405791391143447,
                     "length": 0.0449468244080971,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2219,34 +2219,34 @@
                 "kappa": 9.957507544445683,
                 "phi": -0.7746787237901119,
                 "length": 0.049883984117640695,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 17.075112735928688,
                 "phi": 2.0261146233848444,
                 "length": 0.043463810638240855,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9073486328125e-05,
+            "exec_time": 1.6689300537109375e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 9.957507544445686,
                     "phi": -0.774678723790112,
                     "length": 0.04988398411764069,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 17.075112735928695,
                     "phi": 2.0261146233848444,
                     "length": 0.04346381063824085,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2260,34 +2260,34 @@
                 "kappa": 27.404010313404306,
                 "phi": -2.6929192057770424,
                 "length": 0.05562610530456603,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 15.7812853609735,
                 "phi": -2.3255732309436095,
                 "length": 0.04732160617341317,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9073486328125e-05,
+            "exec_time": 1.5735626220703125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 27.404010313404296,
                     "phi": -2.6929192057770424,
                     "length": 0.055626105304566034,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 15.781285360973516,
                     "phi": -2.32557323094361,
                     "length": 0.04732160617341316,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2301,34 +2301,34 @@
                 "kappa": 36.117834970140876,
                 "phi": -2.9497539900182415,
                 "length": 0.04132220517146439,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 0.9839762169077646,
                 "phi": 1.0426609129352558,
                 "length": 0.0444046538222759,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.621246337890625e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 36.117834970140876,
                     "phi": -2.9497539900182415,
                     "length": 0.04132220517146439,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 0.9839762169077196,
                     "phi": 1.042660912935262,
                     "length": 0.04440465382227701,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2342,34 +2342,34 @@
                 "kappa": 4.281410422219409,
                 "phi": -2.5921587763196525,
                 "length": 0.05474335002278841,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 26.9220041824567,
                 "phi": 2.4527172747510555,
                 "length": 0.05020178014969407,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 4.281410422219401,
                     "phi": -2.5921587763196525,
                     "length": 0.05474335002278847,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 26.922004182456703,
                     "phi": 2.452717274751056,
                     "length": 0.05020178014969407,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2383,34 +2383,34 @@
                 "kappa": 19.904787359280032,
                 "phi": -0.4056413418596321,
                 "length": 0.05965527890388331,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 16.714546929056173,
                 "phi": 2.118667145065363,
                 "length": 0.040290832627220385,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.6689300537109375e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 19.904787359280036,
                     "phi": -0.4056413418596321,
                     "length": 0.05965527890388331,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 16.714546929056183,
                     "phi": 2.118667145065363,
                     "length": 0.04029083262722038,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2424,34 +2424,34 @@
                 "kappa": 15.430396899117225,
                 "phi": 0.6116405917760039,
                 "length": 0.05716886854599023,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 14.52195182572345,
                 "phi": 2.0727680507571233,
                 "length": 0.05047793128453809,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.811981201171875e-05,
+            "exec_time": 2.5987625122070312e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 15.430396899117229,
                     "phi": 0.611640591776004,
                     "length": 0.05716886854599021,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 14.521951825723443,
                     "phi": 2.072768050757124,
                     "length": 0.050477931284538105,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2465,34 +2465,34 @@
                 "kappa": 4.30282251585023,
                 "phi": 0.7303684575472703,
                 "length": 0.04542413365523932,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 10.951452877494804,
                 "phi": -2.0493980082543994,
                 "length": 0.05524343326120775,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9311904907226562e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 4.302822515850238,
                     "phi": 0.7303684575472702,
                     "length": 0.045424133655239264,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 10.9514528774948,
                     "phi": -2.0493980082544,
                     "length": 0.05524343326120777,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2506,34 +2506,34 @@
                 "kappa": 19.27227225607313,
                 "phi": 0.41534290607134194,
                 "length": 0.05956496228039095,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 13.6446875292106,
                 "phi": 3.0641264429876602,
                 "length": 0.0483087716658627,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8835067749023438e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 19.27227225607313,
                     "phi": 0.41534290607134194,
                     "length": 0.05956496228039095,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 13.6446875292106,
                     "phi": 3.0641264429876602,
                     "length": 0.048308771665862685,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2547,34 +2547,34 @@
                 "kappa": 0.9591552009950856,
                 "phi": 3.060120748362473,
                 "length": 0.056347802861558126,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 4.3025809571309015,
                 "phi": 2.1863564106974827,
                 "length": 0.04516260403503218,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 0.9591552009950669,
                     "phi": 3.060120748362473,
                     "length": 0.05634780286155866,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 4.302580957130917,
                     "phi": 2.1863564106974867,
                     "length": 0.04516260403503216,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2588,34 +2588,34 @@
                 "kappa": 13.49516950021385,
                 "phi": -1.0940068117901962,
                 "length": 0.05468605755097815,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 30.80426320997426,
                 "phi": -1.1155119595268683,
                 "length": 0.04309623113320924,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 13.495169500213848,
                     "phi": -1.0940068117901962,
                     "length": 0.054686057550978155,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 30.804263209974255,
                     "phi": -1.1155119595268683,
                     "length": 0.043096231133209234,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2629,34 +2629,34 @@
                 "kappa": 26.502322720333158,
                 "phi": -1.904665223400844,
                 "length": 0.04591374493995398,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 17.094580385214318,
                 "phi": -0.906301324774576,
                 "length": 0.05472467631894909,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.6689300537109375e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 26.502322720333158,
                     "phi": -1.904665223400844,
                     "length": 0.04591374493995398,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 17.094580385214318,
                     "phi": -0.906301324774576,
                     "length": 0.054724676318949096,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2670,34 +2670,34 @@
                 "kappa": 9.48077108957058,
                 "phi": -3.0667615606331564,
                 "length": 0.05859815047327357,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 7.918275058065037,
                 "phi": -1.441120489877031,
                 "length": 0.04751284651410508,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 9.480771089570581,
                     "phi": -3.0667615606331564,
                     "length": 0.058598150473273554,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 7.918275058065038,
                     "phi": -1.4411204898770307,
                     "length": 0.04751284651410508,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2711,14 +2711,14 @@
                 "kappa": 2.4151519611816212,
                 "phi": 0.9926326582760194,
                 "length": 0.054332098414309526,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 12.134782220441473,
                 "phi": -1.8134205507111874,
                 "length": 0.04818502902367156,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
@@ -2731,14 +2731,14 @@
                     "kappa": 2.415151961181625,
                     "phi": 0.9926326582760194,
                     "length": 0.054332098414309485,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 12.134782220441474,
                     "phi": -1.8134205507111876,
                     "length": 0.04818502902367156,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2752,34 +2752,34 @@
                 "kappa": 25.052313523466157,
                 "phi": -2.6679112382986663,
                 "length": 0.047589730334043144,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 9.675857918178567,
                 "phi": 0.44253305139759275,
                 "length": 0.05306106436736576,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 25.052313523466157,
                     "phi": -2.6679112382986663,
                     "length": 0.04758973033404315,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 9.675857918178572,
                     "phi": 0.44253305139759247,
                     "length": 0.053061064367365726,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2793,34 +2793,34 @@
                 "kappa": 13.064163590174113,
                 "phi": 2.3197125288877185,
                 "length": 0.04876610076598948,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 28.605245353137782,
                 "phi": 0.4746308318342477,
                 "length": 0.04849235389869267,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.811981201171875e-05,
+            "exec_time": 1.5735626220703125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 13.064163590174116,
                     "phi": 2.3197125288877185,
                     "length": 0.048766100765989466,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 28.605245353137786,
                     "phi": 0.4746308318342478,
                     "length": 0.048492353898692664,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2834,34 +2834,34 @@
                 "kappa": 25.315798915477476,
                 "phi": -0.6070088715256581,
                 "length": 0.05640615588721912,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 34.59732900988071,
                 "phi": -1.7195001731595716,
                 "length": 0.04065144699629222,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.811981201171875e-05,
+            "exec_time": 1.5735626220703125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 25.315798915477476,
                     "phi": -0.607008871525658,
                     "length": 0.056406155887219124,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 34.597329009880724,
                     "phi": -1.7195001731595716,
                     "length": 0.04065144699629221,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2875,34 +2875,34 @@
                 "kappa": 16.416649343625203,
                 "phi": 0.30837835208441305,
                 "length": 0.04586816513800567,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 12.763602440910345,
                 "phi": -2.8543718984078192,
                 "length": 0.0561903929413984,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8358230590820312e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 16.4166493436252,
                     "phi": 0.3083783520844131,
                     "length": 0.045868165138005665,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 12.763602440910343,
                     "phi": -2.8543718984078192,
                     "length": 0.056190392941398395,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2916,34 +2916,34 @@
                 "kappa": 21.098839983166354,
                 "phi": -1.0891509835647517,
                 "length": 0.05713143381887956,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 0.0064852393840135435,
                 "phi": 0.8301357712927068,
                 "length": 0.04602047961961231,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9073486328125e-05,
+            "exec_time": 1.5974044799804688e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 21.098839983166354,
                     "phi": -1.0891509835647517,
                     "length": 0.05713143381887956,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 0.0064852393797390955,
                     "phi": 0.8301357712920774,
                     "length": 0.046020479634783805,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2957,34 +2957,34 @@
                 "kappa": 27.298744408229943,
                 "phi": 2.4026062562604253,
                 "length": 0.050991368100589685,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 19.79574280397354,
                 "phi": -0.30544615204565034,
                 "length": 0.05602886728741736,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8835067749023438e-05,
+            "exec_time": 1.6689300537109375e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 27.298744408229943,
                     "phi": 2.4026062562604253,
                     "length": 0.050991368100589685,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 19.795742803973532,
                     "phi": -0.3054461520456503,
                     "length": 0.056028867287417364,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -2998,34 +2998,34 @@
                 "kappa": 27.71979259593779,
                 "phi": 2.2609886979063822,
                 "length": 0.05067504187990476,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 10.941435685242833,
                 "phi": 1.3382527541251181,
                 "length": 0.05418739391024808,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.5974044799804688e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 27.71979259593779,
                     "phi": 2.2609886979063822,
                     "length": 0.05067504187990475,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 10.941435685242837,
                     "phi": 1.3382527541251188,
                     "length": 0.0541873939102481,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3039,34 +3039,34 @@
                 "kappa": 11.49933597015854,
                 "phi": 2.148320706652411,
                 "length": 0.05009779127516358,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 2.925329983468919,
                 "phi": -0.3205556277189966,
                 "length": 0.04582392795291746,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 11.499335970158544,
                     "phi": 2.148320706652411,
                     "length": 0.050097791275163575,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 2.9253299834689304,
                     "phi": -0.32055562771899554,
                     "length": 0.045823927952917384,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3080,34 +3080,34 @@
                 "kappa": 25.295626374718815,
                 "phi": 0.3179786958037238,
                 "length": 0.058432360377247576,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 9.564365016995447,
                 "phi": 1.6607701035401898,
                 "length": 0.055274509166354686,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8835067749023438e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 25.29562637471881,
                     "phi": 0.31797869580372384,
                     "length": 0.058432360377247576,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 9.56436501699545,
                     "phi": 1.6607701035401892,
                     "length": 0.055274509166354686,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3121,34 +3121,34 @@
                 "kappa": 29.393753251669267,
                 "phi": -1.28076594044532,
                 "length": 0.04857880117171577,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 18.140168947734328,
                 "phi": -0.9127697436692959,
                 "length": 0.049129992543078975,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.6689300537109375e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 29.393753251669263,
                     "phi": -1.28076594044532,
                     "length": 0.04857880117171578,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 18.140168947734328,
                     "phi": -0.9127697436692956,
                     "length": 0.04912999254307897,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3162,34 +3162,34 @@
                 "kappa": 2.6046629665801,
                 "phi": -1.6204686630831804,
                 "length": 0.05607983642118027,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 23.45071526049905,
                 "phi": -0.7053927672533115,
                 "length": 0.05628447461082453,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8358230590820312e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 2.604662966580106,
                     "phi": -1.6204686630831804,
                     "length": 0.05607983642118021,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 23.45071526049904,
                     "phi": -0.7053927672533115,
                     "length": 0.05628447461082454,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3203,34 +3203,34 @@
                 "kappa": 4.759552382552519,
                 "phi": -1.2954453792427805,
                 "length": 0.053611252195391965,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 20.041642202780253,
                 "phi": 1.1357537546393153,
                 "length": 0.055352342131274844,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.811981201171875e-05,
+            "exec_time": 1.5974044799804688e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 4.75955238255252,
                     "phi": -1.2954453792427805,
                     "length": 0.053611252195391965,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 20.04164220278025,
                     "phi": 1.1357537546393153,
                     "length": 0.055352342131274844,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3244,34 +3244,34 @@
                 "kappa": 17.76956348221956,
                 "phi": -2.658122208166533,
                 "length": 0.055395804527328285,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 4.034730582032455,
                 "phi": 1.1396093536932144,
                 "length": 0.048042841983014214,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.811981201171875e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 17.769563482219553,
                     "phi": -2.658122208166533,
                     "length": 0.055395804527328306,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 4.034730582032464,
                     "phi": 1.1396093536932137,
                     "length": 0.04804284198301416,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3285,34 +3285,34 @@
                 "kappa": 20.671764567637926,
                 "phi": 0.196631239446349,
                 "length": 0.05639373805339944,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 16.785170074239865,
                 "phi": -2.3702884389521324,
                 "length": 0.052838131293116104,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.811981201171875e-05,
+            "exec_time": 1.5735626220703125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 20.671764567637922,
                     "phi": 0.196631239446349,
                     "length": 0.05639373805339944,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 16.785170074239858,
                     "phi": -2.370288438952132,
                     "length": 0.052838131293116104,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3326,34 +3326,34 @@
                 "kappa": 16.135428795141692,
                 "phi": 1.7075955774931662,
                 "length": 0.054237765950501525,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 9.15892882785329,
                 "phi": 0.9761000669272658,
                 "length": 0.05870538122602149,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9073486328125e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 16.135428795141692,
                     "phi": 1.7075955774931662,
                     "length": 0.05423776595050153,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 9.158928827853288,
                     "phi": 0.9761000669272653,
                     "length": 0.05870538122602149,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3367,34 +3367,34 @@
                 "kappa": 10.041132369118824,
                 "phi": 1.8229267468788817,
                 "length": 0.045496149917693685,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 2.0679858434033935,
                 "phi": 1.1514943168731424,
                 "length": 0.055985399129580775,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9073486328125e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 10.041132369118818,
                     "phi": 1.8229267468788817,
                     "length": 0.0454961499176937,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 2.067985843403408,
                     "phi": 1.151494316873143,
                     "length": 0.05598539912958058,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3408,34 +3408,34 @@
                 "kappa": 2.83171947182503,
                 "phi": -0.7331258532435098,
                 "length": 0.043297274350529734,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 10.554544795788923,
                 "phi": -3.059863031360123,
                 "length": 0.056555258396622905,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8835067749023438e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 2.8317194718250454,
                     "phi": -0.7331258532435098,
                     "length": 0.04329727435052962,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 10.554544795788924,
                     "phi": -3.059863031360124,
                     "length": 0.05655525839662291,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3449,34 +3449,34 @@
                 "kappa": 1.881349188357347,
                 "phi": -1.4677577819988226,
                 "length": 0.041324236964095255,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 1.4946166346281986,
                 "phi": 0.33131589371949766,
                 "length": 0.04367669774807109,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.811981201171875e-05,
+            "exec_time": 1.5735626220703125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 1.881349188357332,
                     "phi": -1.4677577819988226,
                     "length": 0.041324236964095415,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 1.494616634628207,
                     "phi": 0.33131589371948866,
                     "length": 0.043676697748071015,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3490,34 +3490,34 @@
                 "kappa": 27.531333232496614,
                 "phi": 0.3971224178924926,
                 "length": 0.041407794282403584,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 27.6371047371779,
                 "phi": -0.5150389563924039,
                 "length": 0.047849356487523476,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9311904907226562e-05,
+            "exec_time": 1.6689300537109375e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 27.53133323249661,
                     "phi": 0.39712241789249264,
                     "length": 0.04140779428240359,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 27.6371047371779,
                     "phi": -0.5150389563924039,
                     "length": 0.04784935648752347,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3531,34 +3531,34 @@
                 "kappa": 28.972542150192748,
                 "phi": 0.026419819974589205,
                 "length": 0.04758295357399737,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 7.869071163337468,
                 "phi": -1.213618338159622,
                 "length": 0.051216141067180684,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8835067749023438e-05,
+            "exec_time": 1.5735626220703125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 28.972542150192748,
                     "phi": 0.026419819974589205,
                     "length": 0.04758295357399737,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 7.869071163337469,
                     "phi": -1.2136183381596213,
                     "length": 0.051216141067180726,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3572,34 +3572,34 @@
                 "kappa": 20.190924445113964,
                 "phi": 0.5699774706494131,
                 "length": 0.05324255179916482,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 15.548710070007584,
                 "phi": -2.4518211968043118,
                 "length": 0.04592511910078686,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9073486328125e-05,
+            "exec_time": 1.5974044799804688e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 20.190924445113968,
                     "phi": 0.5699774706494131,
                     "length": 0.053242551799164824,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 15.548710070007594,
                     "phi": -2.4518211968043118,
                     "length": 0.045925119100786865,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3613,34 +3613,34 @@
                 "kappa": 9.873651012141387,
                 "phi": 2.7767883126190815,
                 "length": 0.0422371469280245,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 27.013769769987668,
                 "phi": -3.0147574286350536,
                 "length": 0.04472641327083022,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9073486328125e-05,
+            "exec_time": 1.7881393432617188e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 9.873651012141382,
                     "phi": 2.7767883126190815,
                     "length": 0.042237146928024515,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 27.013769769987675,
                     "phi": -3.0147574286350536,
                     "length": 0.04472641327083021,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3654,34 +3654,34 @@
                 "kappa": 31.70404108653794,
                 "phi": -0.2695213999505682,
                 "length": 0.04252344390171256,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 31.332523254285753,
                 "phi": 1.9870366466676215,
                 "length": 0.04271130880904609,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 2.002716064453125e-05,
+            "exec_time": 1.621246337890625e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 31.70404108653795,
                     "phi": -0.2695213999505682,
                     "length": 0.04252344390171255,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 31.33252325428576,
                     "phi": 1.9870366466676217,
                     "length": 0.042711308809046084,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3695,34 +3695,34 @@
                 "kappa": 19.925304325897624,
                 "phi": -2.213531842287394,
                 "length": 0.04731740172503413,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 28.87152867818636,
                 "phi": -0.19928013337003653,
                 "length": 0.046737057912247866,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8835067749023438e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 19.925304325897624,
                     "phi": -2.213531842287394,
                     "length": 0.04731740172503413,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 28.87152867818636,
                     "phi": -0.19928013337003708,
                     "length": 0.046737057912247866,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3736,34 +3736,34 @@
                 "kappa": 11.121768154407748,
                 "phi": 1.6828808252670417,
                 "length": 0.0403519595295461,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 3.552539840026177,
                 "phi": -1.5126334676986255,
                 "length": 0.057401839292628716,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.811981201171875e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 11.121768154407748,
                     "phi": 1.6828808252670417,
                     "length": 0.04035195952954611,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 3.5525398400261694,
                     "phi": -1.5126334676986255,
                     "length": 0.05740183929262866,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3777,34 +3777,34 @@
                 "kappa": 30.519399175854637,
                 "phi": -1.6090591268002503,
                 "length": 0.0412250742218296,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 23.025540963133107,
                 "phi": -2.22110502578114,
                 "length": 0.04105633447487599,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9073486328125e-05,
+            "exec_time": 1.6689300537109375e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 30.51939917585464,
                     "phi": -1.6090591268002503,
                     "length": 0.0412250742218296,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 23.025540963133118,
                     "phi": -2.22110502578114,
                     "length": 0.041056334474875986,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3818,34 +3818,34 @@
                 "kappa": 5.708144524277583,
                 "phi": -0.03405383098716606,
                 "length": 0.047154962791451975,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 25.57734593612521,
                 "phi": -0.19326548298700325,
                 "length": 0.05109499400887645,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8835067749023438e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 5.708144524277577,
                     "phi": -0.034053830987166064,
                     "length": 0.047154962791452,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 25.57734593612522,
                     "phi": -0.19326548298700322,
                     "length": 0.05109499400887644,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3859,34 +3859,34 @@
                 "kappa": 3.987589186294925,
                 "phi": 1.9976347449333165,
                 "length": 0.04691044971122147,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 20.1094375210815,
                 "phi": 3.0691218248403964,
                 "length": 0.0540352347088957,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.811981201171875e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 3.9875891862949375,
                     "phi": 1.9976347449333165,
                     "length": 0.04691044971122141,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 20.1094375210815,
                     "phi": 3.069121824840397,
                     "length": 0.05403523470889571,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3900,34 +3900,34 @@
                 "kappa": 0.9469262227607228,
                 "phi": -2.304286894936959,
                 "length": 0.05665522070298791,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 19.57110606515356,
                 "phi": 3.0263450649340013,
                 "length": 0.0551301838970487,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.9311904907226562e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 0.9469262227607053,
                     "phi": -2.304286894936959,
                     "length": 0.05665522070298844,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 19.571106065153565,
                     "phi": 3.026345064934002,
                     "length": 0.05513018389704871,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3941,34 +3941,34 @@
                 "kappa": 16.481444988892093,
                 "phi": -0.8170482007157464,
                 "length": 0.05211715909904975,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 0.5155562739962577,
                 "phi": -2.1050171733053773,
                 "length": 0.05079661859637137,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8358230590820312e-05,
+            "exec_time": 1.5974044799804688e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 16.481444988892097,
                     "phi": -0.8170482007157465,
                     "length": 0.05211715909904975,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 0.5155562739963228,
                     "phi": -2.105017173305385,
                     "length": 0.0507966185963684,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -3982,34 +3982,34 @@
                 "kappa": 32.24983974318413,
                 "phi": 1.2752333122859953,
                 "length": 0.04413444655916934,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 26.877732307961406,
                 "phi": -0.9922717634125541,
                 "length": 0.056484048816578585,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8358230590820312e-05,
+            "exec_time": 1.71661376953125e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 32.24983974318413,
                     "phi": 1.2752333122859953,
                     "length": 0.04413444655916934,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 26.877732307961406,
                     "phi": -0.992271763412554,
                     "length": 0.05648404881657859,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -4023,34 +4023,34 @@
                 "kappa": 31.713089788516857,
                 "phi": -2.1781304380081963,
                 "length": 0.04520389953245357,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 24.759091435510598,
                 "phi": 1.5593679682235853,
                 "length": 0.04100672566391083,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.8358230590820312e-05,
+            "exec_time": 1.5974044799804688e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 31.713089788516857,
                     "phi": -2.1781304380081963,
                     "length": 0.04520389953245357,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 24.759091435510598,
                     "phi": 1.5593679682235853,
                     "length": 0.04100672566391082,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],
@@ -4064,34 +4064,34 @@
                 "kappa": 23.489332484621457,
                 "phi": 2.7379657757581675,
                 "length": 0.041231970897947855,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             },
             {
                 "kappa": 15.847588495977774,
                 "phi": -1.7453589725446417,
                 "length": 0.05404494972026139,
-                "is_extensible": true,
+                "is_extensible": false,
                 "max_curvature": null
             }
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 1.7881393432617188e-05,
+            "exec_time": 1.6927719116210938e-05,
             "iter_count": null,
             "solution_state": [
                 {
                     "kappa": 23.48933248462146,
                     "phi": 2.7379657757581675,
                     "length": 0.041231970897947855,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 },
                 {
                     "kappa": 15.847588495977778,
                     "phi": -1.7453589725446417,
                     "length": 0.05404494972026138,
-                    "is_extensible": true,
+                    "is_extensible": false,
                     "max_curvature": null
                 }
             ],

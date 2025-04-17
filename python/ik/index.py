@@ -84,7 +84,6 @@ class IkSolverType(Enum):
                 return [IkRobotType.TwoSegExtensible]
             case IkSolverType.Fabrikc:
                 return [
-                    IkRobotType.TwoSegInExtensible,
                     IkRobotType.ThreeSegInExtensible,
                 ]
             case IkSolverType.Mics:

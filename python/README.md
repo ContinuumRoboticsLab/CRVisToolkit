@@ -33,18 +33,20 @@ The file path provided can be replaced by any path to a test result JSON file, e
 
 ```
 Results for tests/results/nr/res_2seg_inext.json
-Ran 600 tests
+Ran 100 tests
 
-Success rate: 93.67%
-Mean execution time: 8.927E-03 ± 2.570E-02
-Mean iteration count: 1.533E+01 ± 4.830E+01
-Mean position error: 1.721E-03 ± 1.792E-03
-Mean orientation error: 2.198E-04 ± 2.695E-04
-Mean execution time (succeeded): 2.261E-03 ± 9.980E-04
-Mean iteration count (succeeded): 2.778E+00 ± 1.406E+00
-Mean position error (succeeded): 7.937E-04 ± 1.792E-03
-Mean orientation error (succeeded): 2.164E-04 ± 2.613E-04
+Success rate: 62.00%
+Mean execution time: 4.271E-02 ± 5.088E-02
+Mean iteration count: 7.873E+01 ± 9.573E+01
+Mean position error: 8.968E-03 ± 2.837E-03
+Mean orientation error: 2.642E-04 ± 3.076E-04
+Mean execution time (succeeded): 2.981E-03 ± 1.085E-03
+Mean iteration count (succeeded): 3.790E+00 ± 1.259E+00
+Mean position error (succeeded): 5.005E-03 ± 2.837E-03
+Mean orientation error (succeeded): 2.609E-04 ± 2.655E-04
 ```
+
+For more information about the arguments available on any of the aforementioned scripts, running them with the `--help` option will show a brief summary of the available arguments.
 
 ## Implementing a Solver
 The toolkit was designed with an architecture that allows for easy implementation of other inverse kinematics algorithms. To implement an inverse kinematics algorithm, the following steps must be taken:

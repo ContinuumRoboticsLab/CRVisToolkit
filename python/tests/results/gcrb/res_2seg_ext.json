@@ -18,7 +18,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 9.012222290039062e-05,
+            "exec_time": 8.130073547363281e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -59,7 +59,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 8.177757263183594e-05,
+            "exec_time": 8.225440979003906e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -100,7 +100,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 8.082389831542969e-05,
+            "exec_time": 7.605552673339844e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -141,7 +141,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.891654968261719e-05,
+            "exec_time": 7.486343383789062e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -182,7 +182,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.891654968261719e-05,
+            "exec_time": 7.319450378417969e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -223,7 +223,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 8.082389831542969e-05,
+            "exec_time": 7.414817810058594e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -264,7 +264,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.891654968261719e-05,
+            "exec_time": 7.009506225585938e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -305,7 +305,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.796287536621094e-05,
+            "exec_time": 7.081031799316406e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -346,7 +346,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 8.082389831542969e-05,
+            "exec_time": 7.104873657226562e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -387,7 +387,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.987022399902344e-05,
+            "exec_time": 7.128715515136719e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -428,7 +428,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 8.130073547363281e-05,
+            "exec_time": 7.104873657226562e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -469,7 +469,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 8.0108642578125e-05,
+            "exec_time": 7.081031799316406e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -510,7 +510,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.724761962890625e-05,
+            "exec_time": 7.295608520507812e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -551,7 +551,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.891654968261719e-05,
+            "exec_time": 7.796287536621094e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -592,7 +592,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 8.487701416015625e-05,
+            "exec_time": 7.700920104980469e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -633,7 +633,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.677078247070312e-05,
+            "exec_time": 7.009506225585938e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -674,7 +674,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.605552673339844e-05,
+            "exec_time": 7.104873657226562e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -715,7 +715,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.700920104980469e-05,
+            "exec_time": 7.295608520507812e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -756,7 +756,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 8.106231689453125e-05,
+            "exec_time": 7.009506225585938e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -797,7 +797,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.82012939453125e-05,
+            "exec_time": 7.605552673339844e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -838,7 +838,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.82012939453125e-05,
+            "exec_time": 7.128715515136719e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -879,7 +879,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.700920104980469e-05,
+            "exec_time": 7.200241088867188e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -920,7 +920,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.724761962890625e-05,
+            "exec_time": 7.176399230957031e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -961,7 +961,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 8.106231689453125e-05,
+            "exec_time": 7.390975952148438e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1002,7 +1002,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.581710815429688e-05,
+            "exec_time": 6.866455078125e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1043,7 +1043,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 8.20159912109375e-05,
+            "exec_time": 7.390975952148438e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1084,7 +1084,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.82012939453125e-05,
+            "exec_time": 7.081031799316406e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1125,7 +1125,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.915496826171875e-05,
+            "exec_time": 7.128715515136719e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1166,7 +1166,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.915496826171875e-05,
+            "exec_time": 7.319450378417969e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1207,7 +1207,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.915496826171875e-05,
+            "exec_time": 6.890296936035156e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1248,7 +1248,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.605552673339844e-05,
+            "exec_time": 7.390975952148438e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1289,7 +1289,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.796287536621094e-05,
+            "exec_time": 7.414817810058594e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1330,7 +1330,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.700920104980469e-05,
+            "exec_time": 7.104873657226562e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1371,7 +1371,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.891654968261719e-05,
+            "exec_time": 7.081031799316406e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1412,7 +1412,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.891654968261719e-05,
+            "exec_time": 7.200241088867188e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1453,7 +1453,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.772445678710938e-05,
+            "exec_time": 7.081031799316406e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1494,7 +1494,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.700920104980469e-05,
+            "exec_time": 6.985664367675781e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1535,7 +1535,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.700920104980469e-05,
+            "exec_time": 7.009506225585938e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1576,7 +1576,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.677078247070312e-05,
+            "exec_time": 7.104873657226562e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1617,7 +1617,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.700920104980469e-05,
+            "exec_time": 7.104873657226562e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1658,7 +1658,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.724761962890625e-05,
+            "exec_time": 7.200241088867188e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1699,7 +1699,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.891654968261719e-05,
+            "exec_time": 7.081031799316406e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1740,7 +1740,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.796287536621094e-05,
+            "exec_time": 7.128715515136719e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1781,7 +1781,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.700920104980469e-05,
+            "exec_time": 7.200241088867188e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1822,7 +1822,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.772445678710938e-05,
+            "exec_time": 7.176399230957031e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1863,7 +1863,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.82012939453125e-05,
+            "exec_time": 6.985664367675781e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1904,7 +1904,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.891654968261719e-05,
+            "exec_time": 8.106231689453125e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1945,7 +1945,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.605552673339844e-05,
+            "exec_time": 6.890296936035156e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -1986,7 +1986,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.677078247070312e-05,
+            "exec_time": 7.009506225585938e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2027,7 +2027,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.605552673339844e-05,
+            "exec_time": 6.914138793945312e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2068,7 +2068,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 8.082389831542969e-05,
+            "exec_time": 6.914138793945312e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2109,7 +2109,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.82012939453125e-05,
+            "exec_time": 6.890296936035156e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2150,7 +2150,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.891654968261719e-05,
+            "exec_time": 6.914138793945312e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2191,7 +2191,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.700920104980469e-05,
+            "exec_time": 6.890296936035156e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2232,7 +2232,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.700920104980469e-05,
+            "exec_time": 6.914138793945312e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2273,7 +2273,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 8.20159912109375e-05,
+            "exec_time": 7.176399230957031e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2314,7 +2314,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.605552673339844e-05,
+            "exec_time": 6.866455078125e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2355,7 +2355,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.605552673339844e-05,
+            "exec_time": 6.985664367675781e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2396,7 +2396,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 8.392333984375e-05,
+            "exec_time": 6.890296936035156e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2437,7 +2437,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.987022399902344e-05,
+            "exec_time": 7.009506225585938e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2478,7 +2478,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.82012939453125e-05,
+            "exec_time": 7.200241088867188e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2519,7 +2519,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.796287536621094e-05,
+            "exec_time": 7.081031799316406e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2560,7 +2560,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.605552673339844e-05,
+            "exec_time": 7.510185241699219e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2601,7 +2601,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.796287536621094e-05,
+            "exec_time": 7.009506225585938e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2642,7 +2642,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.700920104980469e-05,
+            "exec_time": 6.985664367675781e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2683,7 +2683,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.724761962890625e-05,
+            "exec_time": 6.914138793945312e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2724,7 +2724,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.700920104980469e-05,
+            "exec_time": 6.890296936035156e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2765,7 +2765,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.772445678710938e-05,
+            "exec_time": 6.914138793945312e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2806,7 +2806,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.700920104980469e-05,
+            "exec_time": 6.866455078125e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2847,7 +2847,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 8.296966552734375e-05,
+            "exec_time": 7.605552673339844e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2888,7 +2888,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.510185241699219e-05,
+            "exec_time": 6.723403930664062e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2929,7 +2929,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.510185241699219e-05,
+            "exec_time": 6.794929504394531e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -2970,7 +2970,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.677078247070312e-05,
+            "exec_time": 6.699562072753906e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3011,7 +3011,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.605552673339844e-05,
+            "exec_time": 6.890296936035156e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3052,7 +3052,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.581710815429688e-05,
+            "exec_time": 6.890296936035156e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3093,7 +3093,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.700920104980469e-05,
+            "exec_time": 6.914138793945312e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3134,7 +3134,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 8.082389831542969e-05,
+            "exec_time": 7.295608520507812e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3175,7 +3175,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.891654968261719e-05,
+            "exec_time": 6.771087646484375e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3216,7 +3216,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.700920104980469e-05,
+            "exec_time": 6.794929504394531e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3257,7 +3257,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.82012939453125e-05,
+            "exec_time": 7.009506225585938e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3298,7 +3298,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.677078247070312e-05,
+            "exec_time": 6.985664367675781e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3339,7 +3339,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.677078247070312e-05,
+            "exec_time": 6.890296936035156e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3380,7 +3380,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 8.034706115722656e-05,
+            "exec_time": 6.985664367675781e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3421,7 +3421,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.987022399902344e-05,
+            "exec_time": 6.985664367675781e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3462,7 +3462,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.915496826171875e-05,
+            "exec_time": 7.033348083496094e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3503,7 +3503,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.987022399902344e-05,
+            "exec_time": 6.818771362304688e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3544,7 +3544,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.891654968261719e-05,
+            "exec_time": 6.985664367675781e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3585,7 +3585,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.891654968261719e-05,
+            "exec_time": 6.985664367675781e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3626,7 +3626,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.772445678710938e-05,
+            "exec_time": 6.914138793945312e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3667,7 +3667,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.891654968261719e-05,
+            "exec_time": 7.128715515136719e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3708,7 +3708,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.677078247070312e-05,
+            "exec_time": 7.081031799316406e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3749,7 +3749,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.796287536621094e-05,
+            "exec_time": 6.890296936035156e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3790,7 +3790,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.700920104980469e-05,
+            "exec_time": 6.890296936035156e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3831,7 +3831,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.772445678710938e-05,
+            "exec_time": 6.985664367675781e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3872,7 +3872,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.677078247070312e-05,
+            "exec_time": 6.818771362304688e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3913,7 +3913,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.796287536621094e-05,
+            "exec_time": 6.818771362304688e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3954,7 +3954,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.700920104980469e-05,
+            "exec_time": 6.794929504394531e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -3995,7 +3995,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.605552673339844e-05,
+            "exec_time": 6.771087646484375e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -4036,7 +4036,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.796287536621094e-05,
+            "exec_time": 6.818771362304688e-05,
             "iter_count": null,
             "solution_state": [
                 {
@@ -4077,7 +4077,7 @@
         ],
         "start_uniform": {
             "success": true,
-            "exec_time": 7.700920104980469e-05,
+            "exec_time": 6.890296936035156e-05,
             "iter_count": null,
             "solution_state": [
                 {
