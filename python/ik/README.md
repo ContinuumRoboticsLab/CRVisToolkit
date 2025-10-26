@@ -1,8 +1,9 @@
-# Overview
-The full Python toolkit for CR, including visualization, forward kineamatics and multiple inverse kinematics solvers, and a testing pipeline for inverse kinematics algorithms.
+# The Inverse Kinematics Module
+This project provides three utilities regarding inverse kinematics:
 
-## Dependencies
-The library has minimal dependencies and can be seen in the `pyproject.toml`. Dependence on external libraries that do not contribute to performance were kept to a minimum. Installation with poetry is recommended.
+1. A generics interface for implementing inverse kinematics solvers that can be used to implement different underlying algorithms.
+2. Implementations of five different inverse kinematics algorithms
+3. A testing pipeline that can generate test cases and evaluate the performance of an inverse kinematics solver across that dataset. 
 
 ## Testing Pipeline
 The entire testing pipeline can be run in steps by running the correct python files with the correct arguments. The pipeline works as follows: first, a number of test cases are randomly generated and saved as zipped JSON files. Then, the test cases in these JSON files are parsed, and the implemented sovlers can be tested across the parsed test cases. The results of each test case are collected and saved in a file. Then, the results file can be parsed to evaluate solver metrics.
