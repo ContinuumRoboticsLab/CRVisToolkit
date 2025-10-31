@@ -1,0 +1,210 @@
+"""
+Test Cases for the Newton-Rhapson Inverse Kinematics Solver
+
+1. a two segment inextensible robot: tested for target R3 position and SE3 pose
+
+2. a two segment extensible robot: tested for target R3 position and SE3 pose
+
+3. a three-segment inextensible robot: tested for target R3 position and SE3 pose
+"""
+
+from math import pi
+import matplotlib.pyplot as plt
+from common.robot import ConstantCurvatureCR, ConstantCurvatureSegment
+from common.types import TDCRPlotterSettings
+from ik.target import SE3IkTarget
+from ik.solvers.mics.nr2 import MicsNewtonRaphsonIkSolver, MicsNewtonRaphsonIkSettings
+import logging
+
+from plotter.tdcr import draw_tdcr
+
+
+def _run_solver_test(
+    target_robot: ConstantCurvatureCR, solver: MicsNewtonRaphsonIkSolver, logger
+):
+    res = solver.solve()
+    logger.info(f"Solution at: {solver.theta_i} after {solver.iter_count} iterations")
+    logger.info(f"yields position: {solver.cr.pose_vector(solver.cr.state_vector())}")
+    logger.info(
+        f"Error: {solver.get_pose() - target_robot.pose_for_target(solver.target_type)}"
+    )
+    return res
+
+
+def test_nr_1(plot, logger):
+    """
+    the test case uses two inextensible segments, with target position, no orientation
+
+    this results in there being a degree of redundancy in the solution, so the
+    solution found is not guaranteed to be the same as the target robot used to
+    generate the target pose
+    """
+
+    logger.info("**** Test Case 1: two-segment inextensible CR ****")
+    seg1 = ConstantCurvatureSegment(1 / 1, -0.85 * pi, 1)
+    seg2 = ConstantCurvatureSegment(1 / 6, 0.4 * pi, 1)
+    seg3 = ConstantCurvatureSegment(1 / 6.5, -pi, 1)
+    robot = ConstantCurvatureCR([seg1, seg2, seg3])
+    starter_plot = robot.as_discrete_curve(pts_per_seg=10)
+
+    target_seg1 = ConstantCurvatureSegment(1 / 0.8, -pi, 1)
+    target_seg2 = ConstantCurvatureSegment(1 / 5, 0.2 * pi, 1)
+    target_seg3 = ConstantCurvatureSegment(1 / 8, -0.7 * pi, 1)
+    target_robot = ConstantCurvatureCR([target_seg1, target_seg2, target_seg3])
+
+    logger.info(
+        f"starting curvature is: {robot.state_vector()} \
+        yielding state\n {robot.pose_vector(robot.state_vector())}"
+    )
+
+    target_pose = SE3IkTarget.from_target_robot(target_robot)
+    print(target_pose.pose)
+
+    logger.info(f"target pose: {target_pose.pose}")
+
+    se3_solver = MicsNewtonRaphsonIkSolver(
+        robot, MicsNewtonRaphsonIkSettings(), target_pose
+    )
+    se3_res = se3_solver.solve()
+
+    logger.info(f"performed {se3_solver.iter_count} iterations")
+    logger.info(
+        f"Solution at: {se3_solver.cr.state_vector()} yielding pose\
+        {se3_solver.cr.pose_vector(se3_solver.cr.state_vector())}"
+    )
+    logger.info(
+        f"Target state is {target_robot.state_vector()} yielding pose\
+        {target_robot.pose_vector(target_robot.state_vector())}"
+    )
+
+    if plot:
+        draw_tdcr(
+            starter_plot,
+            TDCRPlotterSettings(
+                plot_title="NR base case 1 Starter Robot", r_disk=0.1, r_height=0.1
+            ),
+        )
+        draw_tdcr(
+            se3_solver.cr.as_discrete_curve(pts_per_seg=10),
+            TDCRPlotterSettings(plot_title="NR base case 1 Pose Solution"),
+        )
+        draw_tdcr(
+            target_robot.as_discrete_curve(pts_per_seg=10),
+            TDCRPlotterSettings(plot_title="NR base case 1 Target Robot"),
+        )
+        plt.show()
+
+    return se3_res
+
+
+#
+# def test_nr_2(plot, logger):
+#     # Test Case 2: two-segment extensible robot, target pose is an SE3 pose
+#     logger.info("**** Test Case 2: two-segment extensible CR****")
+#
+#     seg1 = ConstantCurvatureSegment(1 / 0.14, -0.8 * pi, 0.05, is_extensible=True)
+#     seg2 = ConstantCurvatureSegment(1 / 0.06, 0.4 * pi, 0.03, is_extensible=True)
+#     robot = ConstantCurvatureCR([seg1, seg2])
+#
+#     target_seg1 = ConstantCurvatureSegment(1 / 0.13, -pi, 0.055, is_extensible=True)
+#     target_seg2 = ConstantCurvatureSegment(
+#         1 / 0.07, 0.35 * pi, 0.035, is_extensible=True
+#     )
+#     target_robot = ConstantCurvatureCR([target_seg1, target_seg2])
+#     logger.info(
+#         f"starting curvature is: {robot.state_vector()} \
+#         yielding state\n {robot.pose_vector(robot.state_vector())}"
+#     )
+#
+#     settings = MicsNewtonRaphsonIkSettings()
+#
+#     target_pose = R6TwistIkTarget(target_robot.pose_vector())
+#     target_position = P3IkTarget(target_robot.pose_vector())
+#
+#     logger.info(f"target pose: {target_pose.pose}")
+#
+#     se3_solver = NewtonRaphsonIkSolver(robot, settings, target_pose)
+#     p3_solver = NewtonRaphsonIkSolver(robot, settings, target_position)
+#
+#     se3_res = _run_solver_test(target_robot, se3_solver, logger)
+#     p3_res = _run_solver_test(target_robot, p3_solver, logger)
+#
+#     if plot:
+#         draw_tdcr(
+#             p3_solver.cr.as_discrete_curve(pts_per_seg=10),
+#             TDCRPlotterSettings(plot_title="NR base case 2 Position Solution"),
+#         )
+#         # draw_tdcr(
+#         #     se3_solver.cr.as_discrete_curve(pts_per_seg=10),
+#         #     TDCRPlotterSettings(plot_title="NR base case 2 Pose Solution"),
+#         # )
+#         draw_tdcr(
+#             target_robot.as_discrete_curve(pts_per_seg=10),
+#             TDCRPlotterSettings(plot_title="NR base case 2 Target Robot"),
+#         )
+#         plt.show()
+#
+#     return (se3_res, p3_res)
+#
+#
+# def test_nr_3(plot, logger):
+#     """
+#     testing a three-segment inextensible robot
+#     """
+#     logger.info("**** Test Case 3: three-segment inextensible CR****")
+#
+#     seg1 = ConstantCurvatureSegment(1 / 0.14, -0.85 * pi, 0.05)
+#     seg2 = ConstantCurvatureSegment(1 / 0.06, 0.4 * pi, 0.03)
+#     seg3 = ConstantCurvatureSegment(1 / 0.065, -pi, 0.035)
+#     robot = ConstantCurvatureCR([seg1, seg2, seg3])
+#     starting_plot = robot.as_discrete_curve(pts_per_seg=10)
+#
+#     target_seg1 = ConstantCurvatureSegment(1 / 0.13, -pi, 0.05)
+#     target_seg2 = ConstantCurvatureSegment(1 / 0.07, 0.35 * pi, 0.03)
+#     target_seg3 = ConstantCurvatureSegment(1 / 0.05, -0.9 * pi, 0.035)
+#     target_robot = ConstantCurvatureCR([target_seg1, target_seg2, target_seg3])
+#     logger.info(
+#         f"starting curvature is: {robot.state_vector()} \
+#         yielding state\n {robot.pose_vector(robot.state_vector())}"
+#     )
+#
+#     settings = NewtonRaphsonIkSettings()
+#
+#     target_pose = SE3IkTarget.from_target_robot(target_robot)
+#
+#     logger.info(f"target pose: {target_pose.pose}")
+#
+#     se3_solver = NewtonRaphsonIkSolver(robot, settings, target_pose)
+#
+#     se3_res = _run_solver_test(target_robot, se3_solver, logger)
+#
+#     if plot:
+#         draw_tdcr(
+#             starting_plot,
+#             TDCRPlotterSettings(plot_title="NR base case 2 Starter Robot"),
+#         )
+#         draw_tdcr(
+#             se3_solver.cr.as_discrete_curve(pts_per_seg=10),
+#             TDCRPlotterSettings(plot_title="NR base case 2 Pose Solution"),
+#         )
+#         draw_tdcr(
+#             target_robot.as_discrete_curve(pts_per_seg=10),
+#             TDCRPlotterSettings(plot_title="NR base case 2 Target Robot"),
+#         )
+#         plt.show()
+#
+#     return se3_res
+#
+
+
+def run(plot=False, loglevel=logging.INFO):
+    format = "%(levelname)s: %(message)s"
+    logging.basicConfig(level=loglevel, format=format)
+    logger = logging.getLogger(__name__)
+    test_nr_1(plot, logger)
+    # test_nr_2(plot, logger)
+    # test_nr_3(plot, logger)
+
+
+if __name__ == "__main__":
+    run(True)
