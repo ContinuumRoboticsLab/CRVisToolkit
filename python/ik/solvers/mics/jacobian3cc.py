@@ -8,78 +8,7 @@ kinematics is expressed using the product of exponentials formula.
 import numpy as np
 from scipy.linalg import expm
 
-
-def up_hat(v):
-    """
-    Computes the Lie algebra of a vector (hat map).
-
-    Converts a vector to its corresponding skew-symmetric matrix representation.
-
-    Parameters
-    ----------
-    v : array_like
-        Vector in R^3 or R^6
-
-    Returns
-    -------
-    M : ndarray
-        Element of so(3) (3x3) if v is in R^3, or se(3) (4x4) if v is in R^6
-
-    Raises
-    ------
-    ValueError
-        If input vector is not of length 3 or 6
-    """
-    v = np.asarray(v).flatten()
-
-    if len(v) == 3:
-        M = np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])
-    elif len(v) == 6:
-        M = np.array(
-            [
-                [0, -v[2], v[1], v[3]],
-                [v[2], 0, -v[0], v[4]],
-                [-v[1], v[0], 0, v[5]],
-                [0, 0, 0, 0],
-            ]
-        )
-    else:
-        raise ValueError("Input must be in R^3 or R^6")
-
-    return M
-
-
-def up_vee(M):
-    """
-    Computes the inverse of the hat map (vee map).
-
-    Converts a skew-symmetric matrix back to its vector representation.
-
-    Parameters
-    ----------
-    M : array_like
-        Element of so(3) (3x3) or se(3) (4x4)
-
-    Returns
-    -------
-    v : ndarray
-        Vector in R^3 or R^6
-
-    Raises
-    ------
-    ValueError
-        If input matrix is not 3x3 or 4x4
-    """
-    M = np.asarray(M)
-
-    if M.shape[0] == 3:
-        v = np.array([-M[1, 2], M[0, 2], -M[0, 1]])
-    elif M.shape[0] == 4:
-        v = np.array([-M[1, 2], M[0, 2], -M[0, 1], M[0, 3], M[1, 3], M[2, 3]])
-    else:
-        raise ValueError("Input must be in so(3) or se(3)")
-
-    return v
+from ik.solvers.mics.mics_utils import up_hat, up_vee
 
 
 def jaco_c12(w1, w2, L):
