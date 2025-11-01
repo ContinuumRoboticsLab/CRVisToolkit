@@ -136,7 +136,7 @@ class TestRunner:
 
             except Exception as e:
                 print(f"Error in test case {i}: {e}")
-                if fail_on_error:
+                if fail_on_error or True:
                     raise e
 
     def save_results(self, path, compress=False):

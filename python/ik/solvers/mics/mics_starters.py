@@ -256,6 +256,7 @@ def find_mics_starters(L1, L2, L3, q, r, par, noc):
     solns = np.full((9, npar), np.nan)
     is_indices = []
     nts = 0
+    soln = None  # Initialize soln before the loop
 
     for i in range(npar):
         t = zeta[i]
@@ -268,13 +269,14 @@ def find_mics_starters(L1, L2, L3, q, r, par, noc):
         if d != 0:
             for cor_idx in range(noc[0]):
                 # One-step correction
-                denominator = n0 @ r0 + np.array(
+                n0_extended = n0 + np.array(
                     [
                         0,
                         0,
                         L3 * d * (1 / np.arccos(r3[2]) - 1 / np.sqrt(1 - r3[2] ** 2)),
                     ]
                 )
+                denominator = n0_extended @ r0
                 numerator = n0 @ r3 - utils.rho(r3[2], L3) * d
                 tmp = r3 - (numerator / denominator) * r0
                 r3 = tmp / norm(tmp)
@@ -298,7 +300,6 @@ def find_mics_starters(L1, L2, L3, q, r, par, noc):
             e = e_t
 
         # Step 2g: Detect local minima
-        soln = None  # shouldn't ever raise issue in iteration, but stop LSP complaints
         if i == 0:
             # No operation
             pass

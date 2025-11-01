@@ -1,6 +1,7 @@
 import time
 import numpy as np
 from scipy.linalg import logm
+from scipy.spatial.transform import Rotation as R
 from spatialmath import SE3
 
 from common.robot import ConstantCurvatureCR
@@ -46,8 +47,8 @@ class MicsSolverSettings(CcIkSettings):
     t_search_resolutions = [0.01]
     zero_tolerance = 1e-4
     numerical_solver_settings = MicsNewtonRaphsonIkSettings()
-    num_r1_corrections = 2
-    num_r3_corrrections = 1
+    num_r1_corrections = 5
+    num_r3_corrrections = 5
 
 
 class MicsSolver(CcIkSolver):
@@ -382,7 +383,8 @@ class MicsSolver(CcIkSolver):
 
         # cache all local minima found - we will later start from these points for numerical convergence
         self.mics_starting_points = local_min
-        print(self.mics_starting_points)
+        for i in self.mics_starting_points:
+            print(i)
 
         post_correction_errors = []
         for i, (r1, r2, r3) in enumerate(local_min):
@@ -423,7 +425,6 @@ if __name__ == "__main__":
     """
     from common.robot import ConstantCurvatureSegment
     from math import pi
-    from scipy.spatial.transform import Rotation as R
 
     # init position doesn't matter for MICS solver, just instantiate the link lengths
     robot = ConstantCurvatureCR(
@@ -446,7 +447,7 @@ if __name__ == "__main__":
             [0, 0, 0, 1],
         ]
     )
-    target = SE3IkTarget(pose_matrix)
+    target = SE3IkTarget(SE3(pose_matrix))
 
     settings = MicsSolverSettings()
     solver = MicsSolver(robot, settings, target)

@@ -62,7 +62,7 @@ class MicsNewtonRaphsonIkSolver(IterativeIkSolver):
             self.settings.tol,
         )
 
-        print(f"NR2 finished in {noi} iterations with error {err}")
+        # print(f"NR2 finished in {noi} iterations with error {err}")
 
         arc_params = xi2arc_robot(xi_star, self.cr)
         self.cr.set_config(arc_params.reshape(-1, 2))
