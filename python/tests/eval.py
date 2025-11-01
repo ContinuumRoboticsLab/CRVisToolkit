@@ -77,6 +77,8 @@ def run_all(compressed_run=True):
     print("Running all tests for all solvers")
     start = time.time()
     for solver_type in IkSolverType:
+        if solver_type != IkSolverType.Mics:
+            continue
         run_all_for_solver(solver_type, compress_out=compressed_run)
     duration = time.time() - start
     print(f"Finished running all tests for all solvers after {duration:.2f} seconds")

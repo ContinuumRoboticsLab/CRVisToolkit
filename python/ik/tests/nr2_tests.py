@@ -40,7 +40,7 @@ def test_nr_1(plot, logger):
     generate the target pose
     """
 
-    logger.info("**** Test Case 1: two-segment inextensible CR ****")
+    logger.info("**** Test Case 1: three-segment inextensible CR ****")
     seg1 = ConstantCurvatureSegment(1 / 1, -0.85 * pi, 1)
     seg2 = ConstantCurvatureSegment(1 / 6, 0.4 * pi, 1)
     seg3 = ConstantCurvatureSegment(1 / 6.5, -pi, 1)

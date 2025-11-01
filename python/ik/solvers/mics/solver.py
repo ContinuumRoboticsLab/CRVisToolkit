@@ -5,7 +5,6 @@ from spatialmath import SE3
 
 from common.robot import ConstantCurvatureCR
 from common.utils import (
-    se3_to_uq,
     se3_to_pose,
     up_star,
     up_plus,
@@ -14,8 +13,9 @@ from common.utils import (
 )
 
 from ik.solvers.base_solver import CcIkSettings, CcIkSolver, IkResult
-from ik.solvers.nr import NewtonRaphsonIkSettings, NewtonRaphsonIkSolver
-from ik.target import IkTarget, IkTargetType
+from ik.solvers.mics.mics_starters import find_mics_starters
+from ik.solvers.mics.nr2 import MicsNewtonRaphsonIkSettings, MicsNewtonRaphsonIkSolver
+from ik.target import IkTarget, IkTargetType, SE3IkTarget
 
 from copy import deepcopy
 
@@ -43,9 +43,9 @@ def _rho(a, length) -> int:
 
 
 class MicsSolverSettings(CcIkSettings):
-    t_search_resolutions = [0.03, 0.01, 0.005]
+    t_search_resolutions = [0.01]
     zero_tolerance = 1e-4
-    numerical_solver_settings = NewtonRaphsonIkSettings(max_iter=30)
+    numerical_solver_settings = MicsNewtonRaphsonIkSettings()
     num_r1_corrections = 2
     num_r3_corrrections = 1
 
@@ -76,7 +76,8 @@ class MicsSolver(CcIkSolver):
         se3: np.ndarray = SE3(ik_target.as_array()).A
         self.target_pose = se3
         self.r = se3[:3, 3]
-        self.q = se3_to_uq(se3)
+        self.q = R.from_matrix(se3[:3, :3]).as_quat()
+        self.q = np.array([self.q[3], self.q[0], self.q[1], self.q[2]])  # w, x, y, z
 
         # constant robot segment lengths
         self.l1 = self.cr.segments[0].length
@@ -327,7 +328,7 @@ class MicsSolver(CcIkSolver):
         """
         robot_copy = deepcopy(self.cr)
 
-        numerical_solver = NewtonRaphsonIkSolver(
+        numerical_solver = MicsNewtonRaphsonIkSolver(
             robot_copy,
             self.settings.numerical_solver_settings,
             self.ik_target,
@@ -363,79 +364,25 @@ class MicsSolver(CcIkSolver):
 
         start = time.time()
 
-        t = 0
-        i = 0
-        num_points = 0
-        num_t_steps = int(1 / t_resolution) + 1
+        local_minima = find_mics_starters(
+            self.l1,
+            self.l2,
+            self.l3,
+            self.q,
+            self.r,
+            t_resolution,
+            [self.settings.num_r1_corrections, self.settings.num_r3_corrrections],
+        )
 
-        errors = np.array([np.nan for _ in range(num_t_steps)])
-
-        local_min = []
-        local_min_indices = []
-
-        # find all errors
-        while t <= 1:
-            self.r3 = self._get_r3_approx(t)
-            self.r1 = self._get_r1_approx()
-
-            r2_cand_1, r2_cand_2 = self._get_r2_values()
-
-            e1 = self._get_error(self.r1, r2_cand_1, self.r3)
-            e2 = self._get_error(self.r1, r2_cand_2, self.r3)
-
-            if e1 > e2:
-                self.r2 = r2_cand_2
-                err = e2
-            else:
-                self.r2 = r2_cand_1
-                err = e1
-
-            if i == 0:
-                pass  # noqa
-            elif i == 1:
-                # always add first point
-                num_points += 1
-                local_min.append((self.r1, self.r2, self.r3))
-                local_min_indices.append(i)
-            else:
-                # local minimum case:
-                if err > errors[i - 1] and errors[i - 1] <= errors[i - 2]:
-                    num_points += 1
-                    local_min.append((self.r1, self.r2, self.r3))
-                    local_min_indices.append(i)
-
-            errors[i] = err
-            t += t_resolution
-            i += 1
-
-        # check limits of search space
-        if t == 1:  # first, last point will coincide
-            if not (errors[1] > errors[0] and errors[0] <= errors[-1]):
-                local_min = local_min[1:]
-                local_min_indices = local_min_indices[1:]
-
-        else:  # step size not divisor of 1, check both ends
-            if errors[0] > errors[-1] and errors[-1] <= errors[-2]:
-                num_points += 1
-                local_min.append((self.r1, self.r2, self.r3))
-                local_min_indices.append(i)
-            if not (errors[1] > errors[0] and errors[0] <= errors[-1]):
-                local_min = local_min[1:]
-                local_min_indices = local_min_indices[1:]
-
-        # try numerical correction (NR) for all candidate local minima
-        if len(local_min) == 0:
-            raise self.NoLocalMinimaFound("No local minima found")
-
-        # sort local minima by how close the t value was to 0.5
-        # in our code, we achieve the same by sorting by the index of the local minima
-        mid_index = num_t_steps / 2
-        distances = [abs(index - mid_index) for index in local_min_indices]
-        sorting_indices = np.argsort(distances)
-        local_min = [local_min[i] for i in sorting_indices]
+        # turn 9xN array into a list of N tuples of (r1, r2, r3)
+        local_min = [
+            (local_minima[0:3, i], local_minima[3:6, i], local_minima[6:9, i])
+            for i in range(local_minima.shape[1])
+        ]
 
         # cache all local minima found - we will later start from these points for numerical convergence
         self.mics_starting_points = local_min
+        print(self.mics_starting_points)
 
         post_correction_errors = []
         for i, (r1, r2, r3) in enumerate(local_min):
@@ -468,3 +415,42 @@ class MicsSolver(CcIkSolver):
         r1, r2, r3 = local_min[ind]
 
         return IkResult.DIVERGED
+
+
+if __name__ == "__main__":
+    """
+    replicate the example from the Matlab code, verify the four starting positions found
+    """
+    from common.robot import ConstantCurvatureSegment
+    from math import pi
+    from scipy.spatial.transform import Rotation as R
+
+    # init position doesn't matter for MICS solver, just instantiate the link lengths
+    robot = ConstantCurvatureCR(
+        [
+            ConstantCurvatureSegment(1, 0, 1),
+            ConstantCurvatureSegment(1, 0, 1),
+            ConstantCurvatureSegment(1, 0, 1),
+        ]
+    )
+
+    alpha = 15 * pi / 16
+    omega = np.array([0.48, np.sqrt(3) / 10, -0.86])
+    q = np.array([np.cos(alpha / 2), *(np.sin(alpha / 2) * omega)])
+    r = np.array([-0.4, 1.1, 0.8])
+
+    rot = R.from_quat([q[1], q[2], q[3], q[0]]).as_matrix()
+    pose_matrix = np.block(
+        [
+            [rot, r.reshape((3, 1))],
+            [0, 0, 0, 1],
+        ]
+    )
+    target = SE3IkTarget(pose_matrix)
+
+    settings = MicsSolverSettings()
+    solver = MicsSolver(robot, settings, target)
+    result = solver.solve()
+    print(
+        f"Result: {result}, found from starting point {solver.converged_starting_point}"
+    )

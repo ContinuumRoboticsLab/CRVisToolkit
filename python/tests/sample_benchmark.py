@@ -5,7 +5,7 @@ from tests.generation.perturbation import PerturbedRobotGenerator
 
 from ik.solvers.nr import NewtonRaphsonIkSolver, NewtonRaphsonIkSettings
 from ik.solvers.neppalli import NeppalliIkSolver, NeppalliIkSettings, NeppalliIkTarget
-from ik.solvers.mics import MicsSolver, MicsSolverSettings
+from ik.solvers.mics.solver import MicsSolver, MicsSolverSettings
 from ik.solvers.fabrikc import FabrikcIkSettings, FabrikcIkSolver
 from ik.target import SE3IkTarget, P3Direction
 

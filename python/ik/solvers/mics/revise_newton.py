@@ -72,7 +72,10 @@ def revise_newton(L1, L2, L3, q, r, xi, mstep, tol, plot=False):
     while k < mstep:
         # Check error condition
         Tt = get_end(L1, L2, L3, xi)
-        V = up_vee(logm(np.linalg.inv(Tt) @ Td))
+        try:
+            V = up_vee(logm(np.linalg.inv(Tt) @ Td))
+        except Exception as _:
+            return xi, np.inf, k
 
         omg_e[k] = np.linalg.norm(V[:3])
         v_e[k] = np.linalg.norm(V[3:6])

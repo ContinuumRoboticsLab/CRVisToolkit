@@ -166,7 +166,7 @@ class CcIkSolver:
             return d_position, d_orientation
         except Exception as e:
             print(f"Error in get_errors: {e}")
-            return None, None
+            return np.inf, np.inf
 
     @property
     def ik_target_pose(self):

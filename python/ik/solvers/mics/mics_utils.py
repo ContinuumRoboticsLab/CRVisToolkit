@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.linalg import norm
 
 from common.robot import ConstantCurvatureCR
 
@@ -258,3 +259,131 @@ def up_vee(M):
         raise ValueError("Input must be in so(3) or se(3)")
 
     return v
+
+
+def rho(a, L):
+    """
+    Computes the linear distance between two ends of a circular arc.
+
+    Parameters:
+        a: scalar value
+        L: length of the arc
+
+    Returns:
+        d: linear distance
+    """
+    if a == 1:
+        d = L
+    else:
+        d = L * np.sqrt(1 - a**2) / np.arccos(a)
+    return d
+
+
+def up_plus(q):
+    """
+    Computes the matrix for left multiplication of quaternions.
+
+    Parameters:
+        q: quaternion as numpy array [delta, epsilon1, epsilon2, epsilon3]
+
+    Returns:
+        q_up_plus: 4x4 left multiplication matrix
+    """
+    q = np.asarray(q).flatten()
+    delta = q[0]
+    epsilon = q[1:4]
+
+    # q^+ = [delta,        -epsilon^T
+    #        epsilon,   delta*I + epsilon^×]
+    q_up_plus = np.zeros((4, 4))
+    q_up_plus[0, 0] = delta
+    q_up_plus[0, 1:4] = -epsilon
+    q_up_plus[1:4, 0] = epsilon
+    q_up_plus[1:4, 1:4] = delta * np.eye(3) + up_hat(epsilon)
+
+    return q_up_plus
+
+
+def up_oplus(q):
+    """
+    Computes the matrix for right multiplication of quaternions.
+
+    Parameters:
+        q: quaternion as numpy array [delta, epsilon1, epsilon2, epsilon3]
+
+    Returns:
+        q_up_oplus: 4x4 right multiplication matrix
+    """
+    q = np.asarray(q).flatten()
+    delta = q[0]
+    epsilon = q[1:4]
+
+    # q^⊕ = [delta,        -epsilon^T
+    #        epsilon,   delta*I - epsilon^×]
+    q_up_oplus = np.zeros((4, 4))
+    q_up_oplus[0, 0] = delta
+    q_up_oplus[0, 1:4] = -epsilon
+    q_up_oplus[1:4, 0] = epsilon
+    q_up_oplus[1:4, 1:4] = delta * np.eye(3) - up_hat(epsilon)
+
+    return q_up_oplus
+
+
+def up_star(q):
+    """
+    Computes the quaternion conjugation.
+
+    Parameters:
+        q: quaternion as numpy array [delta, epsilon1, epsilon2, epsilon3]
+
+    Returns:
+        q_up_star: conjugated quaternion [delta, -epsilon]
+    """
+    q = np.asarray(q).flatten()
+    delta = q[0]
+    epsilon = q[1:4]
+
+    q_up_star = np.concatenate([[delta], -epsilon])
+
+    return q_up_star
+
+
+def veelog(M):
+    """
+    Composition of the matrix logarithm and the vee map.
+    Inverse of exphat using Rodrigues' formula.
+
+    Parameters:
+        M: matrix in SO(3) (3x3) or SE(3) (4x4)
+
+    Returns:
+        V: vector in R3 or R6
+    """
+    M = np.asarray(M)
+
+    R = M[0:3, 0:3]
+
+    if norm(R - np.eye(3)) < 2e-8:
+        # Near identity
+        if M.shape == (3, 3):
+            V = np.zeros(3)
+        else:
+            V = np.concatenate([np.zeros(3), M[0:3, 3]])
+    else:
+        theta = np.arccos((np.trace(R) - 1) / 2)
+        omega_hat = 1 / (2 * np.sin(theta)) * (R - R.T)
+        omega = up_vee(omega_hat)
+
+        if M.shape == (3, 3):
+            V = omega * theta
+        else:
+            # SE(3) case
+            A_inv = (
+                np.eye(3)
+                - theta / 2 * omega_hat
+                + (1 - theta / (2 * np.tan(theta / 2))) * omega_hat @ omega_hat
+            )
+            v = A_inv @ M[0:3, 3]
+            V = np.concatenate([omega * theta, v])
+
+    return V

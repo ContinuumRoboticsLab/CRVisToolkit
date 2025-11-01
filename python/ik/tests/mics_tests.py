@@ -1,9 +1,8 @@
 from math import pi
 from common.robot import ConstantCurvatureCR, ConstantCurvatureSegment
 from ik.target import SE3IkTarget
-from ik.solvers.mics import MicsSolverSettings, MicsSolver
+from ik.solvers.mics.solver import MicsSolverSettings, MicsSolver
 import logging
-from copy import deepcopy
 
 from plotter.tdcr import draw_tdcr, TDCRPlotterSettings
 from matplotlib import pyplot as plt
@@ -11,27 +10,29 @@ from matplotlib import pyplot as plt
 
 def test_mics_nominations(logger):
     logger.info("**** Test Case 1: three-segment inextensible CR ****")
-
-    seg1 = ConstantCurvatureSegment(1 / 0.14, -0.8 * pi, 0.05)
-    seg2 = ConstantCurvatureSegment(1 / 0.06, 0.4 * pi, 0.03)
-    seg3 = ConstantCurvatureSegment(1 / 0.065, -pi, 0.035)
-    robot = ConstantCurvatureCR([deepcopy(seg1), deepcopy(seg2), deepcopy(seg3)])
-
+    seg1 = ConstantCurvatureSegment(1 / 1, -0.85 * pi, 1)
+    seg2 = ConstantCurvatureSegment(1 / 6, 0.4 * pi, 1)
+    seg3 = ConstantCurvatureSegment(1 / 6.5, -pi, 1)
+    robot = ConstantCurvatureCR([seg1, seg2, seg3])
     starting_config_plot = robot.as_discrete_curve(pts_per_seg=10)
 
-    target_seg1 = ConstantCurvatureSegment(1 / 0.13, -pi, 0.05)
-    target_seg2 = ConstantCurvatureSegment(1 / 0.07, 0.35 * pi, 0.03)
-    target_seg3 = ConstantCurvatureSegment(1 / 0.04, -0.9 * pi, 0.035)
+    target_seg1 = ConstantCurvatureSegment(1 / 0.8, -pi, 1)
+    target_seg2 = ConstantCurvatureSegment(1 / 5, 0.2 * pi, 1)
+    target_seg3 = ConstantCurvatureSegment(1 / 8, -0.7 * pi, 1)
     target_robot = ConstantCurvatureCR([target_seg1, target_seg2, target_seg3])
 
-    settings = MicsSolverSettings()
+    logger.info(
+        f"starting curvature is: {robot.state_vector()} \
+        yielding state\n {robot.pose_vector(robot.state_vector())}"
+    )
 
-    target_pose = SE3IkTarget(target_robot.t_matrix())
+    target_pose = SE3IkTarget.from_target_robot(target_robot)
+    print(target_pose.pose)
 
     logger.info(f"target pose: {target_pose.pose}")
     logger.info(f"robot configuration: {robot.state_vector()}")
 
-    solver = MicsSolver(robot, settings, target_pose)
+    solver = MicsSolver(robot, MicsSolverSettings(), target_pose)
 
     res = solver.solve()  # noqa
     logger.info(

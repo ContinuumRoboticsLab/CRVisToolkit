@@ -5,6 +5,7 @@ An implementation of the Newton-Raphson solver according to the MICS MATLAB pape
 from dataclasses import dataclass
 import numpy as np
 from scipy.spatial.transform import Rotation as R
+from spatialmath import SE3
 
 from ik.solvers.base_solver import CcIkSettings, IkResult, IterativeIkSolver
 from ik.solvers.mics.mics_utils import xi2arc_robot
@@ -38,7 +39,10 @@ class MicsNewtonRaphsonIkSolver(IterativeIkSolver):
         self.l3 = self.cr.segments[2].length
 
     def solve(self, *args, **kwargs):
-        target_pose = self.ik_target_pose.A
+        if isinstance(self.ik_target_pose, SE3):
+            target_pose = self.ik_target_pose.A
+        else:
+            target_pose = self.ik_target_pose
         orientation = target_pose[0:3, 0:3]
         position = target_pose[0:3, 3]
 
@@ -68,4 +72,4 @@ class MicsNewtonRaphsonIkSolver(IterativeIkSolver):
         if success:
             return IkResult.SUCCESS
         else:
-            return None
+            return IkResult.DIVERGED
