@@ -383,8 +383,6 @@ class MicsSolver(CcIkSolver):
 
         # cache all local minima found - we will later start from these points for numerical convergence
         self.mics_starting_points = local_min
-        for i in self.mics_starting_points:
-            print(i)
 
         post_correction_errors = []
         for i, (r1, r2, r3) in enumerate(local_min):

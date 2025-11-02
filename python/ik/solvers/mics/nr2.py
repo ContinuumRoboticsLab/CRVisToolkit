@@ -17,7 +17,7 @@ from ik.solvers.mics.revise_newton import revise_newton
 @dataclass
 class MicsNewtonRaphsonIkSettings(CcIkSettings):
     max_iter: int = 200
-    tol = 1e-2
+    tol = 1e-3
 
 
 class MicsNewtonRaphsonIkSolver(IterativeIkSolver):
@@ -61,6 +61,7 @@ class MicsNewtonRaphsonIkSolver(IterativeIkSolver):
             self.settings.max_iter,
             self.settings.tol,
         )
+        self.iter_count = noi
 
         # print(f"NR2 finished in {noi} iterations with error {err}")
 

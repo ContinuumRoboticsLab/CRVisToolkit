@@ -27,7 +27,7 @@ The `-a` option will run all the unzipped JSON files for all five inverse kinema
 To then compute the performance metrics from any set of test results, run the following:
 
 ```
-python -m tests.tesults.parse_results tests/results/nr/res_2seg_inext.json
+python -m tests.results.parse_results tests/results/nr/res_2seg_inext.json
 ```
 
 The file path provided can be replaced by any path to a test result JSON file, even if the file is gzip compressed. The output should look as follows:
